@@ -19,9 +19,12 @@ jobs:
           version: 8
           run_install: true
 
+      - name: Install Ion
+        run: curl -fsSL https://ion.sst.dev/install | bash
+
       - name: Test sst
         run: |
-          pnpm sst diff --stage staging
+          pnpm deploy:staging
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

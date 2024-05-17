@@ -6,7 +6,9 @@
     "build": "next build",
     "dev": "sst dev \"next dev --turbo\"",
     "lint": "next lint",
-    "start": "next start"
+    "start": "next start",
+    "deploy:staging": "sst deploy --stage staging",
+    "deploy:prod": "sst deploy --stage prod"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.4.0",
