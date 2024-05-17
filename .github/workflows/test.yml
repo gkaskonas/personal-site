@@ -21,7 +21,7 @@ jobs:
 
       - name: Test sst
         run: |
-          yarn sst diff --stage prod
+          pnpm sst diff --stage staging
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

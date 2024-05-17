@@ -1,44 +1,35 @@
-import { Certificate } from "aws-cdk-lib/aws-certificatemanager";
+/// <reference path="./.sst/platform/config.d.ts" />
 
-import { SSTConfig } from "sst";
-import { Config, NextjsSite } from "sst/constructs";
-
-export default {
-  config(_input) {
+export default $config({
+  app(input) {
     return {
       name: "personalsite",
-      region: "eu-west-1",
-      profile: "personal-prod",
+      providers: {
+        aws: {
+          region: "eu-west-1",
+          profile: "personal-prod",
+        },
+      },
+      removal: input?.stage === "live" ? "retain" : "remove",
+      home: "aws",
     };
   },
-  stacks(app) {
-    app.stack(function Site({ stack }) {
-      const RESEND_API_KEY = new Config.Secret(stack, "RESEND_API_KEY");
-      const site = new NextjsSite(stack, "site", {
-        bind: [RESEND_API_KEY],
-        warm: app.stage === "prod" ? 1 : 0,
-        timeout: "30 seconds",
-        logging: "combined",
-        memorySize: 1024,
-        customDomain:
-          app.stage === "prod"
-            ? {
-                domainName: "peterkaskonas.com",
-                isExternalDomain: true,
-                cdk: {
-                  certificate: Certificate.fromCertificateArn(
-                    stack,
-                    "Certificate",
-                    "arn:aws:acm:us-east-1:119184259962:certificate/f0dca187-ff36-46bf-a19d-d9bbffc3d392",
-                  ),
-                },
-              }
-            : undefined,
-      });
+  async run() {
+    const secret = new sst.Secret("ResendApiKey", "placeholder");
 
-      stack.addOutputs({
-        SiteUrl: site.url,
-      });
+    new sst.aws.Nextjs("MyWeb", {
+      link: [secret],
+      domain:
+        $app.stage === "live"
+          ? {
+              name: "peterkaskonas.com",
+              // redirects: ["www.peterkaskonas.com"],
+              dns: sst.cloudflare.dns({
+                zone: process.env.CLOUDFLARE_ZONE_ID,
+              }),
+            }
+          : undefined,
+      warm: $app.stage === "live" ? 1 : 0,
     });
   },
-} satisfies SSTConfig;
+});
