@@ -15,7 +15,7 @@ export default $config({
     };
   },
   async run() {
-    const secret = new sst.Secret("ResendApiKey", "placeholder");
+    const secret = new sst.Secret("ResendApiKey");
 
     new sst.aws.Nextjs("MyWeb", {
       link: [secret],
@@ -23,7 +23,7 @@ export default $config({
         $app.stage === "live"
           ? {
               name: "peterkaskonas.com",
-              // redirects: ["www.peterkaskonas.com"],
+              redirects: ["www.peterkaskonas.com"],
               dns: sst.cloudflare.dns({
                 zone: process.env.CLOUDFLARE_ZONE_ID,
               }),

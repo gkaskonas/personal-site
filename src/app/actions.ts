@@ -2,8 +2,7 @@
 
 import { EmailTemplate } from "@/components/email-template";
 import { Resend } from "resend";
-
-const resend = new Resend(process.env.RESEND_API_KEY ?? "default");
+import { Resource } from "sst";
 
 export async function sendEmail(formData: {
   name: string;
@@ -11,6 +10,9 @@ export async function sendEmail(formData: {
   message: string;
 }): Promise<boolean> {
   const { name, email, message } = formData;
+
+  const resend = new Resend(Resource.ResendApiKey.value);
+
   try {
     const { data, error } = await resend.emails.send({
       from: "Acme <onboarding@resend.dev>",
