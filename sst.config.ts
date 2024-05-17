@@ -24,7 +24,6 @@ export default {
           app.stage === "prod"
             ? {
                 domainName: "peterkaskonas.com",
-                domainAlias: "www.peterkaskonas.com",
                 isExternalDomain: true,
                 cdk: {
                   certificate: Certificate.fromCertificateArn(
