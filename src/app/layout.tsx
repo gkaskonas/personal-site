@@ -8,6 +8,12 @@ const fontSans = FontSans({
   variable: "--font-sans",
 });
 
+export const metadata = {
+  title: "Peter Kaskonas",
+  description: "Peter Kaskonas personal website",
+  url: "https://peterkaskonas.com",
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -18,7 +24,7 @@ export default function RootLayout({
       <head />
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased",
+          "mx-auto min-h-screen bg-background font-sans antialiased",
           fontSans.variable,
         )}
       >

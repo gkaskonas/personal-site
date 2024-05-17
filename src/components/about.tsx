@@ -6,7 +6,7 @@ export default function About() {
       id="about"
       className="flex items-center justify-center bg-neutral-900 text-white"
     >
-      <div className="mx-auto max-w-3xl space-y-5 py-20 text-left">
+      <div className="mx-auto max-w-xs space-y-5 py-20 text-left sm:max-w-2xl lg:max-w-3xl">
         <h2 className=" text-2xl font-semibold">About Me</h2>
         <p className="mt-4  text-base text-slate-300">
           Certified AWS Solutions Architect with excellent communication and
