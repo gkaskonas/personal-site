@@ -21,6 +21,7 @@ export default function Certificates() {
     AutoScroll({
       delay: 500,
       loop: true,
+      stopOnInteraction: false,
     }),
   );
 

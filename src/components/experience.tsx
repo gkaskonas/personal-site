@@ -41,7 +41,7 @@ export default function Experience() {
         <li className="flex basis-1/2 flex-col justify-between">
           <ul className="flex flex-col">
             <h3 className="text-xl font-semibold">Bsc in Games Technologies</h3>
-            <p className="text-base italic">Convetry University</p>
+            <p className="text-base italic">Coventry University</p>
             <p className="text-base">2013-2017</p>
           </ul>
         </li>

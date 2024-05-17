@@ -6,7 +6,6 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  type CarouselApi,
 } from "@/components/ui/carousel";
 import {
   Card,
@@ -36,24 +35,14 @@ export default function Testimonials() {
       testimonial:
         "He is a phenomenal talent and regularly produces high quality work that 2 or 3 people would struggle to reproduce.",
     },
+    {
+      name: "Brian Lee",
+      role: "Lead Coach/Co Founder",
+      company: "Lift Performance",
+      testimonial:
+        "We hired Pete to build our company’s website from scratch, and with his vast knowledge and experience, he gave us a lot of great recommendations on how to create more leads. He is also very efficient and responsive. I can’t recommend his work enough!",
+    },
   ];
-
-  const [api, setApi] = React.useState<CarouselApi>();
-  const [current, setCurrent] = React.useState(0);
-  const [count, setCount] = React.useState(0);
-
-  React.useEffect(() => {
-    if (!api) {
-      return;
-    }
-
-    setCount(api.scrollSnapList().length);
-    setCurrent(api.selectedScrollSnap() + 1);
-
-    api.on("select", () => {
-      setCurrent(api.selectedScrollSnap() + 1);
-    });
-  }, [api]);
 
   const plugin = React.useRef(
     AutoPlay({
@@ -78,7 +67,6 @@ export default function Testimonials() {
           loop: true,
         }}
         plugins={[plugin.current]}
-        setApi={setApi}
         className="mx-auto w-full max-w-3xl items-center"
       >
         <CarouselContent>
@@ -107,9 +95,6 @@ export default function Testimonials() {
           ))}
         </CarouselContent>
       </Carousel>
-      <div className="py-2 text-center text-sm text-white">
-        {current} of {count}
-      </div>
     </section>
   );
 }
