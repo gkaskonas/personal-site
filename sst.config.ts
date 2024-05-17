@@ -7,7 +7,6 @@ export default $config({
       providers: {
         aws: {
           region: "eu-west-1",
-          profile: "personal-prod",
         },
       },
       removal: input?.stage === "live" ? "retain" : "remove",
