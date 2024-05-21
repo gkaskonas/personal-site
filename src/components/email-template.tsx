@@ -12,7 +12,7 @@ export const EmailTemplate: React.FC<Readonly<EmailTemplateProps>> = ({
   message,
 }) => (
   <div className="w-96 rounded-lg border border-gray-300 p-6 font-sans text-gray-800">
-    <h2 className="mb-4 text-xl font-bold">Email Template</h2>
+    <h2 className="mb-4 text-xl font-bold">New contact!</h2>
     <p className="mb-2">
       <span className="font-semibold">Name:</span> {name}
     </p>

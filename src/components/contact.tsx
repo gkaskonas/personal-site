@@ -106,7 +106,7 @@ export default function Contact({ year }: { year: number }) {
           <Button
             type="submit"
             disabled={form.formState.isSubmitting}
-            className="w-1/2 bg-orange-500 p-6 hover:bg-orange-700 sm:w-1/4"
+            className="w-1/2 p-6 sm:w-1/4"
           >
             Submit
           </Button>

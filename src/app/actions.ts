@@ -15,11 +15,11 @@ export async function sendEmail(formData: {
 
   try {
     const { data, error } = await resend.emails.send({
-      from: "Acme <onboarding@resend.dev>",
-      to: "pkpersonal@proton.me",
+      from: "Personal Portfolio Update <no-reply@peterkaskonas.com>",
+      to: "contact@peterkaskonas.com",
       subject: "New Email from Peter Kaskonas Portfolio!",
       react: EmailTemplate({ name, email, message }),
-      text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
+      text: "",
     });
 
     console.log(data);

@@ -10,7 +10,7 @@ import { Separator } from "@/components/ui/separator";
 export default function Home() {
   const year = new Date().getFullYear();
   return (
-    <main className="min-h-screen ">
+    <main className="min-h-screen">
       <Navbar />
       <Hero />
       <About />
