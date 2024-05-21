@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "dev": "sst dev \"next dev --turbo\"",
+    "dev": "sst dev \"next dev \"",
     "lint": "next lint",
     "start": "next start",
     "deploy:staging": "sst deploy --stage staging",
@@ -16,6 +16,7 @@
     "@radix-ui/react-progress": "^1.0.3",
     "@radix-ui/react-separator": "^1.0.3",
     "@radix-ui/react-slot": "^1.0.2",
+    "@sentry/nextjs": "^8.2.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "embla-carousel-auto-scroll": "^8.0.4",
