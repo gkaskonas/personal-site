@@ -4,6 +4,7 @@ import Contact from "@/components/contact";
 import Experience from "@/components/experience";
 import Hero from "@/components/hero";
 import Navbar from "@/components/navbar";
+import Services from "@/components/services";
 import Testimonials from "@/components/testimonials";
 import { Separator } from "@/components/ui/separator";
 
@@ -15,6 +16,8 @@ export default function Home() {
       <Hero />
       <About />
       <Certificates />
+      <Separator className="mx-auto w-1/2" />
+      <Services />
       <Separator className="mx-auto w-1/2" />
       <Experience />
       <Testimonials />

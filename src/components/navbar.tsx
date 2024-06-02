@@ -19,6 +19,9 @@ export default function Navbar() {
         <Link href="#contact" className="hover:text-orange-400">
           Contact
         </Link>
+        <Link href="/blog" className="hover:text-orange-400">
+          Blog
+        </Link>
       </nav>
     </header>
   );
