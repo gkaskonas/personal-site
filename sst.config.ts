@@ -14,10 +14,10 @@ export default $config({
     };
   },
   async run() {
-    const secret = new sst.Secret("ResendApiKey");
+    const resendApiSecret = new sst.Secret("ResendApiKey");
 
     new sst.aws.Nextjs("MyWeb", {
-      link: [secret],
+      link: [resendApiSecret],
       domain:
         $app.stage === "live"
           ? {
