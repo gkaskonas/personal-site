@@ -19,6 +19,9 @@ jobs:
           version: 8
           run_install: true
 
+      - name: Install Ion
+        run: curl -fsSL https://ion.sst.dev/install | bash
+
       - name: Test sst
         run: |
           pnpm deploy:staging
