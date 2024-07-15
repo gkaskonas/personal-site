@@ -1,16 +1,16 @@
 /* tslint:disable */
 /* eslint-disable */
-import "sst"
+import "sst";
 declare module "sst" {
   export interface Resource {
     MyWeb: {
-      type: "sst.aws.Nextjs"
-      url: string
-    }
+      type: "sst.aws.Nextjs";
+      url: string;
+    };
     ResendApiKey: {
-      type: "sst.sst.Secret"
-      value: string
-    }
+      type: "sst.sst.Secret";
+      value: string;
+    };
   }
 }
-export {}
+export {};
