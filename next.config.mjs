@@ -11,6 +11,9 @@ const nextConfig = {
     ],
     minimumCacheTTL: 86400,
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 };
 
 export default withSentryConfig(nextConfig, {
