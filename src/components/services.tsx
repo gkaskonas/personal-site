@@ -36,13 +36,13 @@ export default function Services() {
     },
   ];
   return (
-    <main className="mx-auto max-w-6xl py-5">
+    <main className="ms:max-w-xl mx-auto py-5 lg:max-w-6xl">
       <h1 className="pb-5 text-center text-3xl font-semibold">Services</h1>
       <h2 className="mx-auto max-w-lg pb-10 text-center text-xl text-slate-800">
         Transform your vision into reality with expert full stack development
         and cutting-edge AWS cloud solutions.
       </h2>
-      <div className="grid grid-flow-row auto-rows-max grid-cols-3 grid-rows-1 gap-8">
+      <div className="flex flex-col gap-4 sm:grid sm:grid-flow-row sm:auto-rows-max sm:grid-cols-3 sm:grid-rows-1 sm:gap-8">
         {services.map((service, index) => (
           <div
             key={index}
