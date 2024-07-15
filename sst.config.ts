@@ -14,10 +14,11 @@ export default $config({
     };
   },
   async run() {
-    const secret = new sst.Secret("ResendApiKey");
+    const resendApiSecret = new sst.Secret("ResendApiKey");
+    const HygraphEndpointSecret = new sst.Secret("HygraphEndpointSecret");
 
     new sst.aws.Nextjs("MyWeb", {
-      link: [secret],
+      link: [resendApiSecret, HygraphEndpointSecret],
       domain:
         $app.stage === "live"
           ? {
