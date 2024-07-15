@@ -22,6 +22,12 @@ jobs:
       - name: Install Ion
         run: curl -fsSL https://ion.sst.dev/install | bash
 
+      - name: Echo sst
+        run: cat sst-env.d.ts
+
+      - name: Refresh
+        run: pnpm sst refresh --stage staging
+
       - name: Test sst
         run: |
           pnpm deploy:staging
