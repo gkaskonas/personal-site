@@ -1,7 +1,17 @@
 import { withSentryConfig } from "@sentry/nextjs";
 
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        hostname: "media.graphassets.com",
+        protocol: "https",
+      },
+    ],
+    minimumCacheTTL: 86400,
+  },
+};
 
 export default withSentryConfig(nextConfig, {
   org: "pkpersonal",
