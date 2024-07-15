@@ -2,6 +2,11 @@ name: Run tests
 
 on: [pull_request]
 
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+
 jobs:
   test:
     name: test
@@ -21,13 +26,9 @@ jobs:
       - name: Install Ion
         run: curl -fsSL https://ion.sst.dev/install | bash
 
-      - name: Echo sst
-        run: cat sst-env.d.ts
+      - name: AWS test
+        run: aws sts get-caller-identity
 
       - name: Test sst
         run: |
           pnpm deploy:staging
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
