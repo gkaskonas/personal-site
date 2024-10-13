@@ -151,19 +151,19 @@ export default function Services() {
   return (
     <motion.main
       ref={ref}
-      className="mx-auto px-4 py-16 sm:px-6 lg:max-w-7xl lg:px-8"
+      className="mx-auto  px-4 py-16  sm:px-6 lg:max-w-7xl lg:px-8"
       initial="hidden"
       animate={controls}
       variants={containerVariants}
     >
       <motion.h1
-        className="mb-4 text-center text-4xl font-bold"
+        className="mb-4 text-center text-4xl font-bold text-gray-900 dark:text-white"
         variants={itemVariants}
       >
         Services
       </motion.h1>
       <motion.h2
-        className="mx-auto mb-12 max-w-2xl text-center text-xl text-slate-600"
+        className="mx-auto mb-12 max-w-2xl text-center text-xl text-gray-600 dark:text-gray-300"
         variants={itemVariants}
       >
         Transform your vision into reality with expert full stack development
@@ -181,7 +181,7 @@ export default function Services() {
             onHoverStart={() => setHoveredIndex(index)}
             onHoverEnd={() => setHoveredIndex(null)}
           >
-            <Card className="h-full overflow-hidden bg-white shadow-lg transition-shadow duration-300 hover:shadow-xl">
+            <Card className="h-full overflow-hidden  shadow-lg transition-shadow duration-300 hover:shadow-xl ">
               <div className="relative h-60 w-full">
                 <Image
                   className="object-cover transition-transform duration-300 ease-in-out hover:scale-110"
@@ -191,13 +191,13 @@ export default function Services() {
                 />
               </div>
               <CardHeader>
-                <CardTitle className="flex items-center text-2xl font-bold">
+                <CardTitle className="flex items-center text-2xl font-bold text-gray-900 dark:text-white">
                   {service.icon}
                   <span className="ml-2">{service.title}</span>
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="mb-4 text-slate-600">
+                <p className="mb-4 text-gray-600 dark:text-gray-300">
                   {service.shortDescription}
                 </p>
                 <Button onClick={() => setSelectedService(service)}>
@@ -215,11 +215,11 @@ export default function Services() {
       >
         <DialogContent className="sm:max-w-[700px]">
           <DialogHeader>
-            <DialogTitle className="flex items-center text-3xl font-bold">
+            <DialogTitle className="flex items-center text-3xl font-bold text-gray-900 dark:text-white">
               {selectedService?.icon}
               <span className="ml-2">{selectedService?.title}</span>
             </DialogTitle>
-            <DialogDescription className="text-lg">
+            <DialogDescription className="text-lg text-gray-600 dark:text-gray-300">
               {selectedService?.shortDescription}
             </DialogDescription>
           </DialogHeader>
@@ -230,12 +230,17 @@ export default function Services() {
               <TabsTrigger value="technologies">Technologies</TabsTrigger>
             </TabsList>
             <TabsContent value="overview" className="mt-4">
-              <p className="">{selectedService?.longDescription}</p>
+              <p className="text-gray-600 dark:text-gray-300">
+                {selectedService?.longDescription}
+              </p>
             </TabsContent>
             <TabsContent value="features" className="mt-4">
               <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
                 {selectedService?.features.map((feature, index) => (
-                  <li key={index} className="flex items-center">
+                  <li
+                    key={index}
+                    className="flex items-center text-gray-600 dark:text-gray-300"
+                  >
                     <CheckCircle className="mr-2 h-5 w-5 text-green-500" />
                     <span>{feature}</span>
                   </li>
@@ -247,7 +252,7 @@ export default function Services() {
                 {selectedService?.technologies.map((tech, index) => (
                   <span
                     key={index}
-                    className="rounded-full bg-blue-100 px-3 py-1 text-sm font-semibold text-blue-800"
+                    className="rounded-full  px-3 py-1 text-sm font-semibold "
                   >
                     {tech}
                   </span>

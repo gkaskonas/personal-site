@@ -41,7 +41,7 @@ export default function About() {
   return (
     <section
       id="about"
-      className="flex items-center justify-center bg-gradient-to-b from-neutral-900 to-neutral-800 text-white"
+      className="flex items-center justify-center  text-gray-900 dark:text-white"
     >
       <motion.div
         className="mx-auto max-w-6xl space-y-8 px-4 py-20 sm:px-6 lg:px-8"
@@ -52,7 +52,7 @@ export default function About() {
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
           <div>
             <h2 className="mb-4 text-3xl font-bold tracking-tight">About Me</h2>
-            <p className="text-lg leading-relaxed text-slate-300">
+            <p className="text-lg leading-relaxed text-gray-700 dark:text-gray-300">
               Certified AWS Solutions Architect with excellent communication and
               problem-solving skills. Over 5 years of experience in the AWS
               environment, encompassing a wide range of activities from
@@ -67,12 +67,12 @@ export default function About() {
               <Badge variant="secondary">Full-Stack</Badge>
             </div>
           </div>
-          <Card className="border-neutral-700 bg-neutral-800">
+          <Card className="border-gray-200  dark:border-neutral-700 ">
             <CardContent className="p-6">
-              <h3 className="mb-4 text-2xl font-semibold text-slate-300">
+              <h3 className="mb-4 text-2xl font-semibold text-gray-800 dark:text-gray-300">
                 Expertise
               </h3>
-              <ul className="space-y-2 text-slate-300">
+              <ul className="space-y-2 text-gray-700 dark:text-gray-300">
                 <li>Serverless backend deployment</li>
                 <li>AWS consultancy</li>
                 <li>Next.js React development</li>
@@ -83,23 +83,23 @@ export default function About() {
             </CardContent>
           </Card>
         </div>
-        <Card className="mt-8 border-neutral-700 bg-neutral-800">
+        <Card className="mt-8 border-gray-200  dark:border-neutral-700 ">
           <CardContent className="p-6">
-            <h3 className="mb-4 text-2xl font-semibold text-slate-300">
+            <h3 className="mb-4 text-2xl font-semibold text-gray-800 dark:text-gray-300">
               Contact
             </h3>
             <div className="space-y-2">
-              <div className="flex items-center text-slate-300">
+              <div className="flex items-center text-gray-700 dark:text-gray-300">
                 <User className="mr-2 h-4 w-4" />
                 <span>Peter Kaskonas</span>
               </div>
-              <div className="flex items-center text-slate-300">
+              <div className="flex items-center text-gray-700 dark:text-gray-300">
                 <MapPin className="mr-2 h-4 w-4" />
                 <span>United Kingdom</span>
               </div>
               <Link
                 href="mailto:contact@peterkaskonas.com"
-                className="flex items-center text-slate-300 transition-colors hover:text-primary"
+                className="flex items-center text-gray-700 transition-colors hover:text-primary dark:text-gray-300"
               >
                 <Mail className="mr-2 h-4 w-4" />
                 <span>contact@peterkaskonas.com</span>

@@ -48,7 +48,7 @@ export default function Blogs({ posts }: { posts: IPost[] }) {
   return (
     <main className="container mx-auto px-4 py-12 sm:px-6 lg:px-8">
       <motion.h1
-        className="mb-12 text-center text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl"
+        className="mb-12 text-center text-4xl font-bold tracking-tight  sm:text-5xl lg:text-6xl"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
@@ -81,7 +81,7 @@ export default function Blogs({ posts }: { posts: IPost[] }) {
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="flex-grow">
-                      <p className="line-clamp-3 text-sm text-gray-600">
+                      <p className="line-clamp-3 text-sm text-gray-600 dark:text-gray-300">
                         {blogpost.excerpt}
                       </p>
                     </CardContent>

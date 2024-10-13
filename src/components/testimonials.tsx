@@ -75,15 +75,15 @@ export default function Testimonials() {
               <Card className="border-none bg-inherit text-white">
                 <CardHeader>
                   <CardTitle>{testimonial.name}</CardTitle>
-                  <CardDescription className="text-slate-300">
+                  <CardDescription className="text-slate-300 ">
                     {testimonial.role}
                   </CardDescription>
-                  <CardDescription className="text-slate-300">
+                  <CardDescription className="text-slate-300 ">
                     {testimonial.company}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p className="italic text-border drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] sm:text-3xl">
+                  <p className="italic text-border text-white drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)] sm:text-3xl">
                     {testimonial.testimonial}
                   </p>
                 </CardContent>

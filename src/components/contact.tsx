@@ -64,7 +64,7 @@ export default function Contact({ year }: { year: number }) {
   return (
     <motion.section
       id="contact"
-      className="flex flex-col bg-neutral-900 py-16 text-white"
+      className="flex flex-col  py-16 "
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
@@ -78,7 +78,7 @@ export default function Contact({ year }: { year: number }) {
         Get in Touch
       </motion.h1>
       <motion.p
-        className="mx-auto mb-12 max-w-2xl text-center text-lg text-gray-300"
+        className="mx-auto mb-12 max-w-2xl text-center text-lg "
         initial={{ y: -20 }}
         animate={{ y: 0 }}
         transition={{ delay: 0.3 }}
@@ -105,7 +105,7 @@ export default function Contact({ year }: { year: number }) {
                   <FormControl>
                     <Input
                       {...field}
-                      className="border-none bg-neutral-800 text-white"
+                      className="border-none "
                       placeholder="Your name"
                     />
                   </FormControl>
@@ -128,7 +128,7 @@ export default function Contact({ year }: { year: number }) {
                   <FormControl>
                     <Input
                       {...field}
-                      className="border-none bg-neutral-800 text-white"
+                      className="border-none "
                       placeholder="your.email@example.com"
                       type="email"
                     />
@@ -152,7 +152,7 @@ export default function Contact({ year }: { year: number }) {
                   <FormControl>
                     <Textarea
                       {...field}
-                      className="min-h-36 border-none bg-neutral-800 text-white"
+                      className="min-h-36 border-none "
                       placeholder="Your message here..."
                     />
                   </FormControl>
@@ -198,7 +198,7 @@ export default function Contact({ year }: { year: number }) {
             <FaGithub size={24} />
           </Link>
         </div>
-        <p className="text-sm text-gray-400">
+        <p className="text-sm ">
           © {year} Peter Kaskonas. All rights reserved.
         </p>
       </motion.footer>
