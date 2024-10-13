@@ -73,10 +73,7 @@ export default function Experience() {
   const SectionTitle = ({ children }: { children: React.ReactNode }) => (
     <h2 className="flex flex-col text-2xl font-semibold">
       {children}
-      <motion.div
-        className="mt-1 h-1 bg-blue-500"
-        variants={underlineVariants}
-      />
+      <motion.div className="mt-1 h-1 bg-blue-200" />
     </h2>
   );
 
