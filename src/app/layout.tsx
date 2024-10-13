@@ -1,9 +1,7 @@
 import "@/styles/globals.css";
 import { Inter as FontSans } from "next/font/google";
-
 import { cn } from "@/lib/utils";
 import { Metadata } from "next";
-
 import { Toaster } from "@/components/ui/sonner";
 
 const fontSans = FontSans({
@@ -27,7 +25,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className="scroll-smooth">
       <head />
       <body
         className={cn(

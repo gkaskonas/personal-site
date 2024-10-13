@@ -99,7 +99,7 @@ export default function About() {
               </div>
               <Link
                 href="mailto:contact@peterkaskonas.com"
-                className="flex items-center text-slate-300 transition-colors hover:text-orange-400"
+                className="flex items-center text-slate-300 transition-colors hover:text-primary"
               >
                 <Mail className="mr-2 h-4 w-4" />
                 <span>contact@peterkaskonas.com</span>
