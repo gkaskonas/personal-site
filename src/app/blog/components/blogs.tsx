@@ -86,7 +86,7 @@ export default function Blogs({ posts }: { posts: IPost[] }) {
                       </p>
                     </CardContent>
                     <CardFooter className="flex items-center justify-between">
-                      <p className="text-sm font-medium text-primary transition-colors duration-300 group-hover:text-orange-800">
+                      <p className="text-sm font-medium text-primary transition-colors duration-300 group-hover:text-primary">
                         Read more
                       </p>
                       <motion.div

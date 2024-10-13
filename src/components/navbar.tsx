@@ -29,22 +29,22 @@ export default function Navbar() {
       }`}
     >
       <nav className="flex space-x-2 text-white sm:space-x-4 lg:space-x-8 lg:text-lg xl:text-xl">
-        <Link href="/" className="hover:text-orange-400">
+        <Link href="/" className="hover:text-primary">
           Home
         </Link>
-        <Link href="#about" className="hover:text-orange-400">
+        <Link href="#about" className="hover:text-primary">
           About
         </Link>
-        <Link href="#resume" className="hover:text-orange-400">
+        <Link href="#resume" className="hover:text-primary">
           Resume
         </Link>
-        <Link href="#testimonials" className="hover:text-orange-400">
+        <Link href="#testimonials" className="hover:text-primary">
           Testimonials
         </Link>
-        <Link href="#contact" className="hover:text-orange-400">
+        <Link href="#contact" className="hover:text-primary">
           Contact
         </Link>
-        <Link href="/blog" className="hover:text-orange-400">
+        <Link href="/blog" className="hover:text-primary">
           Blog
         </Link>
       </nav>
