@@ -1,36 +1,113 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { motion } from "framer-motion";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Mail, MapPin, User } from "lucide-react";
 
 export default function About() {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.1 },
+    );
+
+    const section = document.getElementById("about");
+    if (section) observer.observe(section);
+
+    return () => {
+      if (section) observer.unobserve(section);
+    };
+  }, []);
+
+  const containerVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, ease: "easeOut" },
+    },
+  };
+
   return (
     <section
       id="about"
-      className="flex items-center justify-center bg-neutral-900 text-white"
+      className="flex items-center justify-center bg-gradient-to-b from-neutral-900 to-neutral-800 text-white"
     >
-      <div className="mx-auto max-w-xs space-y-5 py-20 text-left sm:max-w-2xl lg:max-w-3xl">
-        <h2 className=" text-2xl font-semibold">About Me</h2>
-        <p className="mt-4  text-base text-slate-300">
-          Certified AWS Solutions Architect with excellent communication and
-          problem-solving skills. Over 5 years of experience in the AWS
-          environment, encompassing a wide range of activities from deploying
-          software solutions on existing infrastructure to building new,
-          multi-account Landing Zones. Expertise includes serverless backend
-          deployment, AWS consultancy, Next.js React development, and full-stack
-          development. Proficient in managing the entire lifecycle of cloud
-          applications, from initial discussions and architecture design to
-          deploying and maintaining complex applications on the cloud. Skilled
-          in leveraging AWS services to create scalable, reliable, and
-          cost-effective solutions, ensuring optimal performance and security.
-        </p>
-        <h2 className="flex flex-col text-2xl font-semibold">Contact</h2>
-        <p className="mt-0 flex text-base text-slate-300">Peter Kaskonas</p>
-        <p className="mt-0 flex text-base text-slate-300">United Kingdom</p>
-        <Link
-          href="mailto:contact@peterkaskonas.com"
-          className="mt-0 flex text-base text-slate-300"
-        >
-          contact@peterkaskonas.com
-        </Link>
-      </div>
+      <motion.div
+        className="mx-auto max-w-6xl space-y-8 px-4 py-20 sm:px-6 lg:px-8"
+        initial="hidden"
+        animate={isVisible ? "visible" : "hidden"}
+        variants={containerVariants}
+      >
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+          <div>
+            <h2 className="mb-4 text-3xl font-bold tracking-tight">About Me</h2>
+            <p className="text-lg leading-relaxed text-slate-300">
+              Certified AWS Solutions Architect with excellent communication and
+              problem-solving skills. Over 5 years of experience in the AWS
+              environment, encompassing a wide range of activities from
+              deploying software solutions on existing infrastructure to
+              building new, multi-account Landing Zones.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-2">
+              <Badge variant="secondary">AWS</Badge>
+              <Badge variant="secondary">Serverless</Badge>
+              <Badge variant="secondary">Next.js</Badge>
+              <Badge variant="secondary">React</Badge>
+              <Badge variant="secondary">Full-Stack</Badge>
+            </div>
+          </div>
+          <Card className="border-neutral-700 bg-neutral-800">
+            <CardContent className="p-6">
+              <h3 className="mb-4 text-2xl font-semibold text-slate-300">
+                Expertise
+              </h3>
+              <ul className="space-y-2 text-slate-300">
+                <li>Serverless backend deployment</li>
+                <li>AWS consultancy</li>
+                <li>Next.js React development</li>
+                <li>Full-stack development</li>
+                <li>Cloud application lifecycle management</li>
+                <li>Scalable and cost-effective AWS solutions</li>
+              </ul>
+            </CardContent>
+          </Card>
+        </div>
+        <Card className="mt-8 border-neutral-700 bg-neutral-800">
+          <CardContent className="p-6">
+            <h3 className="mb-4 text-2xl font-semibold text-slate-300">
+              Contact
+            </h3>
+            <div className="space-y-2">
+              <div className="flex items-center text-slate-300">
+                <User className="mr-2 h-4 w-4" />
+                <span>Peter Kaskonas</span>
+              </div>
+              <div className="flex items-center text-slate-300">
+                <MapPin className="mr-2 h-4 w-4" />
+                <span>United Kingdom</span>
+              </div>
+              <Link
+                href="mailto:contact@peterkaskonas.com"
+                className="flex items-center text-slate-300 transition-colors hover:text-orange-400"
+              >
+                <Mail className="mr-2 h-4 w-4" />
+                <span>contact@peterkaskonas.com</span>
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
+      </motion.div>
     </section>
   );
 }

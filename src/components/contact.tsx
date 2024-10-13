@@ -1,8 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -13,19 +15,29 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "./ui/textarea";
+import { Textarea } from "@/components/ui/textarea";
 import { sendEmail } from "@/app/actions";
 import Link from "next/link";
-import { Github, Linkedin } from "lucide-react";
-import { useState } from "react";
+import { FaLinkedinIn, FaGithub } from "react-icons/fa";
+import { Toaster, toast } from "sonner";
+
+const formSchema = z.object({
+  name: z
+    .string()
+    .min(2, "Name must be at least 2 characters")
+    .max(50, "Name must be less than 50 characters"),
+  email: z
+    .string()
+    .email("Invalid email address")
+    .min(2, "Email must be at least 2 characters")
+    .max(50, "Email must be less than 50 characters"),
+  message: z
+    .string()
+    .min(10, "Message must be at least 10 characters")
+    .max(500, "Message must be less than 500 characters"),
+});
 
 export default function Contact({ year }: { year: number }) {
-  const formSchema = z.object({
-    name: z.string().min(2).max(50),
-    email: z.string().email().min(2).max(50),
-    message: z.string().min(10).max(500),
-  });
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -35,114 +47,161 @@ export default function Contact({ year }: { year: number }) {
     },
   });
 
-  const [message, setMessage] = useState<string>("");
-
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const status = await sendEmail(values);
-
-    if (status) {
-      setMessage("Email sent successfully!");
-      form.reset();
-    } else {
-      setMessage("Error sending email. Please try again later.");
+    try {
+      const status = await sendEmail(values);
+      if (status) {
+        toast.success("Email sent successfully!");
+        form.reset();
+      } else {
+        throw new Error("Failed to send email");
+      }
+    } catch (error) {
+      toast.error("Error sending email. Please try again later.");
     }
   }
 
   return (
-    <section id="contact" className="flex flex-col   bg-neutral-900 text-white">
-      <h1 className="mx-auto mt-10 max-w-xs items-start justify-start text-2xl sm:max-w-xl lg:text-3xl">
-        For any enquiries, please fill out the form below.
-      </h1>
+    <motion.section
+      id="contact"
+      className="flex flex-col bg-neutral-900 py-16 text-white"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
+      <motion.h1
+        className="mx-auto mb-8 max-w-2xl text-center text-3xl font-bold sm:text-4xl"
+        initial={{ y: -20 }}
+        animate={{ y: 0 }}
+        transition={{ delay: 0.2 }}
+      >
+        Get in Touch
+      </motion.h1>
+      <motion.p
+        className="mx-auto mb-12 max-w-2xl text-center text-lg text-gray-300"
+        initial={{ y: -20 }}
+        animate={{ y: 0 }}
+        transition={{ delay: 0.3 }}
+      >
+        For any enquiries, please fill out the form below. I'll get back to you
+        as soon as possible.
+      </motion.p>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="mx-auto mt-5 flex w-full max-w-xs flex-col space-y-8 sm:max-w-xl lg:max-w-3xl"
+          className="mx-auto w-full max-w-md space-y-6"
         >
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Name</FormLabel>
-                <FormControl>
-                  <Input
-                    {...field}
-                    className="border-none bg-neutral-700 sm:w-1/2"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem className="m-0 flex flex-col justify-between sm:w-1/2">
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input {...field} className="border-none bg-neutral-700" />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="message"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Message</FormLabel>
-                <FormControl>
-                  <Textarea
-                    {...field}
-                    className="min-h-36 border-none bg-neutral-700"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button
-            type="submit"
-            disabled={form.formState.isSubmitting}
-            className="w-1/2 p-6 sm:w-1/4"
+          <motion.div
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.4 }}
           >
-            Submit
-          </Button>
-          <p className="text-white">{message}</p>
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Name</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      className="border-none bg-neutral-800 text-white"
+                      placeholder="Your name"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </motion.div>
+          <motion.div
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.5 }}
+          >
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      className="border-none bg-neutral-800 text-white"
+                      placeholder="your.email@example.com"
+                      type="email"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </motion.div>
+          <motion.div
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.6 }}
+          >
+            <FormField
+              control={form.control}
+              name="message"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Message</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      {...field}
+                      className="min-h-36 border-none bg-neutral-800 text-white"
+                      placeholder="Your message here..."
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </motion.div>
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.7 }}
+          >
+            <Button
+              type="submit"
+              disabled={form.formState.isSubmitting}
+              className="w-full bg-primary p-6 transition-colors hover:bg-orange-700"
+            >
+              {form.formState.isSubmitting ? "Sending..." : "Send Message"}
+            </Button>
+          </motion.div>
         </form>
       </Form>
-      <footer className="max-w-screen-xs mx-auto mt-10 flex flex-col items-center space-y-5">
-        <div className="mx-auto flex w-1/12 flex-row justify-center space-x-4">
+      <motion.footer
+        className="mt-16 flex flex-col items-center space-y-6"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.8 }}
+      >
+        <div className="flex space-x-6">
           <Link
             href="https://www.linkedin.com/in/giedrius-k-7a2880a5/"
-            className="mx-auto flex"
+            className="transition-colors duration-300 hover:text-primary"
+            aria-label="LinkedIn Profile"
           >
-            <Linkedin
-              size={32}
-              color="#ffffff"
-              strokeWidth={0}
-              absoluteStrokeWidth
-              fill="currentColor"
-              className="flex transition-colors duration-300 ease-in-out hover:text-orange-400"
-            />
+            <FaLinkedinIn size={24} />
           </Link>
-          <Link href="https://github.com/gkaskonas" className="mx-auto flex">
-            <Github
-              size={36}
-              color="#ffffff"
-              strokeWidth={1}
-              absoluteStrokeWidth
-              fill="currentColor"
-              className="flex transition-colors duration-300 ease-in-out hover:text-orange-400"
-            />
+          <Link
+            href="https://github.com/gkaskonas"
+            className="transition-colors duration-300 hover:text-primary"
+            aria-label="GitHub Profile"
+          >
+            <FaGithub size={24} />
           </Link>
         </div>
-        <p className="py-10 text-white">
+        <p className="text-sm text-gray-400">
           © {year} Peter Kaskonas. All rights reserved.
         </p>
-      </footer>
-    </section>
+      </motion.footer>
+    </motion.section>
   );
 }

@@ -1,12 +1,10 @@
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "./ui/card";
+"use client";
 
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import { motion, useAnimation } from "framer-motion";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 interface IService {
   title: string;
@@ -15,6 +13,10 @@ interface IService {
 }
 
 export default function Services() {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const controls = useAnimation();
+  const ref = useRef(null);
+
   const services: IService[] = [
     {
       title: "Web Development",
@@ -35,41 +37,107 @@ export default function Services() {
       image: "/img/cloud.jpg",
     },
   ];
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          controls.start("visible");
+        }
+      },
+      { threshold: 0.1 },
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => {
+      if (ref.current) {
+        observer.unobserve(ref.current);
+      }
+    };
+  }, [controls]);
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+      },
+    },
+  };
+
   return (
-    <main className="ms:max-w-xl mx-auto py-5 lg:max-w-6xl">
-      <h1 className="pb-5 text-center text-3xl font-semibold">Services</h1>
-      <h2 className="mx-auto max-w-lg pb-10 text-center text-xl text-slate-800">
+    <motion.main
+      ref={ref}
+      className="mx-auto px-4 py-16 sm:px-6 lg:max-w-7xl lg:px-8"
+      initial="hidden"
+      animate={controls}
+      variants={containerVariants}
+    >
+      <motion.h1
+        className="mb-4 text-center text-4xl font-bold"
+        variants={itemVariants}
+      >
+        Services
+      </motion.h1>
+      <motion.h2
+        className="mx-auto mb-12 max-w-2xl text-center text-xl text-slate-600"
+        variants={itemVariants}
+      >
         Transform your vision into reality with expert full stack development
         and cutting-edge AWS cloud solutions.
-      </h2>
-      <div className="flex flex-col gap-4 sm:grid sm:grid-flow-row sm:auto-rows-max sm:grid-cols-3 sm:grid-rows-1 sm:gap-8">
+      </motion.h2>
+      <motion.div
+        className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3"
+        variants={containerVariants}
+      >
         {services.map((service, index) => (
-          <div
+          <motion.div
             key={index}
-            className="flex flex-col gap-0 transition-transform duration-300 ease-in-out hover:scale-105"
+            variants={itemVariants}
+            whileHover={{ scale: 1.05 }}
+            onHoverStart={() => setHoveredIndex(index)}
+            onHoverEnd={() => setHoveredIndex(null)}
           >
-            <div className="relative h-60 w-full">
-              <Image
-                className="absolute object-cover "
-                src={service.image!}
-                alt="Service image"
-                fill
-              />
-            </div>
-            <Card className="max-w-2xl rounded-none  bg-slate-50 shadow-md">
-              <CardHeader className="flex flex-col">
-                <CardTitle className="w-full text-2xl">
+            <Card className="h-full overflow-hidden bg-white shadow-lg transition-shadow duration-300 hover:shadow-xl">
+              <div className="relative h-60 w-full">
+                <Image
+                  className="object-cover transition-transform duration-300 ease-in-out hover:scale-110"
+                  src={service.image!}
+                  alt={`${service.title} image`}
+                  fill
+                />
+                <div className="absolute inset-0 bg-black bg-opacity-40 transition-opacity duration-300 ease-in-out hover:bg-opacity-20" />
+              </div>
+              <CardHeader>
+                <CardTitle className="text-2xl font-bold">
                   {service.title}
                 </CardTitle>
               </CardHeader>
-              <CardContent className="flex flex-col gap-y-4 text-base">
-                {service.shortDescription}
+              <CardContent>
+                <p className="mb-4 text-slate-600">
+                  {service.shortDescription}
+                </p>
               </CardContent>
-              <CardFooter></CardFooter>
             </Card>
-          </div>
+          </motion.div>
         ))}
-      </div>
-    </main>
+      </motion.div>
+    </motion.main>
   );
 }
