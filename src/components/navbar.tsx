@@ -1,11 +1,14 @@
 "use client";
 
-import Link from "next/link";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { Menu, X } from "lucide-react";
+import { Dialog } from "@/components/ui/dialog";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,36 +26,84 @@ export default function Navbar() {
     };
   }, []);
 
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+  };
+
+  const navLinks = [
+    { href: "/", label: "Home" },
+    { href: "#about", label: "About" },
+    { href: "#resume", label: "Resume" },
+    { href: "#testimonials", label: "Testimonials" },
+    { href: "#contact", label: "Contact" },
+    { href: "/blog", label: "Blog" },
+  ];
+
   return (
     <header
       className={`fixed z-20 flex w-full items-center justify-between p-4 transition-all duration-300 ${
         isScrolled ? "bg-gray-900/80 backdrop-blur-sm" : "bg-transparent"
       }`}
     >
-      <div className="w-1/6">{/* Placeholder for left side, if needed */}</div>
-      <nav className="flex flex-grow justify-center space-x-2 text-white sm:space-x-4 lg:space-x-8 lg:text-lg xl:text-xl">
-        <Link href="/" className="hover:text-primary">
-          Home
-        </Link>
-        <Link href="#about" className="hover:text-primary">
-          About
-        </Link>
-        <Link href="#resume" className="hover:text-primary">
-          Resume
-        </Link>
-        <Link href="#testimonials" className="hover:text-primary">
-          Testimonials
-        </Link>
-        <Link href="#contact" className="hover:text-primary">
-          Contact
-        </Link>
-        <Link href="/blog" className="hover:text-primary">
-          Blog
-        </Link>
+      <div className="flex md:hidden">
+        <button
+          onClick={toggleMobileMenu}
+          className="text-white focus:outline-none"
+          aria-label="Toggle mobile menu"
+        >
+          <Menu className="h-6 w-6" />
+        </button>
+      </div>
+      <nav className="hidden md:flex md:flex-grow md:justify-center">
+        {navLinks.map((link) => (
+          <Link
+            key={link.href}
+            href={link.href}
+            className="mx-2 text-2xl text-white hover:text-primary"
+          >
+            {link.label}
+          </Link>
+        ))}
       </nav>
-      <div className="flex w-1/6 justify-end">
+      <div className="flex items-center">
         <ThemeToggle />
       </div>
+
+      {isMobileMenuOpen && (
+        <Dialog open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+          <div className="fixed inset-0 z-50 bg-black/80 md:hidden">
+            <div className="fixed inset-0 flex items-center justify-center">
+              <div className="w-full max-w-lg">
+                <div className="flex justify-end p-4">
+                  <button
+                    onClick={closeMobileMenu}
+                    className="text-white focus:outline-none"
+                    aria-label="Close mobile menu"
+                  >
+                    <X className="h-6 w-6" />
+                  </button>
+                </div>
+                <nav className="flex flex-col items-center space-y-8">
+                  {navLinks.map((link) => (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className="text-3xl font-bold text-white hover:text-primary"
+                      onClick={closeMobileMenu}
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                </nav>
+              </div>
+            </div>
+          </div>
+        </Dialog>
+      )}
     </header>
   );
 }

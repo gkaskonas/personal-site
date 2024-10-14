@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -38,6 +38,9 @@ const formSchema = z.object({
 });
 
 export default function Contact({ year }: { year: number }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.3 });
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -61,41 +64,56 @@ export default function Contact({ year }: { year: number }) {
     }
   }
 
+  const containerVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5 },
+    },
+  };
+
   return (
     <motion.section
+      ref={ref}
       id="contact"
-      className="flex flex-col  py-16 "
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
+      className="flex flex-col py-16"
+      initial="hidden"
+      animate={isInView ? "visible" : "hidden"}
+      variants={containerVariants}
     >
       <motion.h1
         className="mx-auto mb-8 max-w-2xl text-center text-3xl font-bold sm:text-4xl"
-        initial={{ y: -20 }}
-        animate={{ y: 0 }}
-        transition={{ delay: 0.2 }}
+        variants={itemVariants}
       >
         Get in Touch
       </motion.h1>
       <motion.p
-        className="mx-auto mb-12 max-w-2xl text-center text-lg "
-        initial={{ y: -20 }}
-        animate={{ y: 0 }}
-        transition={{ delay: 0.3 }}
+        className="mx-auto mb-12 max-w-2xl text-center text-lg"
+        variants={itemVariants}
       >
         For any enquiries, please fill out the form below. I'll get back to you
         as soon as possible.
       </motion.p>
       <Form {...form}>
-        <form
+        <motion.form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="mx-auto w-full max-w-md space-y-6"
+          className="mx-auto w-full max-w-lg space-y-6 rounded-lg border border-gray-200 bg-white p-6 shadow-md dark:border-gray-700 dark:bg-gray-800"
+          variants={itemVariants}
         >
-          <motion.div
-            initial={{ x: -20, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ delay: 0.4 }}
-          >
+          <motion.div variants={itemVariants}>
             <FormField
               control={form.control}
               name="name"
@@ -105,7 +123,7 @@ export default function Contact({ year }: { year: number }) {
                   <FormControl>
                     <Input
                       {...field}
-                      className="border-none "
+                      className="border-gray-300 dark:border-gray-600"
                       placeholder="Your name"
                     />
                   </FormControl>
@@ -114,11 +132,7 @@ export default function Contact({ year }: { year: number }) {
               )}
             />
           </motion.div>
-          <motion.div
-            initial={{ x: -20, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ delay: 0.5 }}
-          >
+          <motion.div variants={itemVariants}>
             <FormField
               control={form.control}
               name="email"
@@ -128,7 +142,7 @@ export default function Contact({ year }: { year: number }) {
                   <FormControl>
                     <Input
                       {...field}
-                      className="border-none "
+                      className="border-gray-300 dark:border-gray-600"
                       placeholder="your.email@example.com"
                       type="email"
                     />
@@ -138,11 +152,7 @@ export default function Contact({ year }: { year: number }) {
               )}
             />
           </motion.div>
-          <motion.div
-            initial={{ x: -20, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ delay: 0.6 }}
-          >
+          <motion.div variants={itemVariants}>
             <FormField
               control={form.control}
               name="message"
@@ -152,7 +162,7 @@ export default function Contact({ year }: { year: number }) {
                   <FormControl>
                     <Textarea
                       {...field}
-                      className="min-h-36 border-none "
+                      className="min-h-36 border-gray-300 dark:border-gray-600"
                       placeholder="Your message here..."
                     />
                   </FormControl>
@@ -161,11 +171,7 @@ export default function Contact({ year }: { year: number }) {
               )}
             />
           </motion.div>
-          <motion.div
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.7 }}
-          >
+          <motion.div variants={itemVariants}>
             <Button
               type="submit"
               disabled={form.formState.isSubmitting}
@@ -174,13 +180,11 @@ export default function Contact({ year }: { year: number }) {
               {form.formState.isSubmitting ? "Sending..." : "Send Message"}
             </Button>
           </motion.div>
-        </form>
+        </motion.form>
       </Form>
       <motion.footer
         className="mt-16 flex flex-col items-center space-y-6"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.8 }}
+        variants={itemVariants}
       >
         <div className="flex space-x-6">
           <Link
@@ -198,7 +202,7 @@ export default function Contact({ year }: { year: number }) {
             <FaGithub size={24} />
           </Link>
         </div>
-        <p className="text-sm ">
+        <p className="text-sm">
           © {year} Peter Kaskonas. All rights reserved.
         </p>
       </motion.footer>
