@@ -2,11 +2,6 @@ import { graphConnect } from "@/lib/utils";
 import { gql } from "graphql-request";
 import Blog from "./components/blog";
 
-type Props = {
-  params: Promise<{ slug: string }>;
-  searchParams: { [key: string]: string | string[] | undefined };
-};
-
 export interface IPost {
   excerpt: string;
   slug: string;
@@ -30,7 +25,11 @@ interface IData {
   post: IPost;
 }
 
-export default async function BlogPage({ params }: Props) {
+export default async function BlogPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const { slug } = await params;
 
   const { post }: IData = await graphConnect.request(gql`
