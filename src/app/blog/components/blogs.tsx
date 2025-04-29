@@ -64,41 +64,39 @@ export default function Blogs({ posts }: { posts: IPost[] }) {
         >
           {posts.map((blogpost) => (
             <motion.li key={blogpost.id} variants={itemVariants} layout>
-              <NextLink href={`/blog/${blogpost.slug}`} passHref legacyBehavior>
-                <a className="block h-full">
-                  <Card className="group flex h-full flex-col overflow-hidden transition-all duration-300 hover:shadow-xl">
-                    <div className="relative h-48 overflow-hidden sm:h-64">
-                      <Image
-                        src={blogpost.coverImage.url}
-                        alt={`Cover image for ${blogpost.title}`}
-                        fill
-                        className="rounded-t-lg object-cover transition-transform duration-300 group-hover:scale-105"
-                      />
-                    </div>
-                    <CardHeader>
-                      <CardTitle className="line-clamp-2 text-xl font-semibold transition-colors duration-300 group-hover:text-primary">
-                        {blogpost.title}
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="flex-grow">
-                      <p className="line-clamp-3 text-sm text-gray-600 dark:text-gray-300">
-                        {blogpost.excerpt}
-                      </p>
-                    </CardContent>
-                    <CardFooter className="flex items-center justify-between">
-                      <p className="text-sm font-medium text-primary transition-colors duration-300 group-hover:text-primary">
-                        Read more
-                      </p>
-                      <motion.div
-                        className="rounded-full bg-blue-100 p-2"
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                      >
-                        <ArrowRight className="h-4 w-4 text-primary" />
-                      </motion.div>
-                    </CardFooter>
-                  </Card>
-                </a>
+              <NextLink href={`/blog/${blogpost.slug}`}>
+                <Card className="group flex h-full flex-col overflow-hidden transition-all duration-300 hover:shadow-xl">
+                  <div className="relative h-48 overflow-hidden sm:h-64">
+                    <Image
+                      src={blogpost.coverImage?.url}
+                      alt={`Cover image for ${blogpost.title}`}
+                      fill
+                      className="rounded-t-lg object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                  </div>
+                  <CardHeader>
+                    <CardTitle className="line-clamp-2 text-xl font-semibold transition-colors duration-300 group-hover:text-primary">
+                      {blogpost.title}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="flex-grow">
+                    <p className="line-clamp-3 text-sm text-gray-600 dark:text-gray-300">
+                      {blogpost.excerpt}
+                    </p>
+                  </CardContent>
+                  <CardFooter className="flex items-center justify-between">
+                    <p className="text-sm font-medium text-primary transition-colors duration-300 group-hover:text-primary">
+                      Read more
+                    </p>
+                    <motion.div
+                      className="rounded-full bg-blue-100 p-2"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                    >
+                      <ArrowRight className="h-4 w-4 text-primary" />
+                    </motion.div>
+                  </CardFooter>
+                </Card>
               </NextLink>
             </motion.li>
           ))}

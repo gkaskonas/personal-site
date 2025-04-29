@@ -14,7 +14,7 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { CheckCircle, Code, Cloud, Globe } from "lucide-react";
+import { CheckCircle, Code, Cloud, Globe, CircleCheck } from "lucide-react";
 
 interface IService {
   title: string;
@@ -23,7 +23,10 @@ interface IService {
   image?: string;
   icon: React.ReactNode;
   features: string[];
-  technologies: string[];
+  technologies: {
+    name: string;
+    description: string;
+  }[];
 }
 
 export default function Services() {
@@ -34,73 +37,123 @@ export default function Services() {
 
   const services: IService[] = [
     {
-      title: "Web Development",
+      title: "Modern Web Development",
       shortDescription:
-        "I specialize in creating dynamic, responsive websites using modern technologies like React, Next.js, and Tailwind CSS.",
+        "Fast, responsive, and SEO-optimized web applications built with Next.js 14, React 18, and edge computing",
       longDescription:
-        "With years of experience in web development, I create robust and scalable web applications tailored to your specific needs. Using cutting-edge technologies like React and Next.js, I ensure your website is not only visually appealing but also performant and SEO-friendly. My expertise in Tailwind CSS allows for rapid development of custom, responsive designs that look great on all devices.",
+        "I build cutting-edge web applications using the latest frameworks and best practices:\n- Server components and streaming for optimal performance\n- Edge computing for global low-latency delivery\n- Core Web Vitals optimization for better search rankings\n- Type-safe development with TypeScript 5\n- Responsive design with modern CSS features\n\nMy focus on performance optimization typically results in 40-70% faster load times compared to traditional approaches.",
+
       image: "/img/web-development.jpeg",
       icon: <Globe className="h-6 w-6" />,
       features: [
-        "Responsive design",
-        "SEO optimization",
-        "Performance tuning",
-        "Accessibility compliance",
-        "Cross-browser compatibility",
+        "Next.js optimization",
+        "TypeScript development",
+        "Accessibility-focused UI",
+        "Performance monitoring",
+        "Third-party API integration",
       ],
       technologies: [
-        "React",
-        "Next.js",
-        "Tailwind CSS",
-        "TypeScript",
-        "Node.js",
+        {
+          name: "Next.js",
+          description:
+            "React framework with server components for optimal performance",
+        },
+        {
+          name: "TypeScript",
+          description:
+            "Typed JavaScript for improved code quality and developer experience",
+        },
+        {
+          name: "Tailwind CSS",
+          description: "Utility-first CSS framework for rapid UI development",
+        },
+        {
+          name: "Vercel",
+          description: "Edge deployment platform for global content delivery",
+        },
+        {
+          name: "Cloudflare",
+          description: "Global CDN for edge caching and security",
+        },
       ],
     },
     {
-      title: "Full Stack Development",
+      title: "Serverless Cloud Development",
       shortDescription:
-        "I build full-stack applications using technologies like SST, Next.js, and more. I have experience in using NoSQL, SQL and other databases.",
+        "Cost-efficient serverless solutions with pay-per-use models that reduce cloud spend by up to 60%",
       longDescription:
-        "As a full-stack developer, I offer end-to-end solutions for your web applications. From designing efficient backend systems using SST and Next.js to creating intuitive front-end interfaces, I cover all aspects of the development process. My experience with various database technologies, including NoSQL and SQL, ensures that your data is managed effectively and securely.",
+        "I develop scalable cloud-native applications using:\n- AWS Lambda and serverless patterns\n- Infrastructure-as-Code with AWS CDK\n- Cost-optimized database solutions\n- CI/CD pipelines for automated deployments\n- Real-time data processing architectures\n\nRecent projects have achieved 30-50% cloud cost savings through architectural optimizations.",
       image: "/img/wp10167050.jpg",
       icon: <Code className="h-6 w-6" />,
       features: [
-        "End-to-end application development",
-        "Database design and optimization",
-        "API development",
-        "Authentication and authorization",
-        "Scalable architecture design",
+        "Serverless architecture",
+        "Cloud cost optimization",
+        "Database design",
+        "DevOps automation",
+        "Microservices implementation",
       ],
       technologies: [
-        "SST",
-        "Next.js",
-        "MongoDB",
-        "PostgreSQL",
-        "GraphQL",
-        "REST",
+        {
+          name: "AWS Lambda",
+          description: "Serverless computing platform for running applications",
+        },
+        {
+          name: "SST/CDK",
+          description:
+            "Serverless Stack Toolkit for deploying AWS infrastructure",
+        },
+        {
+          name: "DynamoDB",
+          description: "NoSQL database for high performance and scalability",
+        },
+        {
+          name: "Serverless Framework",
+          description:
+            "Open-source framework for deploying serverless applications",
+        },
+        {
+          name: "GitHub Actions",
+          description: "Automated workflow for CI/CD pipelines",
+        },
       ],
     },
     {
-      title: "Cloud Consulting",
+      title: "Cloud Cost Optimization",
       shortDescription:
-        "I provide consulting services for a wide range of topics, including web development, design, AWS, Kubernetes and more.",
+        "Strategic infrastructure reviews that reduce AWS bills while improving performance and scalability",
       longDescription:
-        "My cloud consulting services cover a wide range of technologies and platforms. Whether you're looking to migrate to AWS, optimize your Kubernetes clusters, or need guidance on cloud-native development practices, I can help. I offer expert advice on cloud architecture, cost optimization, and best practices to ensure your cloud infrastructure is scalable, secure, and efficient.",
+        "I specialize in auditing and optimizing cloud infrastructure to maximize value:\n- Identify and eliminate idle or over-provisioned resources\n- Implement auto-scaling for workload-based cost management\n- Optimize data storage and transfer patterns\n- Right-size infrastructure to match actual usage patterns\n- Implement reserved instances and savings plans\n\nMy clients typically see a 30-60% reduction in monthly AWS bills after optimization, with one recent project cutting costs from $12,000/month to $4,500/month while improving performance.",
       image: "/img/cloud.jpg",
       icon: <Cloud className="h-6 w-6" />,
       features: [
-        "Cloud migration strategies",
-        "Kubernetes optimization",
-        "Serverless architecture design",
-        "Cost optimization",
-        "Security best practices",
+        "Cost analysis",
+        "Architecture review",
+        "Resource right-sizing",
+        "Monitoring setup",
+        "Budget forecasting",
       ],
       technologies: [
-        "AWS",
-        "Kubernetes",
-        "Docker",
-        "Terraform",
-        "Serverless Framework",
+        {
+          name: "AWS Cost Explorer",
+          description: "Web service for managing AWS costs and usage",
+        },
+        {
+          name: "CloudWatch",
+          description: "Monitoring and management service for AWS",
+        },
+        {
+          name: "Kubernetes",
+          description: "Open-source container orchestration platform",
+        },
+        {
+          name: "Terraform",
+          description:
+            "Infrastructure as Code tool for managing and provisioning infrastructure",
+        },
+        {
+          name: "Prometheus",
+          description: "Open-source monitoring system for metrics",
+        },
       ],
     },
   ];
@@ -181,7 +234,7 @@ export default function Services() {
             onHoverStart={() => setHoveredIndex(index)}
             onHoverEnd={() => setHoveredIndex(null)}
           >
-            <Card className="h-full overflow-hidden  shadow-lg transition-shadow duration-300 hover:shadow-xl ">
+            <Card className="flex h-full flex-col overflow-hidden shadow-lg transition-shadow duration-300 hover:shadow-xl">
               <div className="relative h-60 w-full">
                 <Image
                   className="object-cover transition-transform duration-300 ease-in-out hover:scale-110"
@@ -196,11 +249,16 @@ export default function Services() {
                   <span className="ml-2">{service.title}</span>
                 </CardTitle>
               </CardHeader>
-              <CardContent>
-                <p className="mb-4 text-gray-600 dark:text-gray-300">
-                  {service.shortDescription}
-                </p>
-                <Button onClick={() => setSelectedService(service)}>
+              <CardContent className="flex flex-1 flex-col">
+                <div className="flex-grow">
+                  <p className="text-gray-600 dark:text-gray-300">
+                    {service.shortDescription}
+                  </p>
+                </div>
+                <Button
+                  onClick={() => setSelectedService(service)}
+                  className="mt-6 w-1/3"
+                >
                   Learn More
                 </Button>
               </CardContent>
@@ -213,58 +271,261 @@ export default function Services() {
         open={!!selectedService}
         onOpenChange={() => setSelectedService(null)}
       >
-        <DialogContent className="sm:max-w-[700px]">
-          <DialogHeader>
-            <DialogTitle className="flex items-center text-3xl font-bold text-gray-900 dark:text-white">
-              {selectedService?.icon}
-              <span className="ml-2">{selectedService?.title}</span>
-            </DialogTitle>
-            <DialogDescription className="text-lg text-gray-600 dark:text-gray-300">
-              {selectedService?.shortDescription}
-            </DialogDescription>
-          </DialogHeader>
-          <Tabs defaultValue="overview" className="mt-6">
-            <TabsList>
-              <TabsTrigger value="overview">Overview</TabsTrigger>
-              <TabsTrigger value="features">Features</TabsTrigger>
-              <TabsTrigger value="technologies">Technologies</TabsTrigger>
-            </TabsList>
-            <TabsContent value="overview" className="mt-4">
-              <p className="text-gray-600 dark:text-gray-300">
-                {selectedService?.longDescription}
-              </p>
-            </TabsContent>
-            <TabsContent value="features" className="mt-4">
-              <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-                {selectedService?.features.map((feature, index) => (
-                  <li
-                    key={index}
-                    className="flex items-center text-gray-600 dark:text-gray-300"
-                  >
-                    <CheckCircle className="mr-2 h-5 w-5 text-green-500" />
-                    <span>{feature}</span>
-                  </li>
-                ))}
-              </ul>
-            </TabsContent>
-            <TabsContent value="technologies" className="mt-4">
-              <div className="flex flex-wrap gap-2">
-                {selectedService?.technologies.map((tech, index) => (
-                  <span
-                    key={index}
-                    className="rounded-full  px-3 py-1 text-sm font-semibold "
-                  >
-                    {tech}
-                  </span>
-                ))}
+        <DialogContent className="overflow-hidden border-none bg-gradient-to-b from-white to-gray-50 p-0 dark:from-gray-900 dark:to-gray-950 sm:max-w-[700px]">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="px-6 pt-6">
+              <div className="mb-4 flex items-center gap-3">
+                <motion.div
+                  initial={{ scale: 0.8 }}
+                  animate={{ scale: 1 }}
+                  transition={{ delay: 0.2, type: "spring" }}
+                  className="rounded-xl bg-blue-100 p-3 dark:bg-blue-900/30"
+                >
+                  {selectedService?.icon}
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.1 }}
+                >
+                  <DialogTitle className="bg-gradient-to-r from-blue-700 to-indigo-700 bg-clip-text text-2xl font-bold text-transparent dark:from-blue-400 dark:to-indigo-400">
+                    {selectedService?.title}
+                  </DialogTitle>
+                  <DialogDescription className="mt-1 text-base font-medium text-gray-600 dark:text-gray-300">
+                    {selectedService?.shortDescription}
+                  </DialogDescription>
+                </motion.div>
               </div>
-            </TabsContent>
-          </Tabs>
-          <div className="mt-6 flex justify-end">
-            <DialogClose asChild>
-              <Button type="button">Close</Button>
-            </DialogClose>
-          </div>
+            </div>
+
+            <Tabs defaultValue="overview" className="mt-2">
+              <div className="px-6">
+                <TabsList className="grid w-full grid-cols-3 rounded-lg bg-gray-100 p-1 dark:bg-gray-800">
+                  <TabsTrigger
+                    value="overview"
+                    className="rounded-md data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700"
+                  >
+                    Overview
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="features"
+                    className="rounded-md data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700"
+                  >
+                    Features
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="technologies"
+                    className="rounded-md data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700"
+                  >
+                    Technologies
+                  </TabsTrigger>
+                </TabsList>
+              </div>
+
+              <motion.div
+                className="px-6 py-5"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.2 }}
+              >
+                <TabsContent
+                  value="overview"
+                  className="mt-2 focus-visible:outline-none focus-visible:ring-0"
+                >
+                  <motion.div
+                    className="space-y-4 text-gray-600 dark:text-gray-300"
+                    initial="hidden"
+                    animate="visible"
+                    variants={{
+                      hidden: { opacity: 0 },
+                      visible: {
+                        opacity: 1,
+                        transition: {
+                          staggerChildren: 0.1,
+                        },
+                      },
+                    }}
+                  >
+                    {selectedService?.longDescription
+                      .split("\n")
+                      .map((line, index) => {
+                        const isListItem = line.startsWith("- ");
+                        return (
+                          <motion.div
+                            key={index}
+                            variants={{
+                              hidden: { opacity: 0, y: 10 },
+                              visible: { opacity: 1, y: 0 },
+                            }}
+                            className={`flex items-start ${
+                              isListItem ? "space-x-3" : ""
+                            }`}
+                          >
+                            {isListItem && (
+                              <CircleCheck className="mt-1 h-4 w-4 flex-shrink-0 text-blue-500" />
+                            )}
+                            <p className="leading-relaxed">
+                              {line.replace(/^- /, "")}
+                            </p>
+                          </motion.div>
+                        );
+                      })}
+                  </motion.div>
+                </TabsContent>
+
+                <TabsContent
+                  value="features"
+                  className="mt-2 focus-visible:outline-none focus-visible:ring-0"
+                >
+                  <motion.div
+                    initial="hidden"
+                    animate="visible"
+                    variants={{
+                      hidden: { opacity: 0 },
+                      visible: { opacity: 1 },
+                    }}
+                    className="space-y-6"
+                  >
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                      {selectedService?.features.map((feature, index) => (
+                        <motion.div
+                          key={index}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: index * 0.1 }}
+                          whileHover={{
+                            scale: 1.02,
+                            boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
+                          }}
+                          className="group relative overflow-hidden rounded-xl bg-white p-4 shadow-sm transition-all dark:bg-gray-800/40"
+                        >
+                          <div className="absolute -right-4 -top-4 h-20 w-20 rounded-full bg-blue-500/10 dark:bg-blue-500/5" />
+                          <div className="absolute bottom-0 left-0 h-1 w-0 bg-gradient-to-r from-blue-500 to-indigo-500 transition-all duration-300 group-hover:w-full" />
+
+                          <div className="flex items-start gap-3">
+                            <div className="rounded-lg bg-blue-100 p-2.5 text-blue-600 dark:bg-blue-900/30 dark:text-blue-300">
+                              <CheckCircle className="h-5 w-5" />
+                            </div>
+                            <div>
+                              <h4 className="font-medium text-gray-900 dark:text-white">
+                                {feature}
+                              </h4>
+                            </div>
+                          </div>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </motion.div>
+                </TabsContent>
+
+                <TabsContent
+                  value="technologies"
+                  className="mt-2 focus-visible:outline-none focus-visible:ring-0"
+                >
+                  <motion.div
+                    initial="hidden"
+                    animate="visible"
+                    variants={{
+                      hidden: { opacity: 0 },
+                      visible: { opacity: 1 },
+                    }}
+                    className="space-y-6"
+                  >
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                      {selectedService?.technologies.map((tech, index) => {
+                        // Define descriptions for common technologies
+                        const descriptions = {
+                          "Next.js":
+                            "React framework with server components for optimal performance",
+                          TypeScript:
+                            "Typed JavaScript for improved code quality and developer experience",
+                          "Tailwind CSS":
+                            "Utility-first CSS framework for rapid UI development",
+                          Vercel:
+                            "Edge deployment platform for global content delivery",
+                          Cloudflare:
+                            "Global CDN for edge caching and security",
+                          "AWS Lambda":
+                            "Serverless compute service for event-driven applications",
+                          PostgreSQL:
+                            "Powerful open-source relational database",
+                          DynamoDB:
+                            "Fully managed NoSQL database with single-digit millisecond performance",
+                          SST: "Infrastructure as code framework for AWS serverless applications",
+                          Docker:
+                            "Containerization platform for consistent deployment environments",
+                          "AWS Cost Explorer":
+                            "AWS service for visualizing and managing cloud spending",
+                          CloudWatch:
+                            "Monitoring and observability service for AWS resources",
+                          Kubernetes:
+                            "Container orchestration system for automated deployment and scaling",
+                          Terraform:
+                            "Infrastructure as code tool for multi-cloud provisioning",
+                          Prometheus:
+                            "Monitoring and alerting toolkit for container environments",
+                        };
+
+                        // Get description or use a generic one if not found
+                        const description =
+                          descriptions[tech.name] ||
+                          "Modern technology for efficient development and deployment";
+
+                        return (
+                          <motion.div
+                            key={index}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: index * 0.1 }}
+                            whileHover={{ scale: 1.02 }}
+                            className="flex gap-3 rounded-lg border border-gray-100 bg-white p-4 shadow-sm transition-all hover:shadow-md dark:border-gray-700 dark:bg-gray-800 dark:hover:border-gray-600"
+                          >
+                            <div className="mt-0.5 rounded-md bg-blue-100 p-2 text-blue-600 dark:bg-blue-900/30 dark:text-blue-300">
+                              <Code className="h-4 w-4" />
+                            </div>
+                            <div>
+                              <h4 className="font-medium text-gray-900 dark:text-white">
+                                {tech.name}
+                              </h4>
+                              <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                                {description}
+                              </p>
+                            </div>
+                          </motion.div>
+                        );
+                      })}
+                    </div>
+                  </motion.div>
+                </TabsContent>
+              </motion.div>
+            </Tabs>
+
+            <motion.div
+              className="mt-3 flex justify-end gap-3 border-t border-gray-100 bg-gray-50 p-5 dark:border-gray-800 dark:bg-gray-900"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+            >
+              <DialogClose asChild>
+                <Button variant="outline" className="rounded-full px-4">
+                  Close
+                </Button>
+              </DialogClose>
+              <Button
+                className="rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 px-5 shadow-md transition-all hover:from-blue-700 hover:to-indigo-700"
+                onClick={() =>
+                  (window.location.href =
+                    "mailto:contact@peterkaskonas.com.com?subject=Service Inquiry")
+                }
+              >
+                Contact Me
+              </Button>
+            </motion.div>
+          </motion.div>
         </DialogContent>
       </Dialog>
     </motion.main>

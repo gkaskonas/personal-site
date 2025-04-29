@@ -3,7 +3,7 @@ import { gql } from "graphql-request";
 import Blog from "./components/blog";
 
 type Props = {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
   searchParams: { [key: string]: string | string[] | undefined };
 };
 
@@ -31,7 +31,7 @@ interface IData {
 }
 
 export default async function BlogPage({ params }: Props) {
-  const { slug } = params;
+  const { slug } = await params;
 
   const { post }: IData = await graphConnect.request(gql`
     {
