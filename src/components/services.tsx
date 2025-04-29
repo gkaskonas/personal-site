@@ -438,7 +438,7 @@ export default function Services() {
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                       {selectedService?.technologies.map((tech, index) => {
                         // Define descriptions for common technologies
-                        const descriptions = {
+                        const descriptions: Record<string, string> = {
                           "Next.js":
                             "React framework with server components for optimal performance",
                           TypeScript:
@@ -472,7 +472,10 @@ export default function Services() {
 
                         // Get description or use a generic one if not found
                         const description =
-                          descriptions[tech.name] ||
+                          tech.description ||
+                          descriptions[
+                            tech.name as keyof typeof descriptions
+                          ] ||
                           "Modern technology for efficient development and deployment";
 
                         return (
