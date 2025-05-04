@@ -204,7 +204,7 @@ export default function Services() {
   return (
     <motion.main
       ref={ref}
-      className="mx-auto  px-4 py-16  sm:px-6 lg:max-w-7xl lg:px-8"
+      className="mx-auto px-4 py-8 sm:px-6 sm:py-16 lg:max-w-7xl lg:px-8"
       initial="hidden"
       animate={controls}
       variants={containerVariants}
@@ -235,12 +235,13 @@ export default function Services() {
             onHoverEnd={() => setHoveredIndex(null)}
           >
             <Card className="flex h-full flex-col overflow-hidden shadow-lg transition-shadow duration-300 hover:shadow-xl">
-              <div className="relative h-60 w-full">
+              <div className="relative h-48 w-full sm:h-60">
                 <Image
                   className="object-cover transition-transform duration-300 ease-in-out hover:scale-110"
                   src={service.image!}
                   alt={`${service.title} image`}
                   fill
+                  sizes="(max-width: 640px) 100vw, 50vw"
                 />
               </div>
               <CardHeader>
@@ -257,7 +258,7 @@ export default function Services() {
                 </div>
                 <Button
                   onClick={() => setSelectedService(service)}
-                  className="mt-6 w-1/3"
+                  className="mt-6 w-full sm:w-1/3"
                 >
                   Learn More
                 </Button>
@@ -271,13 +272,14 @@ export default function Services() {
         open={!!selectedService}
         onOpenChange={() => setSelectedService(null)}
       >
-        <DialogContent className="overflow-hidden border-none bg-gradient-to-b from-white to-gray-50 p-0 dark:from-gray-900 dark:to-gray-950 sm:max-w-[700px]">
+        <DialogContent className="h-[90vh] overflow-hidden overflow-y-auto border-none bg-gradient-to-b from-white to-gray-50 p-0 dark:from-gray-900 dark:to-gray-950 sm:max-w-[700px]">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
+            className="h-full"
           >
-            <div className="px-6 pt-6">
+            <div className="px-4 pt-4 sm:px-6 sm:pt-6">
               <div className="mb-4 flex items-center gap-3">
                 <motion.div
                   initial={{ scale: 0.8 }}
@@ -292,7 +294,7 @@ export default function Services() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.1 }}
                 >
-                  <DialogTitle className="bg-gradient-to-r from-blue-700 to-indigo-700 bg-clip-text text-2xl font-bold text-transparent dark:from-blue-400 dark:to-indigo-400">
+                  <DialogTitle className="text-xl font-bold sm:bg-gradient-to-r sm:from-blue-700 sm:to-indigo-700 sm:bg-clip-text sm:text-2xl sm:text-transparent dark:sm:from-blue-400 dark:sm:to-indigo-400">
                     {selectedService?.title}
                   </DialogTitle>
                   <DialogDescription className="mt-1 text-base font-medium text-gray-600 dark:text-gray-300">
@@ -304,23 +306,14 @@ export default function Services() {
 
             <Tabs defaultValue="overview" className="mt-2">
               <div className="px-6">
-                <TabsList className="grid w-full grid-cols-3 rounded-lg bg-gray-100 p-1 dark:bg-gray-800">
-                  <TabsTrigger
-                    value="overview"
-                    className="rounded-md data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700"
-                  >
+                <TabsList className="grid h-auto w-full grid-cols-1 gap-2 rounded-lg bg-gray-100 p-1 dark:bg-gray-800 sm:grid-cols-3">
+                  <TabsTrigger value="overview" className="h-10 rounded-md">
                     Overview
                   </TabsTrigger>
-                  <TabsTrigger
-                    value="features"
-                    className="rounded-md data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700"
-                  >
+                  <TabsTrigger value="features" className="h-10 rounded-md">
                     Features
                   </TabsTrigger>
-                  <TabsTrigger
-                    value="technologies"
-                    className="rounded-md data-[state=active]:bg-white dark:data-[state=active]:bg-gray-700"
-                  >
+                  <TabsTrigger value="technologies" className="h-10 rounded-md">
                     Technologies
                   </TabsTrigger>
                 </TabsList>
@@ -390,7 +383,7 @@ export default function Services() {
                     }}
                     className="space-y-6"
                   >
-                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
                       {selectedService?.features.map((feature, index) => (
                         <motion.div
                           key={index}
@@ -435,7 +428,7 @@ export default function Services() {
                     }}
                     className="space-y-6"
                   >
-                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
                       {selectedService?.technologies.map((tech, index) => {
                         // Define descriptions for common technologies
                         const descriptions: Record<string, string> = {
@@ -507,24 +500,16 @@ export default function Services() {
               </motion.div>
             </Tabs>
 
-            <motion.div
-              className="mt-3 flex justify-end gap-3 border-t border-gray-100 bg-gray-50 p-5 dark:border-gray-800 dark:bg-gray-900"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-            >
+            <motion.div className="mt-3 flex flex-col gap-3 border-t border-gray-100 bg-gray-50 p-4 dark:border-gray-800 dark:bg-gray-900 sm:flex-row sm:justify-end sm:p-5">
               <DialogClose asChild>
-                <Button variant="outline" className="rounded-full px-4">
+                <Button
+                  variant="outline"
+                  className="w-full sm:w-auto sm:rounded-full sm:px-4"
+                >
                   Close
                 </Button>
               </DialogClose>
-              <Button
-                className="rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 px-5 shadow-md transition-all hover:from-blue-700 hover:to-indigo-700"
-                onClick={() =>
-                  (window.location.href =
-                    "mailto:contact@peterkaskonas.com.com?subject=Service Inquiry")
-                }
-              >
+              <Button className="w-full sm:w-auto sm:rounded-full sm:px-5">
                 Contact Me
               </Button>
             </motion.div>
