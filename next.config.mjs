@@ -8,6 +8,10 @@ const nextConfig = {
         hostname: "media.graphassets.com",
         protocol: "https",
       },
+      {
+        hostname: "eu-west-2.graphassets.com",
+        protocol: "https",
+      },
     ],
     minimumCacheTTL: 86400,
   },
