@@ -8,8 +8,11 @@ import Services from "@/components/services";
 import Testimonials from "@/components/testimonials";
 import { Separator } from "@/components/ui/separator";
 
+// Force static generation and enable caching
+export const dynamic = "force-static";
+export const revalidate = 86400; // Revalidate every 24 hours
+
 export default function Home() {
-  const year = new Date().getFullYear();
   return (
     <main className="min-h-screen">
       <Navbar />
@@ -21,7 +24,7 @@ export default function Home() {
       <Separator className="mx-auto w-1/2" />
       <Experience />
       <Testimonials />
-      <Contact year={year} />
+      <Contact />
     </main>
   );
 }

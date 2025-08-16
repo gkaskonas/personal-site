@@ -37,9 +37,10 @@ const formSchema = z.object({
     .max(500, "Message must be less than 500 characters"),
 });
 
-export default function Contact({ year }: { year: number }) {
+export default function Contact() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
+  const year = new Date().getFullYear();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
