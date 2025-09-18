@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import { Metadata } from "next";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/theme-provider";
+import Script from "next/script";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -34,6 +35,20 @@ export default function RootLayout({
           fontSans.variable,
         )}
       >
+        {/* Google Analytics */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-T89P9DYYS3"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-T89P9DYYS3');
+          `}
+        </Script>
+
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
