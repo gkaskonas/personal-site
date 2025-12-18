@@ -1,12 +1,13 @@
 "use client";
 
-import { RichText } from "@graphcms/rich-text-react-renderer";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { CalendarIcon, UserIcon, ClockIcon, ShareIcon } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
 import { TextEffect } from "@/components/ui/animate-text";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 interface IPost {
   title: string;
@@ -17,9 +18,7 @@ interface IPost {
   author: {
     name: string;
   };
-  content: {
-    json: any;
-  };
+  markdown: string;
 }
 
 export default function Blog({ post }: { post: IPost }) {
@@ -27,11 +26,10 @@ export default function Blog({ post }: { post: IPost }) {
   const [readingTime, setReadingTime] = useState<number>(0);
 
   useEffect(() => {
-    const text = document.getElementById("article-content")?.textContent;
     const wpm = 225;
-    const words = text?.trim().split(/\s+/).length ?? 0;
-    setReadingTime(Math.ceil(words / wpm));
-  }, [post.content]);
+    const words = post.markdown?.trim().split(/\s+/).filter(Boolean).length ?? 0;
+    setReadingTime(Math.max(1, Math.ceil(words / wpm)));
+  }, [post.markdown]);
 
   const sharePost = () => {
     if (navigator.share) {
@@ -129,25 +127,44 @@ export default function Blog({ post }: { post: IPost }) {
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.5 }}
         >
-          <RichText
-            content={post.content.json}
-            renderers={{
+          <ReactMarkdown
+            remarkPlugins={[remarkGfm]}
+            components={{
               h1: ({ children }) => (
-                <h1 className="py-5 text-3xl font-bold">{children}</h1>
+                <h1 className="mb-4 mt-8 scroll-mt-24 text-3xl font-bold tracking-tight">
+                  {children}
+                </h1>
               ),
               h2: ({ children }) => (
-                <h2 className="py-5 text-2xl font-bold">{children}</h2>
+                <h2 className="mb-3 mt-8 scroll-mt-24 text-2xl font-bold tracking-tight">
+                  {children}
+                </h2>
               ),
               h3: ({ children }) => (
-                <h3 className="py-5 text-xl font-semibold">{children}</h3>
-              ),
-              a: ({ children, href }) => (
-                <Link
-                  href={href!}
-                  className="text-blue-600 underline transition-colors hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-                >
+                <h3 className="mb-2 mt-6 scroll-mt-24 text-xl font-semibold tracking-tight">
                   {children}
-                </Link>
+                </h3>
+              ),
+              a: ({ children, href }) => {
+                if (!href) return <>{children}</>;
+                const isExternal =
+                  href.startsWith("http://") || href.startsWith("https://");
+
+                return (
+                  <Link
+                    href={href}
+                    target={isExternal ? "_blank" : undefined}
+                    rel={isExternal ? "noreferrer noopener" : undefined}
+                    className="font-medium underline underline-offset-4 transition-colors hover:text-blue-800 dark:hover:text-blue-300"
+                  >
+                    {children}
+                  </Link>
+                );
+              },
+              p: ({ children }) => (
+                <p className="my-4 leading-7 text-gray-800 dark:text-gray-200">
+                  {children}
+                </p>
               ),
               ul: ({ children }) => (
                 <ul className="my-4 list-inside list-disc space-y-2">
@@ -159,35 +176,69 @@ export default function Blog({ post }: { post: IPost }) {
                   {children}
                 </ol>
               ),
-              code: ({ children }) => (
-                <code className="rounded bg-gray-100 px-1 py-0.5 font-mono text-sm dark:bg-gray-800">
-                  {children}
-                </code>
-              ),
               li: ({ children }) => <li className="ml-4">{children}</li>,
-              p: ({ children }) => <p className="mb-4">{children}</p>,
-
-              bold: ({ children }) => (
-                <strong className="font-semibold">{children}</strong>
+              blockquote: ({ children }) => (
+                <blockquote className="my-6 border-l-4 border-gray-300 pl-4 italic text-gray-700 dark:border-gray-700 dark:text-gray-300">
+                  {children}
+                </blockquote>
               ),
-              code_block: ({ children }) => (
-                <pre className="my-4 overflow-x-auto rounded-lg bg-gray-100 p-4 font-mono text-sm dark:bg-gray-800">
+              hr: () => (
+                <hr className="my-10 border-gray-200 dark:border-gray-800" />
+              ),
+              code: ({ children, className }) => {
+                const isBlock = Boolean(className);
+                if (!isBlock) {
+                  return (
+                    <code className="rounded bg-gray-100 px-1.5 py-0.5 font-mono text-sm text-gray-900 dark:bg-gray-800 dark:text-gray-100">
+                      {children}
+                    </code>
+                  );
+                }
+
+                return (
+                  <code className="font-mono text-sm text-gray-900 dark:text-gray-100">
+                    {children}
+                  </code>
+                );
+              },
+              pre: ({ children }) => (
+                <pre className="my-6 overflow-x-auto rounded-lg border border-gray-200 bg-gray-50 p-4 text-sm leading-6 dark:border-gray-800 dark:bg-gray-900">
                   {children}
                 </pre>
               ),
-              img: ({ src, altText }) => (
-                <div className="my-6">
-                  <Image
-                    src={src!}
-                    alt={altText ?? "Image for blog post"}
-                    width={800}
-                    height={400}
-                    className="rounded-lg object-cover"
-                  />
+              img: ({ src, alt }) => {
+                if (!src) return null;
+                return (
+                  <span className="my-6 block">
+                    <Image
+                      src={src}
+                      alt={alt ?? "Image for blog post"}
+                      width={1200}
+                      height={630}
+                      className="rounded-lg object-cover"
+                    />
+                  </span>
+                );
+              },
+              table: ({ children }) => (
+                <div className="my-6 overflow-x-auto">
+                  <table className="w-full border-collapse">{children}</table>
                 </div>
               ),
+              th: ({ children }) => (
+                <th className="border border-gray-200 bg-gray-50 px-3 py-2 text-left font-semibold dark:border-gray-800 dark:bg-gray-900">
+                  {children}
+                </th>
+              ),
+              td: ({ children }) => (
+                <td className="border border-gray-200 px-3 py-2 dark:border-gray-800">
+                  {children}
+                </td>
+              ),
             }}
-          />
+          >
+            {post.markdown}
+          </ReactMarkdown>
         </motion.article>
       </motion.main>
     </motion.div>
