@@ -42,3 +42,26 @@ This project uses SST for infrastructure as code and serverless deployment. To l
 ## Sentry Integration
 
 Sentry is integrated into this project for error tracking and performance monitoring. To configure Sentry, update the Sentry configuration in your project files. For more information, refer to the [Sentry documentation for Next.js](https://docs.sentry.io/platforms/javascript/guides/nextjs/)
+
+## CloudFront revalidation webhook (invalidate `/blog/*`)
+
+This app exposes a webhook endpoint that triggers a CloudFront invalidation for `/blog/*`:
+
+- **Endpoint**: `POST /api/revalidate`
+- **Auth**: either
+  - `x-webhook-secret: <CLOUDFRONT_WEBHOOK_SECRET>` header, or
+  - `Authorization: Bearer <CLOUDFRONT_WEBHOOK_SECRET>`
+
+### Required environment variables
+
+- **`CLOUDFRONT_WEBHOOK_SECRET`**: shared secret used to protect the endpoint
+- **`CLOUDFRONT_DISTRIBUTION_ID`**: CloudFront distribution ID to invalidate
+
+### AWS credentials
+
+The route uses the default AWS SDK credential chain (ideal when deployed on AWS via SST/IAM roles).
+If you run locally, you’ll typically need:
+
+- `AWS_REGION` (defaults to `us-east-1` if omitted)
+- `AWS_ACCESS_KEY_ID`
+- `AWS_SECRET_ACCESS_KEY`

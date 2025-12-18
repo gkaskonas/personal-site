@@ -11,6 +11,7 @@
     "deploy:live": "sst deploy --stage live"
   },
   "dependencies": {
+    "@aws-sdk/client-cloudfront": "^3.954.0",
     "@graphcms/rich-text-react-renderer": "0.6.1",
     "@hookform/resolvers": "^3.4.0",
     "@radix-ui/react-dialog": "^1.0.5",
