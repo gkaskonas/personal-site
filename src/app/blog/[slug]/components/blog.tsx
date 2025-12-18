@@ -130,11 +130,7 @@ export default function Blog({ post }: { post: IPost }) {
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             components={{
-              h1: ({ children }) => (
-                <h1 className="mb-4 mt-8 scroll-mt-24 text-3xl font-bold tracking-tight">
-                  {children}
-                </h1>
-              ),
+              h1: () => null,
               h2: ({ children }) => (
                 <h2 className="mb-3 mt-8 scroll-mt-24 text-2xl font-bold tracking-tight">
                   {children}
