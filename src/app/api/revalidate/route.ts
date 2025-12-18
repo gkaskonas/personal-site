@@ -36,7 +36,7 @@ export async function POST(req: Request) {
             ok: true,
             invalidationId: res.Invalidation?.Id ?? null,
             status: res.Invalidation?.Status ?? null,
-            paths: ["/blog/*"],
+            paths: ["/blog/*", "/blog"],
         });
     } catch (err) {
         const message = err instanceof Error ? err.message : "CloudFront invalidation failed";
