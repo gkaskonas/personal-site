@@ -12,4 +12,8 @@ const url =
 
 export const graphConnect = new GraphQLClient(url, {
   fetch,
+  next: {
+    revalidate: 60 * 60 * 12,
+    tags: ["blog"],
+  },
 });

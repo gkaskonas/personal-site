@@ -30,7 +30,7 @@ export async function POST(req: Request) {
 
     try {
         const res = await client.send(cmd);
-        revalidatePath("/blog");
+        revalidatePath("/", "layout");
 
         return Response.json({
             ok: true,
