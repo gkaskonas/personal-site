@@ -15,10 +15,9 @@ export default $config({
   },
   async run() {
     const resendApiSecret = new sst.Secret("ResendApiKey");
-    const cloudfrontWebhookSecret = new sst.Secret("CloudfrontWebhookSecret");
 
     new sst.aws.Nextjs("MyWeb", {
-      link: [resendApiSecret, cloudfrontWebhookSecret],
+      link: [resendApiSecret],
       environment: {
         CLOUDFRONT_DISTRIBUTION_ID: "E3JQXCBBKUYQVF",
       },

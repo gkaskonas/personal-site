@@ -1,16 +1,7 @@
 import { CreateInvalidationCommand, CloudFrontClient } from "@aws-sdk/client-cloudfront";
 import { revalidatePath } from 'next/cache'
 
-export const runtime = "nodejs";
-
 export async function POST(req: Request) {
-    const expectedSecret = process.env.CLOUDFRONT_WEBHOOK_SECRET;
-    if (!expectedSecret) {
-        return Response.json(
-            { ok: false, error: "Server misconfigured: CLOUDFRONT_WEBHOOK_SECRET is not set" },
-            { status: 500 },
-        );
-    }
 
     const distributionId = process.env.CLOUDFRONT_DISTRIBUTION_ID;
     if (!distributionId) {
