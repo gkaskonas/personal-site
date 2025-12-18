@@ -52,7 +52,7 @@ export default async function Homepage() {
   const { posts }: IData = await graphConnect.request(query, {
     fetch,
     next: {
-      revalidate: 86400,
+      revalidate: 3600 * 12,
     },
   });
 

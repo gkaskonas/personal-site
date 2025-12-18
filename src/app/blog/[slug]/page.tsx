@@ -2,10 +2,6 @@ import { graphConnect } from "@/lib/utils";
 import { gql } from "graphql-request";
 import Blog from "./components/blog";
 
-// Incremental Static Regeneration (ISR): refresh blog posts automatically.
-// Adjust as needed (e.g. 3600 = hourly, 86400 = daily).
-export const revalidate = 3600 * 12;
-
 export interface IPost {
   excerpt: string;
   slug: string;
