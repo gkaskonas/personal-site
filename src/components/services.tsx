@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import Image from "next/image";
 import { motion, useAnimation } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -236,12 +235,11 @@ export default function Services() {
           >
             <Card className="flex h-full flex-col overflow-hidden shadow-lg transition-shadow duration-300 hover:shadow-xl">
               <div className="relative h-48 w-full sm:h-60">
-                <Image
-                  className="object-cover transition-transform duration-300 ease-in-out hover:scale-110"
+                <img
+                  className="h-full w-full object-cover transition-transform duration-300 ease-in-out hover:scale-110"
                   src={service.image!}
                   alt={`${service.title} image`}
-                  fill
-                  sizes="(max-width: 640px) 100vw, 50vw"
+                  loading="lazy"
                 />
               </div>
               <CardHeader>
@@ -430,47 +428,6 @@ export default function Services() {
                   >
                     <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
                       {selectedService?.technologies.map((tech, index) => {
-                        // Define descriptions for common technologies
-                        const descriptions: Record<string, string> = {
-                          "Next.js":
-                            "React framework with server components for optimal performance",
-                          TypeScript:
-                            "Typed JavaScript for improved code quality and developer experience",
-                          "Tailwind CSS":
-                            "Utility-first CSS framework for rapid UI development",
-                          Vercel:
-                            "Edge deployment platform for global content delivery",
-                          Cloudflare:
-                            "Global CDN for edge caching and security",
-                          "AWS Lambda":
-                            "Serverless compute service for event-driven applications",
-                          PostgreSQL:
-                            "Powerful open-source relational database",
-                          DynamoDB:
-                            "Fully managed NoSQL database with single-digit millisecond performance",
-                          SST: "Infrastructure as code framework for AWS serverless applications",
-                          Docker:
-                            "Containerization platform for consistent deployment environments",
-                          "AWS Cost Explorer":
-                            "AWS service for visualizing and managing cloud spending",
-                          CloudWatch:
-                            "Monitoring and observability service for AWS resources",
-                          Kubernetes:
-                            "Container orchestration system for automated deployment and scaling",
-                          Terraform:
-                            "Infrastructure as code tool for multi-cloud provisioning",
-                          Prometheus:
-                            "Monitoring and alerting toolkit for container environments",
-                        };
-
-                        // Get description or use a generic one if not found
-                        const description =
-                          tech.description ||
-                          descriptions[
-                            tech.name as keyof typeof descriptions
-                          ] ||
-                          "Modern technology for efficient development and deployment";
-
                         return (
                           <motion.div
                             key={index}
@@ -488,7 +445,7 @@ export default function Services() {
                                 {tech.name}
                               </h4>
                               <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                                {description}
+                                {tech.description}
                               </p>
                             </div>
                           </motion.div>

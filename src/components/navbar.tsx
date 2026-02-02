@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Menu, X } from "lucide-react";
 import { Dialog } from "@/components/ui/dialog";
@@ -45,9 +44,8 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed z-20 flex w-full items-center justify-between p-4 transition-all duration-300 ${
-        isScrolled ? "bg-gray-900/80 backdrop-blur-sm" : "bg-transparent"
-      }`}
+      className={`fixed z-20 flex w-full items-center justify-between p-4 transition-all duration-300 ${isScrolled ? "bg-gray-900/80 backdrop-blur-sm" : "bg-transparent"
+        }`}
     >
       <div className="flex md:hidden">
         <button
@@ -60,13 +58,13 @@ export default function Navbar() {
       </div>
       <nav className="hidden md:flex md:flex-grow md:justify-center">
         {navLinks.map((link) => (
-          <Link
+          <a
             key={link.href}
             href={link.href}
             className="mx-2 text-2xl text-white hover:text-primary"
           >
             {link.label}
-          </Link>
+          </a>
         ))}
       </nav>
       <div className="flex items-center">
@@ -89,14 +87,14 @@ export default function Navbar() {
                 </div>
                 <nav className="flex flex-col items-center space-y-8">
                   {navLinks.map((link) => (
-                    <Link
+                    <a
                       key={link.href}
                       href={link.href}
                       className="text-3xl font-bold text-white hover:text-primary"
                       onClick={closeMobileMenu}
                     >
                       {link.label}
-                    </Link>
+                    </a>
                   ))}
                 </nav>
               </div>

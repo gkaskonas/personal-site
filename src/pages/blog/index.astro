@@ -1,0 +1,33 @@
+---
+import BlogLayout from "@/layouts/BlogLayout.astro";
+import { getCollection } from "astro:content";
+import BlogCard from "@/components/BlogCard.astro";
+
+const posts = await getCollection("blog", ({ data }) => !data.draft);
+const sortedPosts = posts.sort(
+  (a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf()
+);
+---
+
+<BlogLayout
+  title="Peter Kaskonas Blog"
+  description="Peter Kaskonas' personal Blog. Software engineer, AWS Certified Solutions Architect Professional, and AWS Certified DevOps Engineer Professional."
+  canonical="https://peterkaskonas.com/blog"
+>
+  <h1 class="mb-8 text-4xl font-bold text-gray-900 dark:text-white">Blog</h1>
+  <p class="mb-12 text-lg text-gray-600 dark:text-gray-300">
+    Thoughts on AWS, DevOps, and modern web development.
+  </p>
+
+  {
+    sortedPosts.length === 0 ? (
+      <p class="text-gray-600 dark:text-gray-400">No posts yet. Check back soon!</p>
+    ) : (
+      <div class="grid gap-8 md:grid-cols-2">
+        {sortedPosts.map((post) => (
+          <BlogCard post={post} />
+        ))}
+      </div>
+    )
+  }
+</BlogLayout>

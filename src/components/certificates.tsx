@@ -5,15 +5,7 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
-import Image from "next/image";
 import AutoScroll from "embla-carousel-auto-scroll";
-
-import networkingCert from "../../public/img/networking-cert.png";
-import securityCert from "../../public/img/security-cert.png";
-import solutionsArchitectPro from "../../public/img/solutions-architect-pro.png";
-import devopsPro from "../../public/img/devops-pro.png";
-import solutionsArchitectAssociate from "../../public/img/solutions-architect-associate.png";
-import systemsOps from "../../public/img/AWS-SysOpAdmin-Associate.png";
 import React from "react";
 
 export default function Certificates() {
@@ -27,28 +19,27 @@ export default function Certificates() {
 
   const certs = [
     {
-      src: solutionsArchitectPro,
+      src: "/img/solutions-architect-pro.png",
       alt: "AWS Solutions Architect Professional Certificate",
     },
     {
-      src: networkingCert,
+      src: "/img/networking-cert.png",
       alt: "AWS Advanced Networking Specialty Certificate",
     },
-
     {
-      src: devopsPro,
+      src: "/img/devops-pro.png",
       alt: "AWS DevOps Engineer Professional Certificate",
     },
     {
-      src: solutionsArchitectAssociate,
+      src: "/img/solutions-architect-associate.png",
       alt: "AWS Solutions Architect Associate Certificate",
     },
     {
-      src: securityCert,
+      src: "/img/security-cert.png",
       alt: "AWS Security Specialty Certificate",
     },
     {
-      src: systemsOps,
+      src: "/img/AWS-SysOpAdmin-Associate.png",
       alt: "AWS SysOps Administrator Associate Certificate",
     },
   ];
@@ -66,18 +57,18 @@ export default function Certificates() {
           loop: true,
         }}
       >
-        <CarouselContent className="mx-auto -ml-1 ">
+        <CarouselContent className="mx-auto -ml-1">
           {certs.map((cert, index) => (
             <CarouselItem
               key={index}
-              className="lg:basis-1/8 basis-1/2  md:basis-1/3"
+              className="lg:basis-1/8 basis-1/2 md:basis-1/3"
             >
               <div className="relative p-1 sm:h-64 sm:w-64">
-                <Image
+                <img
                   src={cert.src}
                   alt={cert.alt}
-                  placeholder="blur"
                   className="aspect-square h-full w-full object-cover"
+                  loading="lazy"
                 />
               </div>
             </CarouselItem>

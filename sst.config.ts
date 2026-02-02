@@ -8,6 +8,7 @@ export default $config({
         aws: {
           region: "eu-west-1",
         },
+        cloudflare: true,
       },
       removal: input?.stage === "live" ? "retain" : "remove",
       home: "aws",
@@ -16,22 +17,34 @@ export default $config({
   async run() {
     const resendApiSecret = new sst.Secret("ResendApiKey");
 
-    new sst.aws.Nextjs("MyWeb", {
+    new sst.aws.Astro("MyWeb", {
       link: [resendApiSecret],
-      environment: {
-        CLOUDFRONT_DISTRIBUTION_ID: "E3JQXCBBKUYQVF",
-      },
       domain:
         $app.stage === "live"
           ? {
-            name: "peterkaskonas.com",
-            redirects: ["www.peterkaskonas.com"],
-            dns: sst.cloudflare.dns({
-              zone: process.env.CLOUDFLARE_ZONE_ID,
-            }),
-          }
+              name: "peterkaskonas.com",
+              redirects: ["www.peterkaskonas.com"],
+              dns: sst.cloudflare.dns({
+                zone: process.env.CLOUDFLARE_ZONE_ID,
+              }),
+            }
           : undefined,
-      warm: $app.stage === "live" ? 1 : 0,
+      assets: {
+        fileOptions: [
+          {
+            files: ["**/*.css", "**/*.js", "**/*.woff2", "**/*.woff"],
+            cacheControl: "max-age=31536000,public,immutable",
+          },
+          {
+            files: ["**/*.html"],
+            cacheControl: "max-age=0,no-cache,no-store,must-revalidate",
+          },
+          {
+            files: ["**/*.jpg", "**/*.jpeg", "**/*.png", "**/*.webp", "**/*.svg"],
+            cacheControl: "max-age=31536000,public,immutable",
+          },
+        ],
+      },
     });
   },
 });

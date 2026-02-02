@@ -16,10 +16,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { sendEmail } from "@/app/actions";
-import Link from "next/link";
 import { FaLinkedinIn, FaGithub } from "react-icons/fa";
-import { Toaster, toast } from "sonner";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   name: z
@@ -53,12 +51,21 @@ export default function Contact() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const status = await sendEmail(values);
-      if (status) {
+      const response = await fetch("/api/send-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
         toast.success("Email sent successfully!");
         form.reset();
       } else {
-        throw new Error("Failed to send email");
+        throw new Error(data.error || "Failed to send email");
       }
     } catch (error) {
       toast.error("Error sending email. Please try again later.");
@@ -188,20 +195,20 @@ export default function Contact() {
         variants={itemVariants}
       >
         <div className="flex space-x-6">
-          <Link
+          <a
             href="https://www.linkedin.com/in/giedrius-k-7a2880a5/"
             className="transition-colors duration-300 hover:text-primary"
             aria-label="LinkedIn Profile"
           >
             <FaLinkedinIn size={24} />
-          </Link>
-          <Link
+          </a>
+          <a
             href="https://github.com/gkaskonas"
             className="transition-colors duration-300 hover:text-primary"
             aria-label="GitHub Profile"
           >
             <FaGithub size={24} />
-          </Link>
+          </a>
         </div>
         <p className="text-sm">
           © {year} Peter Kaskonas. All rights reserved.

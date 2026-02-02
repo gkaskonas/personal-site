@@ -1,0 +1,27 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Navbar from "@/components/Navbar.astro";
+import Hero from "@/components/Hero.astro";
+import About from "@/components/about";
+import Certificates from "@/components/certificates";
+import Services from "@/components/services";
+import Experience from "@/components/experience";
+import Testimonials from "@/components/testimonials";
+import Contact from "@/components/contact";
+import { Separator } from "@/components/ui/separator";
+---
+
+<BaseLayout title="Peter Kaskonas" canonical="https://peterkaskonas.com/">
+  <main class="min-h-screen">
+    <Navbar />
+    <Hero />
+    <About client:visible />
+    <Certificates client:visible />
+    <Separator className="mx-auto w-1/2" />
+    <Services client:visible />
+    <Separator className="mx-auto w-1/2" />
+    <Experience client:visible />
+    <Testimonials client:visible />
+    <Contact client:visible />
+  </main>
+</BaseLayout>

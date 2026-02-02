@@ -1,5 +1,3 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
 # dependencies
 /node_modules
 /.pnp
@@ -9,9 +7,9 @@
 # testing
 /coverage
 
-# next.js
-/.next/
-/out/
+# astro
+/dist/
+/.astro/
 
 # production
 /build
@@ -27,22 +25,15 @@ yarn-error.log*
 
 # local env files
 .env*.local
+.env
 
 # vercel
 .vercel
 
 # typescript
 *.tsbuildinfo
-next-env.d.ts
 
 # sst
 .sst
-
-# open-next
 .open-next
-.env
-# Sentry Config File
-.env.sentry-build-plugin
-
-# Sentry Config File
-.env.sentry-build-plugin
+sst-env.d.ts

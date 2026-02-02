@@ -1,17 +1,14 @@
 "use client";
 import { cn } from "@/lib/utils";
-import {
-  AnimatePresence,
-  motion,
-  TargetAndTransition,
-  Variants,
-} from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import type { Variants, TargetAndTransition } from "framer-motion";
 import React from "react";
 
 type PresetType = "blur" | "shake" | "scale" | "fade" | "slide";
 
 type TextEffectProps = {
-  children: string;
+  children?: string;
+  text?: string;
   per?: "word" | "char" | "line";
   as?: keyof React.JSX.IntrinsicElements;
   variants?: {
@@ -150,6 +147,7 @@ AnimationComponent.displayName = "AnimationComponent";
 
 export function TextEffect({
   children,
+  text,
   per = "word",
   as = "p",
   variants,
@@ -160,14 +158,21 @@ export function TextEffect({
   onAnimationComplete,
   segmentWrapperClassName,
 }: TextEffectProps) {
+  const content = text || children || "";
+
+  if (typeof content !== "string") {
+    console.error("TextEffect expects a string as children or text prop");
+    return null;
+  }
+
   let segments: string[];
 
   if (per === "line") {
-    segments = children.split("\n");
+    segments = content.split("\n");
   } else if (per === "word") {
-    segments = children.split(/(\s+)/);
+    segments = content.split(/(\s+)/);
   } else {
-    segments = children.split("");
+    segments = content.split("");
   }
 
   const MotionTag = motion[as as keyof typeof motion] as typeof motion.div;
@@ -176,7 +181,7 @@ export function TextEffect({
     : { container: defaultContainerVariants, item: defaultItemVariants };
   const containerVariants = variants?.container || selectedVariants.container;
   const itemVariants = variants?.item || selectedVariants.item;
-  const ariaLabel = per === "line" ? undefined : children;
+  const ariaLabel = per === "line" ? undefined : content;
 
   const stagger = defaultStaggerTimes[per];
 

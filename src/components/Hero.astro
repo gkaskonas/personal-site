@@ -1,0 +1,56 @@
+---
+import { Separator } from "@/components/ui/separator";
+import { TextEffect } from "@/components/ui/animate-text";
+import { FaLinkedinIn, FaGithub } from "react-icons/fa";
+---
+
+<section class="relative mx-auto flex min-h-screen flex-col items-center justify-center">
+  <img
+    src="/img/header3.jpg"
+    alt="Hero picture"
+    class="absolute inset-0 -z-10 h-full w-full object-cover"
+    loading="eager"
+    fetchpriority="high"
+  />
+  <div class="z-10 flex w-full flex-col items-center justify-center text-center text-white">
+    <TextEffect
+      per="word"
+      as="h1"
+      preset="blur"
+      text="I am Peter Kaskonas."
+      className="text-4xl font-extrabold sm:text-[70px] lg:text-[90px]"
+      client:load
+    />
+    <TextEffect
+      per="word"
+      as="p"
+      preset="blur"
+      text="Devops Lead and Solutions Architect"
+      className="mt-4 sm:mt-10 sm:text-2xl"
+      client:load
+    />
+    <Separator className="mx-auto my-4 w-1/3 bg-slate-100/10" />
+    <div class="mx-auto flex w-1/12 flex-row justify-center space-x-4 sm:space-x-6">
+      <a
+        href="https://www.linkedin.com/in/giedrius-k-7a2880a5/"
+        class="mx-auto flex"
+        aria-label="LinkedIn Profile"
+      >
+        <FaLinkedinIn
+          size={32}
+          className="transition-colors duration-300 ease-in-out hover:text-primary"
+        />
+      </a>
+      <a
+        href="https://github.com/gkaskonas"
+        class="mx-auto flex"
+        aria-label="GitHub Profile"
+      >
+        <FaGithub
+          size={32}
+          className="transition-colors duration-300 ease-in-out hover:text-primary"
+        />
+      </a>
+    </div>
+  </div>
+</section>

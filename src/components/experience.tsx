@@ -1,6 +1,8 @@
 "use client";
+
 import React, { useEffect, useRef } from "react";
-import { motion, useAnimation, Variants } from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
+import type { Variants } from "framer-motion";
 import { Separator } from "@/components/ui/separator";
 
 const sectionVariants: Variants = {
@@ -20,11 +22,6 @@ const skillVariants: Variants = {
     scaleX: 1,
     transition: { duration: 1, ease: "easeOut" },
   },
-};
-
-const underlineVariants: Variants = {
-  hidden: { width: "0%" },
-  visible: { width: "100%", transition: { duration: 0.6, ease: "easeOut" } },
 };
 
 export default function Experience() {

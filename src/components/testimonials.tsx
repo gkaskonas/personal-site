@@ -15,7 +15,6 @@ import {
   CardHeader,
   CardTitle,
 } from "./ui/card";
-import Image from "next/image";
 
 import AutoPlay from "embla-carousel-autoplay";
 
@@ -40,7 +39,7 @@ export default function Testimonials() {
       role: "Lead Coach/Co Founder",
       company: "Lift Performance",
       testimonial:
-        "We hired Pete to build our company’s website from scratch, and with his vast knowledge and experience, he gave us a lot of great recommendations on how to create more leads. He is also very efficient and responsive. I can’t recommend his work enough!",
+        "We hired Pete to build our company's website from scratch, and with his vast knowledge and experience, he gave us a lot of great recommendations on how to create more leads. He is also very efficient and responsive. I can't recommend his work enough!",
     },
   ];
 
@@ -56,11 +55,11 @@ export default function Testimonials() {
       id="testimonials"
       className="relative mx-auto mt-10 flex w-full flex-col space-y-5"
     >
-      <Image
+      <img
         src="/img/testimonials-bg.jpg"
         alt="Testimonials"
-        fill
         className="absolute inset-0 -z-10 h-full w-full object-cover"
+        loading="lazy"
       />
       <Carousel
         opts={{
@@ -75,10 +74,10 @@ export default function Testimonials() {
               <Card className="border-none bg-inherit text-white">
                 <CardHeader>
                   <CardTitle>{testimonial.name}</CardTitle>
-                  <CardDescription className="text-slate-300 ">
+                  <CardDescription className="text-slate-300">
                     {testimonial.role}
                   </CardDescription>
-                  <CardDescription className="text-slate-300 ">
+                  <CardDescription className="text-slate-300">
                     {testimonial.company}
                   </CardDescription>
                 </CardHeader>

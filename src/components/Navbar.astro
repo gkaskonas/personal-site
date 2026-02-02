@@ -1,0 +1,120 @@
+---
+import { ThemeToggle } from "./theme-toggle";
+
+const navLinks = [
+  { href: "/", label: "Home" },
+  { href: "/#about", label: "About" },
+  { href: "/#resume", label: "Resume" },
+  { href: "/#testimonials", label: "Testimonials" },
+  { href: "/#contact", label: "Contact" },
+  { href: "/blog", label: "Blog" },
+];
+---
+
+<header
+  id="navbar"
+  class="fixed z-20 flex w-full items-center justify-between p-4 transition-all duration-300 bg-transparent"
+>
+  <div class="flex md:hidden">
+    <button
+      id="mobile-menu-btn"
+      class="text-white focus:outline-none"
+      aria-label="Toggle mobile menu"
+    >
+      <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+  </div>
+  <nav class="hidden md:flex md:flex-grow md:justify-center">
+    {
+      navLinks.map((link) => (
+        <a
+          href={link.href}
+          class="mx-2 text-2xl text-white hover:text-primary transition-colors"
+        >
+          {link.label}
+        </a>
+      ))
+    }
+  </nav>
+  <div class="flex items-center">
+    <ThemeToggle client:load />
+  </div>
+</header>
+
+<!-- Mobile menu overlay -->
+<div
+  id="mobile-menu"
+  class="fixed inset-0 z-50 bg-black/80 md:hidden hidden"
+>
+  <div class="fixed inset-0 flex items-center justify-center">
+    <div class="w-full max-w-lg">
+      <div class="flex justify-end p-4">
+        <button
+          id="mobile-menu-close"
+          class="text-white focus:outline-none"
+          aria-label="Close mobile menu"
+        >
+          <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+      <nav class="flex flex-col items-center space-y-8">
+        {
+          navLinks.map((link) => (
+            <a
+              href={link.href}
+              class="mobile-nav-link text-3xl font-bold text-white hover:text-primary transition-colors"
+            >
+              {link.label}
+            </a>
+          ))
+        }
+      </nav>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Navbar scroll effect
+  const navbar = document.getElementById("navbar");
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 0) {
+      navbar?.classList.add("bg-gray-900/80", "backdrop-blur-sm");
+      navbar?.classList.remove("bg-transparent");
+    } else {
+      navbar?.classList.remove("bg-gray-900/80", "backdrop-blur-sm");
+      navbar?.classList.add("bg-transparent");
+    }
+  });
+
+  // Mobile menu toggle
+  const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+  const mobileMenuClose = document.getElementById("mobile-menu-close");
+  const mobileMenu = document.getElementById("mobile-menu");
+  const mobileNavLinks = document.querySelectorAll(".mobile-nav-link");
+
+  mobileMenuBtn?.addEventListener("click", () => {
+    mobileMenu?.classList.remove("hidden");
+  });
+
+  mobileMenuClose?.addEventListener("click", () => {
+    mobileMenu?.classList.add("hidden");
+  });
+
+  mobileNavLinks.forEach((link) => {
+    link.addEventListener("click", () => {
+      mobileMenu?.classList.add("hidden");
+    });
+  });
+</script>
