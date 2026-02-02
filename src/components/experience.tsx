@@ -1,186 +1,237 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
-import { motion, useAnimation } from "framer-motion";
-import type { Variants } from "framer-motion";
-import { Separator } from "@/components/ui/separator";
+import React from "react";
+import { motion } from "framer-motion";
+import { GraduationCap, Briefcase, Zap } from "lucide-react";
+import { cn } from "@/lib/utils";
 
-const sectionVariants: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-};
+const skills = [
+  { name: "AWS", progress: 90 },
+  { name: "CDK/SST", progress: 88 },
+  { name: "DevOps", progress: 85 },
+  { name: "Kubernetes", progress: 80 },
+  { name: "TypeScript", progress: 75 },
+];
 
-const listItemVariants: Variants = {
-  hidden: { opacity: 0, x: -20 },
-  visible: { opacity: 1, x: 0, transition: { duration: 0.5 } },
-};
-
-const skillVariants: Variants = {
-  hidden: { opacity: 0, scaleX: 0 },
-  visible: {
-    opacity: 1,
-    scaleX: 1,
-    transition: { duration: 1, ease: "easeOut" },
+const experience = [
+  {
+    company: "Lumar",
+    roles: [
+      { title: "DevOps Lead", period: "Dec 2022 - Present" },
+      { title: "Senior DevOps Engineer", period: "Jul 2021 - Dec 2022" },
+    ],
   },
-};
+  {
+    company: "Inawisdom",
+    roles: [{ title: "Cloud Engineer", period: "Sep 2020 - Jul 2021" }],
+  },
+  {
+    company: "Ocado",
+    roles: [{ title: "DevOps Engineer", period: "Sep 2019 - Sep 2020" }],
+  },
+];
 
 export default function Experience() {
-  const [skills, setSkills] = React.useState([
-    { name: "AWS", progress: 13 },
-    { name: "CDK", progress: 13 },
-    { name: "Devops", progress: 13 },
-    { name: "Kubernetes", progress: 13 },
-    { name: "Typescript", progress: 13 },
-  ]);
-
-  const controls = useAnimation();
-  const sectionRef = useRef(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          controls.start("visible");
-          const timer = setTimeout(() => {
-            setSkills([
-              { name: "AWS", progress: 90 },
-              { name: "CDK", progress: 88 },
-              { name: "Devops", progress: 85 },
-              { name: "Kubernetes", progress: 80 },
-              { name: "Typescript", progress: 70 },
-            ]);
-          }, 500);
-          return () => clearTimeout(timer);
-        }
-      },
-      { threshold: 0.1 },
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
-    };
-  }, [controls]);
-
-  const SectionTitle = ({ children }: { children: React.ReactNode }) => (
-    <h2 className="flex flex-col text-2xl font-semibold">
-      {children}
-      <motion.div className="mt-1 h-1 bg-blue-200" />
-    </h2>
+  const [animatedSkills, setAnimatedSkills] = React.useState(
+    skills.map((s) => ({ ...s, progress: 0 }))
   );
+  const [hasAnimated, setHasAnimated] = React.useState(false);
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30, filter: "blur(10px)" },
+    visible: {
+      opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
+      transition: {
+        duration: 0.6,
+        ease: [0.25, 0.46, 0.45, 0.94],
+      },
+    },
+  };
+
+  const handleInView = () => {
+    if (!hasAnimated) {
+      setHasAnimated(true);
+      setTimeout(() => {
+        setAnimatedSkills(skills);
+      }, 500);
+    }
+  };
 
   return (
-    <motion.section
-      id="resume"
-      ref={sectionRef}
-      className="mx-auto mt-10 flex max-w-xs flex-col space-y-8 sm:max-w-2xl lg:max-w-4xl"
-      initial="hidden"
-      animate={controls}
-      variants={sectionVariants}
-    >
+    <section id="resume" className="py-24 lg:py-32 relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
+      </div>
+
       <motion.div
-        className="flex flex-col justify-between space-y-5 text-left sm:flex-row sm:space-y-0"
-        variants={sectionVariants}
+        className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={containerVariants}
+        onViewportEnter={handleInView}
       >
-        <SectionTitle>Education</SectionTitle>
-        <motion.li
-          className="flex basis-1/2 flex-col justify-between"
-          variants={listItemVariants}
-        >
-          <ul className="flex flex-col">
-            <h3 className="text-xl font-semibold">Bsc in Games Technologies</h3>
-            <p className="text-base italic text-muted-foreground">
-              Coventry University
-            </p>
-            <p className="text-base text-muted-foreground">2013-2017</p>
-          </ul>
-        </motion.li>
-      </motion.div>
-      <Separator className="bg-primary/20" />
-      <motion.div
-        className="flex flex-col justify-between space-y-5 text-left sm:flex-row sm:space-y-0"
-        variants={sectionVariants}
-      >
-        <SectionTitle>Experience</SectionTitle>
-        <li className="flex basis-1/2 list-outside flex-col justify-between space-y-6">
-          {[
-            {
-              company: "Lumar",
-              roles: [
-                { title: "Devops Lead", period: "Dec 2022 - Present" },
-                {
-                  title: "Senior Devops Engineer",
-                  period: "Jul 2021 - Dec 2022",
-                },
-              ],
-            },
-            {
-              company: "Inawisdom",
-              roles: [
-                { title: "Cloud Engineer", period: "Sep 2020 - Jul 2021" },
-              ],
-            },
-            {
-              company: "Ocado",
-              roles: [
-                { title: "Devops Engineer", period: "Sep 2019 - Sep 2020" },
-              ],
-            },
-          ].map((job, index) => (
-            <motion.ul
-              key={job.company}
-              className="flex flex-col space-y-2"
-              variants={listItemVariants}
-            >
-              <h3 className="text-xl font-semibold">{job.company}</h3>
-              {job.roles.map((role, roleIndex) => (
-                <motion.div
-                  key={roleIndex}
-                  className="border-l-2 border-primary pl-4"
-                  variants={listItemVariants}
-                >
-                  <p className="text-base font-medium">{role.title}</p>
-                  <p className="text-sm text-muted-foreground">{role.period}</p>
-                </motion.div>
-              ))}
-            </motion.ul>
-          ))}
-        </li>
-      </motion.div>
-      <Separator className="bg-primary/20" />
-      <motion.div
-        className="flex flex-col justify-between space-y-5 text-left sm:flex-row sm:space-y-0"
-        variants={sectionVariants}
-      >
-        <SectionTitle>Skills</SectionTitle>
-        <li className="flex basis-1/2 list-outside flex-col justify-between space-y-6">
-          {skills.map((skill) => (
-            <motion.div
-              key={skill.name}
-              className="flex flex-col"
-              variants={skillVariants}
-            >
-              <h3 className="mb-2 text-lg font-semibold">{skill.name}</h3>
-              <div className="relative h-4 w-full overflow-hidden rounded-full bg-secondary">
-                <motion.div
-                  className="absolute left-0 top-0 h-full bg-primary"
-                  initial={{ width: "0%" }}
-                  animate={{ width: `${skill.progress}%` }}
-                  transition={{ duration: 1, ease: "easeOut" }}
-                />
+        {/* Section Header */}
+        <motion.div className="text-center mb-16" variants={itemVariants}>
+          <span className="inline-block mb-4 px-4 py-1.5 text-sm font-medium text-primary bg-primary/10 rounded-full">
+            Career
+          </span>
+          <h2 className="text-4xl font-bold text-gray-900 dark:text-white lg:text-5xl">
+            Experience & Skills
+          </h2>
+        </motion.div>
+
+        <div className="grid gap-12 lg:grid-cols-2">
+          {/* Left Column - Education & Experience */}
+          <div className="space-y-12">
+            {/* Education */}
+            <motion.div variants={itemVariants}>
+              <div className="flex items-center gap-3 mb-6">
+                <div className="p-2 rounded-lg bg-primary/10 text-primary">
+                  <GraduationCap className="w-5 h-5" />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                  Education
+                </h3>
               </div>
-              <p className="mt-1 text-right text-sm text-muted-foreground">
-                {skill.progress}%
-              </p>
+              <div className="relative pl-8 border-l-2 border-primary/20">
+                <div className="absolute left-[-9px] top-0 w-4 h-4 rounded-full bg-primary" />
+                <div className="p-6 rounded-2xl bg-white dark:bg-gray-900/50 border border-gray-200 dark:border-gray-800 card-glow">
+                  <h4 className="text-lg font-semibold text-gray-900 dark:text-white">
+                    BSc in Games Technologies
+                  </h4>
+                  <p className="text-primary font-medium">Coventry University</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                    2013 - 2017
+                  </p>
+                </div>
+              </div>
             </motion.div>
-          ))}
-        </li>
+
+            {/* Experience */}
+            <motion.div variants={itemVariants}>
+              <div className="flex items-center gap-3 mb-6">
+                <div className="p-2 rounded-lg bg-primary/10 text-primary">
+                  <Briefcase className="w-5 h-5" />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                  Experience
+                </h3>
+              </div>
+              <div className="relative pl-8 border-l-2 border-primary/20 space-y-6">
+                {experience.map((job, jobIndex) => (
+                  <motion.div
+                    key={job.company}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: jobIndex * 0.15 }}
+                    className="relative"
+                  >
+                    <div className="absolute left-[-9px] top-0 w-4 h-4 rounded-full bg-primary" />
+                    <div className="p-6 rounded-2xl bg-white dark:bg-gray-900/50 border border-gray-200 dark:border-gray-800 card-glow">
+                      <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                        {job.company}
+                      </h4>
+                      <div className="space-y-3">
+                        {job.roles.map((role, roleIndex) => (
+                          <div
+                            key={roleIndex}
+                            className={cn(
+                              "pl-4 border-l-2",
+                              roleIndex === 0
+                                ? "border-primary"
+                                : "border-gray-300 dark:border-gray-700"
+                            )}
+                          >
+                            <p className="font-medium text-gray-900 dark:text-white">
+                              {role.title}
+                            </p>
+                            <p className="text-sm text-gray-500 dark:text-gray-400">
+                              {role.period}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Right Column - Skills */}
+          <motion.div variants={itemVariants}>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="p-2 rounded-lg bg-primary/10 text-primary">
+                <Zap className="w-5 h-5" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                Technical Skills
+              </h3>
+            </div>
+            <div className="p-8 rounded-2xl bg-white dark:bg-gray-900/50 border border-gray-200 dark:border-gray-800 card-glow">
+              <div className="space-y-8">
+                {animatedSkills.map((skill, index) => (
+                  <motion.div
+                    key={skill.name}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                  >
+                    <div className="flex justify-between items-center mb-3">
+                      <span className="font-semibold text-gray-900 dark:text-white">
+                        {skill.name}
+                      </span>
+                      <span className="text-sm font-medium text-primary">
+                        {skill.progress}%
+                      </span>
+                    </div>
+                    <div className="relative h-3 w-full overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800">
+                      <motion.div
+                        className="absolute left-0 top-0 h-full bg-gradient-to-r from-primary to-primary/70 rounded-full"
+                        initial={{ width: "0%" }}
+                        animate={{ width: `${skill.progress}%` }}
+                        transition={{
+                          duration: 1.2,
+                          ease: "easeOut",
+                          delay: index * 0.15,
+                        }}
+                      />
+                      {/* Animated glow effect */}
+                      <motion.div
+                        className="absolute top-0 h-full w-8 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                        initial={{ left: "-10%" }}
+                        animate={{ left: "110%" }}
+                        transition={{
+                          duration: 1.5,
+                          ease: "easeInOut",
+                          delay: 1 + index * 0.15,
+                        }}
+                      />
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        </div>
       </motion.div>
-    </motion.section>
+    </section>
   );
 }
