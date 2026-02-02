@@ -22,12 +22,12 @@ export default $config({
       domain:
         $app.stage === "live"
           ? {
-              name: "peterkaskonas.com",
-              redirects: ["www.peterkaskonas.com"],
-              dns: sst.cloudflare.dns({
-                zone: process.env.CLOUDFLARE_ZONE_ID,
-              }),
-            }
+            name: "peterkaskonas.com",
+            redirects: ["www.peterkaskonas.com"],
+            dns: sst.cloudflare.dns({
+              zone: process.env.CLOUDFLARE_ZONE_ID,
+            }),
+          }
           : undefined,
       assets: {
         fileOptions: [
