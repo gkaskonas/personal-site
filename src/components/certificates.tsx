@@ -8,6 +8,14 @@ import {
 import AutoScroll from "embla-carousel-auto-scroll";
 import React from "react";
 
+// Import optimized certificate images
+import solutionsArchitectPro from "@/assets/img/solutions-architect-pro.png";
+import networkingCert from "@/assets/img/networking-cert.png";
+import devopsPro from "@/assets/img/devops-pro.png";
+import solutionsArchitectAssociate from "@/assets/img/solutions-architect-associate.png";
+import securityCert from "@/assets/img/security-cert.png";
+import sysOpsAdmin from "@/assets/img/AWS-SysOpAdmin-Associate.png";
+
 export default function Certificates() {
   const plugin = React.useRef(
     AutoScroll({
@@ -19,27 +27,27 @@ export default function Certificates() {
 
   const certs = [
     {
-      src: "/img/solutions-architect-pro.png",
+      src: solutionsArchitectPro.src,
       alt: "AWS Solutions Architect Professional Certificate",
     },
     {
-      src: "/img/networking-cert.png",
+      src: networkingCert.src,
       alt: "AWS Advanced Networking Specialty Certificate",
     },
     {
-      src: "/img/devops-pro.png",
+      src: devopsPro.src,
       alt: "AWS DevOps Engineer Professional Certificate",
     },
     {
-      src: "/img/solutions-architect-associate.png",
+      src: solutionsArchitectAssociate.src,
       alt: "AWS Solutions Architect Associate Certificate",
     },
     {
-      src: "/img/security-cert.png",
+      src: securityCert.src,
       alt: "AWS Security Specialty Certificate",
     },
     {
-      src: "/img/AWS-SysOpAdmin-Associate.png",
+      src: sysOpsAdmin.src,
       alt: "AWS SysOps Administrator Associate Certificate",
     },
   ];

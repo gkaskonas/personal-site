@@ -3,7 +3,7 @@ title: "Welcome to My New Blog"
 excerpt: "I've migrated my blog to a new, faster platform. Here's what's changed and why."
 date: 2024-02-01
 author: "Peter Kaskonas"
-coverImage: "/img/header3.jpg"
+coverImage: "../../assets/img/header3.jpg"
 tags: ["astro", "web-development", "performance"]
 draft: false
 ---

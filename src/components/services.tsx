@@ -15,11 +15,16 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CheckCircle, Code, Cloud, Globe, CircleCheck } from "lucide-react";
 
+// Import optimized images
+import webDevImage from "@/assets/img/web-development.jpeg";
+import serverlessImage from "@/assets/img/wp10167050.jpg";
+import cloudImage from "@/assets/img/cloud.jpg";
+
 interface IService {
   title: string;
   shortDescription: string;
   longDescription: string;
-  image?: string;
+  image: string;
   icon: React.ReactNode;
   features: string[];
   technologies: {
@@ -42,7 +47,7 @@ export default function Services() {
       longDescription:
         "I build cutting-edge web applications using the latest frameworks and best practices:\n- Server components and streaming for optimal performance\n- Edge computing for global low-latency delivery\n- Core Web Vitals optimization for better search rankings\n- Type-safe development with TypeScript 5\n- Responsive design with modern CSS features\n\nMy focus on performance optimization typically results in 40-70% faster load times compared to traditional approaches.",
 
-      image: "/img/web-development.jpeg",
+      image: webDevImage.src,
       icon: <Globe className="h-6 w-6" />,
       features: [
         "Next.js optimization",
@@ -82,7 +87,7 @@ export default function Services() {
         "Cost-efficient serverless solutions with pay-per-use models that reduce cloud spend by up to 60%",
       longDescription:
         "I develop scalable cloud-native applications using:\n- AWS Lambda and serverless patterns\n- Infrastructure-as-Code with AWS CDK\n- Cost-optimized database solutions\n- CI/CD pipelines for automated deployments\n- Real-time data processing architectures\n\nRecent projects have achieved 30-50% cloud cost savings through architectural optimizations.",
-      image: "/img/wp10167050.jpg",
+      image: serverlessImage.src,
       icon: <Code className="h-6 w-6" />,
       features: [
         "Serverless architecture",
@@ -122,7 +127,7 @@ export default function Services() {
         "Strategic infrastructure reviews that reduce AWS bills while improving performance and scalability",
       longDescription:
         "I specialize in auditing and optimizing cloud infrastructure to maximize value:\n- Identify and eliminate idle or over-provisioned resources\n- Implement auto-scaling for workload-based cost management\n- Optimize data storage and transfer patterns\n- Right-size infrastructure to match actual usage patterns\n- Implement reserved instances and savings plans\n\nMy clients typically see a 30-60% reduction in monthly AWS bills after optimization, with one recent project cutting costs from $12,000/month to $4,500/month while improving performance.",
-      image: "/img/cloud.jpg",
+      image: cloudImage.src,
       icon: <Cloud className="h-6 w-6" />,
       features: [
         "Cost analysis",
@@ -237,7 +242,7 @@ export default function Services() {
               <div className="relative h-48 w-full sm:h-60">
                 <img
                   className="h-full w-full object-cover transition-transform duration-300 ease-in-out hover:scale-110"
-                  src={service.image!}
+                  src={service.image}
                   alt={`${service.title} image`}
                   loading="lazy"
                 />

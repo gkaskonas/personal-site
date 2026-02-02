@@ -1,6 +1,12 @@
 ---
 import { ThemeToggle } from "./theme-toggle";
 
+interface Props {
+  variant?: "dark" | "light";
+}
+
+const { variant = "dark" } = Astro.props;
+
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/#about", label: "About" },
@@ -9,16 +15,23 @@ const navLinks = [
   { href: "/#contact", label: "Contact" },
   { href: "/blog", label: "Blog" },
 ];
+
+// dark variant = navbar over dark background (white text)
+// light variant = navbar over light background (dark text in light mode, white in dark mode)
+const textColorClass = variant === "light"
+  ? "text-gray-900 dark:text-white"
+  : "text-white";
 ---
 
 <header
   id="navbar"
   class="fixed z-20 flex w-full items-center justify-between p-4 transition-all duration-300 bg-transparent"
+  data-variant={variant}
 >
   <div class="flex md:hidden">
     <button
       id="mobile-menu-btn"
-      class="text-white focus:outline-none"
+      class:list={[textColorClass, "focus:outline-none"]}
       aria-label="Toggle mobile menu"
     >
       <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -35,7 +48,7 @@ const navLinks = [
       navLinks.map((link) => (
         <a
           href={link.href}
-          class="mx-2 text-2xl text-white hover:text-primary transition-colors"
+          class:list={["mx-2 text-2xl hover:text-primary transition-colors", textColorClass]}
         >
           {link.label}
         </a>
@@ -88,18 +101,46 @@ const navLinks = [
 <script>
   // Navbar scroll effect
   const navbar = document.getElementById("navbar");
-  window.addEventListener("scroll", () => {
-    if (window.scrollY > 0) {
+  const isLightVariant = navbar?.dataset.variant === "light";
+  const navLinks = navbar?.querySelectorAll("nav a");
+  const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+
+  function updateNavbarColors(scrolled: boolean) {
+    if (scrolled) {
       navbar?.classList.add("bg-gray-900/80", "backdrop-blur-sm");
       navbar?.classList.remove("bg-transparent");
+      // When scrolled with dark background, always use white text
+      if (isLightVariant) {
+        navLinks?.forEach((link) => {
+          link.classList.remove("text-gray-900", "dark:text-white");
+          link.classList.add("text-white");
+        });
+        mobileMenuBtn?.classList.remove("text-gray-900", "dark:text-white");
+        mobileMenuBtn?.classList.add("text-white");
+      }
     } else {
       navbar?.classList.remove("bg-gray-900/80", "backdrop-blur-sm");
       navbar?.classList.add("bg-transparent");
+      // When at top, restore original variant colors
+      if (isLightVariant) {
+        navLinks?.forEach((link) => {
+          link.classList.add("text-gray-900", "dark:text-white");
+          link.classList.remove("text-white");
+        });
+        mobileMenuBtn?.classList.add("text-gray-900", "dark:text-white");
+        mobileMenuBtn?.classList.remove("text-white");
+      }
     }
+  }
+
+  window.addEventListener("scroll", () => {
+    updateNavbarColors(window.scrollY > 0);
   });
 
+  // Initial state
+  updateNavbarColors(window.scrollY > 0);
+
   // Mobile menu toggle
-  const mobileMenuBtn = document.getElementById("mobile-menu-btn");
   const mobileMenuClose = document.getElementById("mobile-menu-close");
   const mobileMenu = document.getElementById("mobile-menu");
   const mobileNavLinks = document.querySelectorAll(".mobile-nav-link");

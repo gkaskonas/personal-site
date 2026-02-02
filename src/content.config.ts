@@ -4,15 +4,16 @@ import { z } from "astro/zod";
 
 const blog = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/blog" }),
-  schema: z.object({
-    title: z.string(),
-    excerpt: z.string(),
-    date: z.coerce.date(),
-    author: z.string().default("Peter Kaskonas"),
-    coverImage: z.string(),
-    tags: z.array(z.string()).optional(),
-    draft: z.boolean().default(false),
-  }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      excerpt: z.string(),
+      date: z.coerce.date(),
+      author: z.string().default("Peter Kaskonas"),
+      coverImage: image(),
+      tags: z.array(z.string()).optional(),
+      draft: z.boolean().default(false),
+    }),
 });
 
 export const collections = { blog };

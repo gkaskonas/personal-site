@@ -1,16 +1,19 @@
 ---
+import { Image } from "astro:assets";
 import { Separator } from "@/components/ui/separator";
 import { TextEffect } from "@/components/ui/animate-text";
 import { FaLinkedinIn, FaGithub } from "react-icons/fa";
+import heroImage from "@/assets/img/header3.jpg";
 ---
 
 <section class="relative mx-auto flex min-h-screen flex-col items-center justify-center">
-  <img
-    src="/img/header3.jpg"
+  <Image
+    src={heroImage}
     alt="Hero picture"
     class="absolute inset-0 -z-10 h-full w-full object-cover"
     loading="eager"
     fetchpriority="high"
+    quality={80}
   />
   <div class="z-10 flex w-full flex-col items-center justify-center text-center text-white">
     <TextEffect

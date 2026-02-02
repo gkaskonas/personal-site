@@ -5,10 +5,6 @@
 
 declare module "sst" {
   export interface Resource {
-    "CloudfrontWebhookSecret": {
-      "type": "sst.sst.Secret"
-      "value": string
-    }
     "MyWeb": {
       "type": "sst.aws.Astro"
       "url": string

@@ -18,6 +18,9 @@ import {
 
 import AutoPlay from "embla-carousel-autoplay";
 
+// Import optimized background image
+import testimonialsBg from "@/assets/img/testimonials-bg.jpg";
+
 export default function Testimonials() {
   const testimonials = [
     {
@@ -56,7 +59,7 @@ export default function Testimonials() {
       className="relative mx-auto mt-10 flex w-full flex-col space-y-5"
     >
       <img
-        src="/img/testimonials-bg.jpg"
+        src={testimonialsBg.src}
         alt="Testimonials"
         className="absolute inset-0 -z-10 h-full w-full object-cover"
         loading="lazy"
