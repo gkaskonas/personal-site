@@ -1,5 +1,7 @@
 import type { APIRoute } from "astro";
 import { Resend } from "resend";
+// @ts-ignore - SST Resource types are generated at build time
+import { Resource } from "sst";
 
 export const prerender = false;
 
@@ -15,7 +17,15 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
 
-    const resendApiKey = import.meta.env.RESEND_API_KEY || process.env.RESEND_API_KEY;
+    // Get API key from SST Resource linking
+    let resendApiKey: string | undefined;
+
+    try {
+      resendApiKey = Resource.ResendApiKey.value;
+    } catch {
+      // Fallback to environment variable for local development
+      resendApiKey = import.meta.env.RESEND_API_KEY || process.env.RESEND_API_KEY;
+    }
 
     if (!resendApiKey) {
       console.error("RESEND_API_KEY not configured");
