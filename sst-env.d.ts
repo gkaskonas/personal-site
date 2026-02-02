@@ -10,7 +10,7 @@ declare module "sst" {
       "value": string
     }
     "MyWeb": {
-      "type": "sst.aws.Nextjs"
+      "type": "sst.aws.Astro"
       "url": string
     }
     "ResendApiKey": {

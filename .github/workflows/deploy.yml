@@ -21,8 +21,8 @@ jobs:
         with:
           run_install: true
 
-      - name: Install Pulumi
-        uses: pulumi/actions@v6
+      - name: Remove stale Pulumi plugins
+        run: sudo rm -f /usr/local/bin/pulumi-language-nodejs
 
       - name: Install SST Ion
         run: curl -fsSL https://ion.sst.dev/install | bash
