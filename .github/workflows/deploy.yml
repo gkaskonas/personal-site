@@ -29,7 +29,9 @@ jobs:
       - name: Run install
         uses: pnpm/action-setup@v4
         with:
-          run_install: true
+          run_install: false
+      - name: Install dependencies
+        run: pnpm install
 
       - name: Remove stale Pulumi plugins
         run: sudo rm -f /usr/local/bin/pulumi-language-nodejs
