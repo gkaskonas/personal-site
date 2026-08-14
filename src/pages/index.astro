@@ -5,18 +5,67 @@ import Hero from "@/components/Hero.astro";
 import About from "@/components/about";
 import Certificates from "@/components/certificates";
 import Services from "@/components/services";
+import FeaturedWork from "@/components/featured-work";
 import Experience from "@/components/experience";
 import Testimonials from "@/components/testimonials";
 import Contact from "@/components/contact";
+
+const description =
+  "Web developer and SaaS consultant in Suffolk, UK. I build fast business websites, custom web apps and SaaS products for local businesses across Suffolk and East Anglia, backed by AWS-certified cloud expertise.";
+
+const localBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  name: "Peter Kaskonas — Web & Software Development",
+  url: "https://peterkaskonas.com",
+  email: "contact@peterkaskonas.com",
+  description,
+  address: {
+    "@type": "PostalAddress",
+    addressRegion: "Suffolk",
+    addressCountry: "GB",
+  },
+  areaServed: [
+    { "@type": "AdministrativeArea", name: "Suffolk" },
+    { "@type": "AdministrativeArea", name: "East Anglia" },
+    { "@type": "Country", name: "United Kingdom" },
+  ],
+  founder: {
+    "@type": "Person",
+    name: "Peter Kaskonas",
+    jobTitle: "Software Engineer",
+    sameAs: [
+      "https://www.linkedin.com/in/giedrius-k-7a2880a5/",
+      "https://github.com/gkaskonas",
+    ],
+  },
+  serviceType: [
+    "Business Website Development",
+    "Custom Web App Development",
+    "SaaS Product Development",
+    "Serverless Cloud Development",
+    "Cloud Cost Optimization",
+  ],
+};
 ---
 
-<BaseLayout title="Peter Kaskonas" canonical="https://peterkaskonas.com/">
+<BaseLayout
+  title="Peter Kaskonas | Web Developer & SaaS Consultant in Suffolk, UK"
+  description={description}
+  canonical="https://peterkaskonas.com/"
+>
+  <script
+    slot="head"
+    type="application/ld+json"
+    set:html={JSON.stringify(localBusinessSchema)}
+  />
   <main class="min-h-screen">
     <Navbar />
     <Hero />
     <About client:visible />
     <Certificates client:visible />
     <Services client:visible />
+    <FeaturedWork client:visible />
     <Experience client:visible />
     <Testimonials client:visible />
     <Contact client:visible />

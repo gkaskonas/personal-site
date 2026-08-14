@@ -2,7 +2,7 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { FaLinkedinIn, FaGithub } from "react-icons/fa";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, MapPin, ArrowRight } from "lucide-react";
 import { FloatingShape } from "./FloatingShape";
 
 interface HeroModernProps {
@@ -129,37 +129,73 @@ export function HeroModern({ heroImageUrl }: HeroModernProps) {
         initial="hidden"
         animate="visible"
       >
-        {/* AWS Badge */}
+        {/* Badges */}
         <motion.div
           variants={itemVariants}
-          className="mb-6 glass rounded-full px-4 py-2 text-sm font-medium text-white/90 border border-white/20"
+          className="mb-6 flex flex-wrap items-center justify-center gap-3"
         >
-          AWS Certified Solutions Architect
+          <span className="glass rounded-full px-4 py-2 text-sm font-medium text-white/90 border border-white/20">
+            AWS Certified Solutions Architect
+          </span>
+          <span className="glass flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-medium text-white/90 border border-white/20">
+            <MapPin className="h-4 w-4 text-primary" />
+            Based in Suffolk, UK
+          </span>
         </motion.div>
 
-        {/* Name - Split for staggered animation */}
+        {/* Intro */}
+        <motion.p
+          variants={itemVariants}
+          className="mb-4 text-lg sm:text-xl font-medium text-white/90"
+        >
+          Hi, I&apos;m Peter Kaskonas — Software Engineer
+        </motion.p>
+
+        {/* Headline - Split for staggered animation */}
         <motion.h1
-          className="text-4xl font-extrabold sm:text-[70px] lg:text-[90px] leading-tight"
+          className="text-4xl font-extrabold sm:text-6xl lg:text-7xl leading-tight max-w-5xl"
           variants={itemVariants}
         >
           <motion.span className="block" variants={itemVariants}>
-            Peter
+            Websites &amp; Custom Software
           </motion.span>
           <motion.span
             className="block bg-gradient-to-r from-white via-primary/80 to-white bg-clip-text text-transparent"
             variants={itemVariants}
           >
-            Kaskonas
+            That Grow Your Business
           </motion.span>
         </motion.h1>
 
         {/* Subtitle */}
         <motion.p
           variants={itemVariants}
-          className="mt-4 sm:mt-8 text-lg sm:text-2xl text-white/80 max-w-2xl"
+          className="mt-4 sm:mt-8 text-lg sm:text-2xl text-white/80 max-w-3xl"
         >
-          Architecting Scalable Cloud Solutions
+          I help businesses across Suffolk and East Anglia launch modern
+          websites, web apps and SaaS products — backed by AWS-certified cloud
+          expertise.
         </motion.p>
+
+        {/* CTAs */}
+        <motion.div
+          variants={itemVariants}
+          className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4"
+        >
+          <a
+            href="#contact"
+            className="group inline-flex items-center gap-2 rounded-full bg-primary px-8 py-3.5 text-base font-semibold text-primary-foreground shadow-lg shadow-primary/25 transition-all duration-300 hover:scale-105 hover:shadow-primary/40"
+          >
+            Start a Project
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+          </a>
+          <a
+            href="#services"
+            className="glass inline-flex items-center rounded-full border border-white/30 px-8 py-3.5 text-base font-semibold text-white transition-all duration-300 hover:scale-105 hover:border-primary/50 hover:bg-white/10"
+          >
+            See Services
+          </a>
+        </motion.div>
 
         {/* Animated Separator */}
         <motion.div

@@ -12,10 +12,11 @@ import {
 } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, Code, Cloud, Globe, ArrowRight, X } from "lucide-react";
+import { CheckCircle, Code, Cloud, Globe, Rocket, ArrowRight, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 // Import optimized images
+import businessWebImage from "@/assets/img/testimonials-bg.jpg";
 import webDevImage from "@/assets/img/web-development.jpeg";
 import serverlessImage from "@/assets/img/wp10167050.jpg";
 import cloudImage from "@/assets/img/cloud.jpg";
@@ -35,26 +36,49 @@ interface IService {
 
 const services: IService[] = [
   {
-    title: "Modern Web Development",
+    title: "Business Websites",
     shortDescription:
-      "Fast, responsive, and SEO-optimized web applications built with Next.js 14, React 18, and edge computing",
+      "Professional, fast-loading websites that get your business found on Google and turn visitors into customers",
     longDescription:
-      "I build cutting-edge web applications using the latest frameworks and best practices:\n- Server components and streaming for optimal performance\n- Edge computing for global low-latency delivery\n- Core Web Vitals optimization for better search rankings\n- Type-safe development with TypeScript 5\n- Responsive design with modern CSS features\n\nMy focus on performance optimization typically results in 40-70% faster load times compared to traditional approaches.",
-    image: webDevImage.src,
+      "Your website is your hardest-working employee — it should win you business around the clock. I build websites for local businesses that:\n- Load fast and look sharp on every phone, tablet and desktop\n- Rank well on Google with local SEO built in from day one\n- Make it easy for customers to contact you, book or buy\n- Cost very little to run thanks to modern hosting\n- Are easy to keep up to date without calling a developer\n\nWhether you run a trades business, shop, restaurant or professional practice in Suffolk, I'll build you a site that pays for itself.",
+    image: businessWebImage.src,
     icon: <Globe className="h-6 w-6" />,
     features: [
-      "Next.js optimization",
-      "TypeScript development",
-      "Accessibility-focused UI",
-      "Performance monitoring",
-      "Third-party API integration",
+      "Mobile-first design",
+      "Local SEO setup",
+      "Contact & booking forms",
+      "Analytics & tracking",
+      "Low-cost, reliable hosting",
+    ],
+    technologies: [
+      { name: "Astro", description: "Modern framework for websites that load almost instantly" },
+      { name: "React", description: "Powers interactive features like forms and galleries" },
+      { name: "Tailwind CSS", description: "Utility-first CSS framework for polished, consistent design" },
+      { name: "Cloudflare", description: "Global CDN keeping your site fast and secure worldwide" },
+      { name: "Google Analytics", description: "See where your visitors come from and what they do" },
+    ],
+  },
+  {
+    title: "Custom Web Apps & SaaS",
+    shortDescription:
+      "Bespoke web applications that automate manual work — booking systems, customer portals, dashboards and full SaaS products",
+    longDescription:
+      "If your business runs on spreadsheets, paper and copy-and-paste, custom software can win you back hours every week. I design and build:\n- Booking and scheduling systems that take orders while you sleep\n- Customer portals for quotes, invoices and documents\n- Internal dashboards that put your numbers in one place\n- Integrations that connect the tools you already use\n- Full SaaS products, from first idea to paying customers\n\nYou get software built around how your business actually works — not the other way around.",
+    image: webDevImage.src,
+    icon: <Rocket className="h-6 w-6" />,
+    features: [
+      "Booking & scheduling systems",
+      "Customer portals",
+      "Online payments",
+      "Admin dashboards",
+      "SaaS product development",
     ],
     technologies: [
       { name: "Next.js", description: "React framework with server components for optimal performance" },
       { name: "TypeScript", description: "Typed JavaScript for improved code quality" },
-      { name: "Tailwind CSS", description: "Utility-first CSS framework for rapid UI development" },
-      { name: "Vercel", description: "Edge deployment platform for global content delivery" },
-      { name: "Cloudflare", description: "Global CDN for edge caching and security" },
+      { name: "Stripe", description: "Secure online payments and subscription billing" },
+      { name: "AWS", description: "Reliable, scalable cloud infrastructure that grows with you" },
+      { name: "PostgreSQL & DynamoDB", description: "Battle-tested databases for your business data" },
     ],
   },
   {
@@ -133,7 +157,7 @@ export default function Services() {
   };
 
   return (
-    <section className="py-24 lg:py-32 relative overflow-hidden">
+    <section id="services" className="py-24 lg:py-32 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-1/4 left-0 w-72 h-72 bg-primary/5 rounded-full blur-3xl" />
@@ -156,13 +180,14 @@ export default function Services() {
             Services
           </h2>
           <p className="mt-4 text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            Transform your vision into reality with expert full stack development
-            and cutting-edge AWS cloud solutions.
+            From your first business website to a fully-fledged SaaS product —
+            I work with local businesses in Suffolk and growing companies
+            across the UK.
           </p>
         </motion.div>
 
         {/* Services Grid */}
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-8 md:grid-cols-2">
           {services.map((service, index) => (
             <motion.div
               key={index}
@@ -214,6 +239,20 @@ export default function Services() {
             </motion.div>
           ))}
         </div>
+
+        {/* Section CTA */}
+        <motion.div className="mt-16 text-center" variants={itemVariants}>
+          <p className="text-lg text-gray-600 dark:text-gray-400 mb-6">
+            Not sure what you need? Get in touch for a free, no-obligation chat
+            about your project.
+          </p>
+          <Button asChild size="lg" className="rounded-full px-8">
+            <a href="#contact">
+              Get in Touch
+              <ArrowRight className="ml-2 w-4 h-4" />
+            </a>
+          </Button>
+        </motion.div>
       </motion.div>
 
       {/* Service Detail Dialog */}
