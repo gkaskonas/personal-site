@@ -1,6 +1,7 @@
 ---
 import "@/styles/globals.css";
 import { Toaster } from "@/components/ui/sonner";
+import ogImage from "@/assets/img/header3.jpg";
 
 interface Props {
   title: string;
@@ -10,9 +11,11 @@ interface Props {
 
 const {
   title,
-  description = "Peter Kaskonas' personal website. Software engineer, AWS Certified Solutions Architect Professional, and AWS Certified DevOps Engineer Professional.",
+  description = "Peter Kaskonas — software engineer and AWS Certified Solutions Architect based in Suffolk, UK. Websites, web apps, SaaS products and cloud consulting for local businesses and growing companies.",
   canonical = "https://peterkaskonas.com",
 } = Astro.props;
+
+const ogImageUrl = new URL(ogImage.src, "https://peterkaskonas.com").href;
 ---
 
 <!doctype html>
@@ -25,6 +28,20 @@ const {
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+
+    <!-- Open Graph / Twitter -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Peter Kaskonas" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    <slot name="head" />
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

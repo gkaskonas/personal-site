@@ -14,12 +14,12 @@ const skills = [
 ];
 
 const expertise = [
-  "Serverless backend deployment",
+  "Business websites that bring in customers",
+  "Custom web apps & SaaS products",
+  "Booking systems & customer portals",
+  "Full-stack development with React & Next.js",
   "AWS consultancy & architecture",
-  "Next.js React development",
-  "Full-stack development",
-  "Cloud application lifecycle management",
-  "Scalable and cost-effective solutions",
+  "Cloud cost optimization",
 ];
 
 export default function About() {
@@ -71,7 +71,7 @@ export default function About() {
             About Me
           </span>
           <h2 className="text-4xl font-bold text-gray-900 dark:text-white lg:text-5xl">
-            Building the Future of Cloud
+            Your Local Developer, with Big-Tech Experience
           </h2>
         </motion.div>
 
@@ -85,11 +85,18 @@ export default function About() {
               <div className="absolute top-0 left-8 w-20 h-1 bg-gradient-to-r from-primary to-primary/50 rounded-full" />
 
               <p className="text-lg leading-relaxed text-gray-700 dark:text-gray-300">
-                Certified AWS Solutions Architect with excellent communication and
-                problem-solving skills. Over 5 years of experience in the AWS
-                environment, encompassing a wide range of activities from
-                deploying software solutions on existing infrastructure to
-                building new, multi-account Landing Zones.
+                I&apos;m a software engineer based in Suffolk, and I help
+                businesses get more from technology — whether that&apos;s a
+                website that brings in new customers, a web app that takes care
+                of the paperwork, or a SaaS product built from the ground up.
+              </p>
+
+              <p className="mt-4 text-lg leading-relaxed text-gray-700 dark:text-gray-300">
+                I&apos;ve spent over five years building large-scale cloud
+                systems as an AWS Certified Solutions Architect. That means
+                your project — big or small — sits on the same fast, secure and
+                reliable foundations that enterprises trust, without the
+                enterprise price tag.
               </p>
 
               <div className="mt-8 flex flex-wrap gap-2">
@@ -164,7 +171,7 @@ export default function About() {
                   <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
                     <MapPin className="w-5 h-5 text-primary" />
                   </div>
-                  <span>United Kingdom</span>
+                  <span>Suffolk, United Kingdom</span>
                 </div>
               </div>
               <a
