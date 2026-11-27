@@ -2,13 +2,12 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import Navbar from "@/components/Navbar.astro";
 import Hero from "@/components/Hero.astro";
-import About from "@/components/about";
-import Certificates from "@/components/certificates";
-import Services from "@/components/services";
-import FeaturedWork from "@/components/featured-work";
-import Experience from "@/components/experience";
-import Testimonials from "@/components/testimonials";
+import Services from "@/components/Services.astro";
+import FeaturedWork from "@/components/FeaturedWork.astro";
+import About from "@/components/About.astro";
+import Testimonials from "@/components/Testimonials.astro";
 import Contact from "@/components/contact";
+import Footer from "@/components/Footer.astro";
 
 const description =
   "Web developer and SaaS consultant in Suffolk, UK. I build fast business websites, custom web apps and SaaS products for local businesses across Suffolk and East Anglia, backed by AWS-certified cloud expertise.";
@@ -59,15 +58,14 @@ const localBusinessSchema = {
     type="application/ld+json"
     set:html={JSON.stringify(localBusinessSchema)}
   />
-  <main class="min-h-screen">
-    <Navbar />
+  <Navbar />
+  <main id="main">
     <Hero />
-    <About client:visible />
-    <Certificates client:visible />
-    <Services client:visible />
-    <FeaturedWork client:visible />
-    <Experience client:visible />
-    <Testimonials client:visible />
+    <Services />
+    <FeaturedWork />
+    <About />
+    <Testimonials />
     <Contact client:visible />
   </main>
+  <Footer />
 </BaseLayout>

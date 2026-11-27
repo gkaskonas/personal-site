@@ -19,7 +19,7 @@ const ogImageUrl = new URL(ogImage.src, "https://peterkaskonas.com").href;
 ---
 
 <!doctype html>
-<html lang="en" class="scroll-smooth">
+<html lang="en-GB" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -27,6 +27,7 @@ const ogImageUrl = new URL(ogImage.src, "https://peterkaskonas.com").href;
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#0F1A24" />
     <title>{title}</title>
 
     <!-- Open Graph / Twitter -->
@@ -47,7 +48,7 @@ const ogImageUrl = new URL(ogImage.src, "https://peterkaskonas.com").href;
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..700&display=swap"
       rel="stylesheet"
     />
 
@@ -66,21 +67,21 @@ const ogImageUrl = new URL(ogImage.src, "https://peterkaskonas.com").href;
 
     <!-- Theme initialization to prevent flash -->
     <script is:inline>
-      const theme = (() => {
-        if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
-          return localStorage.getItem("theme");
-        }
-        if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-          return "dark";
-        }
-        return "light";
-      })();
-      if (theme === "dark") {
+      // Dark (dusk) is the default; light only when the visitor chose it
+      if (localStorage.getItem("theme") !== "light") {
         document.documentElement.classList.add("dark");
+        document.querySelector('meta[name="theme-color"]')?.setAttribute("content", "#0F1A24");
+      } else {
+        document.querySelector('meta[name="theme-color"]')?.setAttribute("content", "#F3F7F8");
       }
     </script>
   </head>
-  <body class="mx-auto min-h-screen font-sans antialiased">
+  <body class="min-h-screen font-sans antialiased">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"
+      >Skip to content</a
+    >
     <slot />
     <Toaster client:load />
   </body>

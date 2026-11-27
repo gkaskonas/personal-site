@@ -1,0 +1,101 @@
+---
+import { Image } from "astro:assets";
+import solutionsArchitectPro from "@/assets/img/solutions-architect-pro.png";
+import devopsPro from "@/assets/img/devops-pro.png";
+import networkingCert from "@/assets/img/networking-cert.png";
+import securityCert from "@/assets/img/security-cert.png";
+import solutionsArchitectAssociate from "@/assets/img/solutions-architect-associate.png";
+import sysOpsAdmin from "@/assets/img/AWS-SysOpAdmin-Associate.png";
+
+const certGroups = [
+  {
+    level: "Professional",
+    certs: [
+      { src: solutionsArchitectPro, name: "Solutions Architect" },
+      { src: devopsPro, name: "DevOps Engineer" },
+    ],
+  },
+  {
+    level: "Specialty",
+    certs: [
+      { src: networkingCert, name: "Advanced Networking" },
+      { src: securityCert, name: "Security" },
+    ],
+  },
+  {
+    level: "Associate",
+    certs: [
+      { src: solutionsArchitectAssociate, name: "Solutions Architect" },
+      { src: sysOpsAdmin, name: "SysOps Administrator" },
+    ],
+  },
+];
+
+const timeline = [
+  { org: "Lumar", role: "DevOps Lead", when: "2022 to now" },
+  { org: "Lumar", role: "Senior DevOps Engineer", when: "2021 to 2022" },
+  { org: "Inawisdom", role: "Cloud Engineer", when: "2020 to 2021" },
+  { org: "Ocado", role: "DevOps Engineer", when: "2019 to 2020" },
+  { org: "Coventry University", role: "BSc Games Technologies", when: "2013 to 2017" },
+];
+---
+
+<section id="about" class="container-page py-24 lg:py-32">
+  <div class="grid gap-14 lg:grid-cols-[1.2fr_1fr] lg:gap-20">
+    <div>
+      <h2 class="wipe text-[clamp(2rem,4.5vw,3.25rem)] font-extrabold leading-[1.02]">
+        A local developer with big-tech experience
+      </h2>
+      <div class="mt-8 max-w-[62ch] space-y-5 text-lg">
+        <p>
+          I'm a software engineer based in Suffolk. I help businesses get more from technology, whether
+          that's a website that brings in new customers, a web app that takes care of the paperwork, or a
+          SaaS product built from scratch.
+        </p>
+        <p class="text-muted-foreground">
+          I've spent over five years building large-scale cloud systems. Your project, big or small, sits
+          on the same fast, secure foundations enterprises rely on, without the enterprise price tag.
+        </p>
+      </div>
+    </div>
+
+    <div>
+      <h3 class="text-lg font-bold">Where I've worked</h3>
+      <dl class="mt-4 border-t">
+        {
+          timeline.map((t) => (
+            <div class="reveal grid grid-cols-[1fr_auto] gap-x-4 border-b py-3">
+              <dt class="font-semibold">{t.role}</dt>
+              <dd class="row-span-2 text-sm tabular-nums text-muted-foreground">{t.when}</dd>
+              <dd class="text-muted-foreground">{t.org}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </div>
+
+  <h3 class="mt-24 text-lg font-bold">Six AWS certifications</h3>
+  <ul class="mt-8 grid gap-12 sm:grid-cols-3">
+    {
+      certGroups.map((g, gi) => (
+        <li class="cert-group pop" style={`--i: ${gi}`}>
+          <div class="flex h-36 items-center">
+            {g.certs.map((c) => (
+              <Image
+                src={c.src}
+                alt={`AWS Certified ${c.name} ${g.level}`}
+                width={288}
+                height={288}
+                class="badge h-36 w-36 object-contain drop-shadow-md"
+                loading="lazy"
+              />
+            ))}
+          </div>
+          <p class="mt-5 text-xl font-bold tracking-tight">{g.level}</p>
+          <p class="mt-1 text-muted-foreground">{g.certs.map((c) => c.name).join(" and ")}</p>
+        </li>
+      ))
+    }
+  </ul>
+</section>
