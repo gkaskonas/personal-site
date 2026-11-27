@@ -1,0 +1,23 @@
+allowBuilds:
+  esbuild: true
+  sharp: true
+  # postinstall only prints a deprecation notice
+  aws-sdk: false
+patchedDependencies:
+  astro-sst@3.1.4: patches/astro-sst@3.1.4.patch
+# Transitive security fixes. Most come from sst@3 > opencontrol (sst CLI only, not deployed code)
+# and resend > @react-email/render. Remove once upstream bumps them.
+overrides:
+  hono: ^4.12.25
+  "@modelcontextprotocol/sdk": ^1.32.0
+  proxy-addr: ^2.0.8
+  "body-parser@>=2 <2.4.0": ^2.4.0
+  "path-to-regexp@>=8 <8.4.0": ^8.4.0
+  "minimatch@>=9 <9.0.7": ^9.0.7
+  "brace-expansion@>=2 <2.1.6": ^2.1.6
+  "picomatch@<2.3.2": ^2.3.2
+  "picomatch@>=4 <4.0.4": ^4.0.4
+  js-cookie: ^3.0.7
+  source-map-js: ^1.2.2
+  "opencontrol>zod": ^4.6.7
+  "opencontrol>zod-to-json-schema": ^3.25.2
