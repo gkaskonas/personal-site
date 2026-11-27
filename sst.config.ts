@@ -25,12 +25,6 @@ export default $config({
             name: "peterkaskonas.com",
             dns: sst.cloudflare.dns({
               zone: process.env.CLOUDFLARE_ZONE_ID,
-              // Records already exist in Cloudflare outside SST state; adopt them instead of failing.
-              transform: {
-                record: (args) => {
-                  args.allowOverwrite = true;
-                },
-              },
             }),
           }
           : undefined,
