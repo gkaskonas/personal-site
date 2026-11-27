@@ -23,6 +23,7 @@ export default $config({
         $app.stage === "live"
           ? {
             name: "peterkaskonas.com",
+            redirects: ["www.peterkaskonas.com"],
             dns: sst.cloudflare.dns({
               zone: process.env.CLOUDFLARE_ZONE_ID,
             }),
