@@ -14,11 +14,9 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await render(post);
 
-const formattedDate = new Date(post.data.date).toLocaleDateString("en-US", {
-  year: "numeric",
-  month: "long",
-  day: "numeric",
-});
+const formattedDate = new Intl.DateTimeFormat("en-GB", { dateStyle: "long" }).format(
+  new Date(post.data.date),
+);
 ---
 
 <BlogLayout
@@ -26,11 +24,12 @@ const formattedDate = new Date(post.data.date).toLocaleDateString("en-US", {
   description={post.data.excerpt}
   canonical={`https://peterkaskonas.com/blog/${post.id}`}
 >
-  <article class="prose prose-lg dark:prose-invert max-w-none">
+  <div aria-hidden="true" class="read-progress fixed inset-x-0 top-0 z-[60] h-1 origin-left bg-accent"></div>
+  <article class="prose prose-lg mx-auto max-w-[70ch] dark:prose-invert">
     <header class="mb-8 not-prose">
       <a
         href="/blog"
-        class="mb-4 inline-flex items-center text-primary hover:underline"
+        class="mb-4 inline-flex items-center font-semibold text-primary hover:underline"
       >
         <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
@@ -43,19 +42,18 @@ const formattedDate = new Date(post.data.date).toLocaleDateString("en-US", {
         class="mt-4 h-64 w-full rounded-2xl object-cover md:h-96"
         quality={85}
       />
-      <h1 class="mt-6 text-4xl font-bold text-gray-900 dark:text-white">
+      <h1 class="mt-8 text-[clamp(2.25rem,5vw,3.5rem)] font-extrabold leading-[1.02] tracking-[-0.035em]">
         {post.data.title}
       </h1>
-      <div class="mt-4 flex items-center text-gray-600 dark:text-gray-400">
+      <div class="mt-4 flex items-center text-muted-foreground">
         <span>{formattedDate}</span>
-        <span class="mx-2">·</span>
-        <span>{post.data.author}</span>
+        <span>, {post.data.author}</span>
       </div>
       {
         post.data.tags && post.data.tags.length > 0 && (
           <div class="mt-4 flex flex-wrap gap-2">
             {post.data.tags.map((tag) => (
-              <span class="rounded-full bg-primary/10 px-3 py-1 text-sm font-medium text-primary">
+              <span class="rounded bg-muted px-2.5 py-1 text-sm text-muted-foreground">
                 {tag}
               </span>
             ))}
@@ -70,26 +68,26 @@ const formattedDate = new Date(post.data.date).toLocaleDateString("en-US", {
 
 <style is:global>
   .prose h2 {
-    @apply mt-8 mb-4 text-2xl font-bold text-gray-900 dark:text-white;
+    @apply mt-12 mb-4 text-3xl font-bold tracking-tight;
   }
   .prose h3 {
-    @apply mt-6 mb-3 text-xl font-semibold text-gray-900 dark:text-white;
+    @apply mt-8 mb-3 text-xl font-bold;
   }
   .prose p {
-    @apply mb-4 text-gray-700 dark:text-gray-300 leading-relaxed;
+    @apply mb-5 leading-relaxed;
   }
   .prose ul,
   .prose ol {
-    @apply mb-4 pl-6 text-gray-700 dark:text-gray-300;
+    @apply mb-5 list-disc pl-6 marker:text-accent;
   }
   .prose li {
     @apply mb-2;
   }
   .prose a {
-    @apply text-primary hover:underline;
+    @apply text-primary underline decoration-accent decoration-2 underline-offset-2 hover:decoration-primary;
   }
   .prose code {
-    @apply rounded bg-gray-100 px-1.5 py-0.5 text-sm dark:bg-gray-800;
+    @apply rounded bg-muted px-1.5 py-0.5 text-[0.9em];
   }
   .prose pre {
     @apply mb-4 overflow-x-auto rounded-lg bg-gray-900 p-4 text-sm;
@@ -98,22 +96,22 @@ const formattedDate = new Date(post.data.date).toLocaleDateString("en-US", {
     @apply bg-transparent p-0;
   }
   .prose blockquote {
-    @apply border-l-4 border-primary pl-4 italic text-gray-600 dark:text-gray-400;
+    @apply border-l-4 border-accent pl-5 text-lg text-muted-foreground;
   }
   .prose table {
     @apply w-full border-collapse mb-4;
   }
   .prose th,
   .prose td {
-    @apply border border-gray-300 dark:border-gray-700 px-4 py-2 text-left;
+    @apply border px-4 py-2 text-left;
   }
   .prose th {
-    @apply bg-gray-100 dark:bg-gray-800 font-semibold;
+    @apply bg-muted font-semibold;
   }
   .prose img {
     @apply rounded-lg;
   }
   .prose hr {
-    @apply my-8 border-gray-200 dark:border-gray-700;
+    @apply my-10;
   }
 </style>

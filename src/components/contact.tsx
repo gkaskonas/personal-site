@@ -1,10 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -13,12 +11,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { FaLinkedinIn, FaGithub } from "react-icons/fa";
-import { Mail, MapPin, Send, ArrowUpRight } from "lucide-react";
 import { toast } from "sonner";
-import { cn } from "@/lib/utils";
 
 const formSchema = z.object({
   name: z
@@ -27,7 +20,7 @@ const formSchema = z.object({
     .max(50, "Name must be less than 50 characters"),
   email: z
     .string()
-    .email("Invalid email address")
+    .email("Enter an email address like you@company.co.uk")
     .min(2, "Email must be at least 2 characters")
     .max(50, "Email must be less than 50 characters"),
   message: z
@@ -36,298 +29,141 @@ const formSchema = z.object({
     .max(500, "Message must be less than 500 characters"),
 });
 
-const socialLinks = [
-  {
-    name: "LinkedIn",
-    href: "https://www.linkedin.com/in/giedrius-k-7a2880a5/",
-    icon: FaLinkedinIn,
-  },
-  {
-    name: "GitHub",
-    href: "https://github.com/gkaskonas",
-    icon: FaGithub,
-  },
-];
+const field =
+  "w-full rounded border border-white/25 bg-white/[0.06] px-4 py-3 text-white placeholder:text-white/45 transition-colors hover:border-white/40 focus-visible:border-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60";
 
 export default function Contact() {
-  const year = new Date().getFullYear();
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      message: "",
-    },
+    defaultValues: { name: "", email: "", message: "" },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       const response = await fetch("/api/send-email", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
       });
-
       const data = await response.json();
-
       if (data.success) {
-        toast.success("Email sent successfully!");
+        toast.success("Message sent. I’ll get back to you soon.");
         form.reset();
       } else {
         throw new Error(data.error || "Failed to send email");
       }
     } catch (error) {
-      toast.error("Error sending email. Please try again later.");
+      toast.error(
+        "Your message didn’t send. Try again, or email contact@peterkaskonas.com directly.",
+      );
     }
   }
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30, filter: "blur(10px)" },
-    visible: {
-      opacity: 1,
-      y: 0,
-      filter: "blur(0px)",
-      transition: {
-        duration: 0.6,
-        ease: [0.25, 0.46, 0.45, 0.94],
-      },
-    },
-  };
-
   return (
-    <section id="contact" className="relative py-24 lg:py-32 overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-gray-50 dark:from-gray-900 to-transparent" />
-        <div className="absolute top-1/4 right-0 w-72 h-72 bg-primary/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
-      </div>
-
-      <motion.div
-        className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-        variants={containerVariants}
+    <section id="contact" className="relative mt-16 bg-[hsl(var(--band))] py-24 text-white lg:py-32">
+      <svg
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-full block h-10 w-full sm:h-14"
+        viewBox="0 0 1440 56"
+        preserveAspectRatio="none"
       >
-        {/* Section Header */}
-        <motion.div className="text-center mb-16" variants={itemVariants}>
-          <span className="inline-block mb-4 px-4 py-1.5 text-sm font-medium text-primary bg-primary/10 rounded-full">
-            Contact
-          </span>
-          <h2 className="text-4xl font-bold text-gray-900 dark:text-white lg:text-5xl">
-            Get in Touch
+        <path
+          className="wave"
+          style={{ ["--t" as string]: "18s" }}
+          fill="hsl(var(--band) / 0.45)"
+          d="M0 28q90-26 180 0t180 0 180 0 180 0 180 0 180 0 180 0 180 0 180 0 180 0 180 0 180 0V56H0Z"
+        />
+        <path
+          className="wave"
+          style={{ ["--t" as string]: "11s" }}
+          fill="hsl(var(--band))"
+          d="M0 36q90-20 180 0t180 0 180 0 180 0 180 0 180 0 180 0 180 0 180 0 180 0 180 0 180 0V56H0Z"
+        />
+      </svg>
+      <div className="container-page grid gap-14 lg:grid-cols-[1fr_1.2fr] lg:gap-20">
+        <div>
+          <h2 className="wipe text-[clamp(2rem,4.5vw,3.25rem)] font-extrabold leading-[1.02]">
+            Tell me about your project
           </h2>
-          <p className="mt-4 text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            Have a project in mind? Let's discuss how I can help bring your ideas to life.
+          <p className="mt-6 max-w-md text-lg text-white/75">
+            A few lines on what you need is plenty. The first conversation is free and there’s no
+            obligation.
           </p>
-        </motion.div>
-
-        <div className="grid gap-12 lg:grid-cols-5">
-          {/* Contact Info */}
-          <motion.div
-            className="lg:col-span-2 space-y-8"
-            variants={itemVariants}
+          <p className="mt-10 text-white/75">Prefer email?</p>
+          <a
+            href="mailto:contact@peterkaskonas.com"
+            className="mt-1 inline-block break-all text-xl font-bold underline decoration-accent decoration-2 underline-offset-4 hover:text-accent"
           >
-            {/* Contact Cards */}
-            <div className="space-y-4">
-              <div className="p-6 rounded-2xl bg-white dark:bg-gray-900/50 border border-gray-200 dark:border-gray-800 card-glow">
-                <div className="flex items-center gap-4">
-                  <div className="p-3 rounded-xl bg-primary/10 text-primary">
-                    <Mail className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                      Email
-                    </p>
-                    <a
-                      href="mailto:contact@peterkaskonas.com"
-                      className="font-medium text-gray-900 dark:text-white hover:text-primary transition-colors"
-                    >
-                      contact@peterkaskonas.com
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              <div className="p-6 rounded-2xl bg-white dark:bg-gray-900/50 border border-gray-200 dark:border-gray-800 card-glow">
-                <div className="flex items-center gap-4">
-                  <div className="p-3 rounded-xl bg-primary/10 text-primary">
-                    <MapPin className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                      Location
-                    </p>
-                    <p className="font-medium text-gray-900 dark:text-white">
-                      United Kingdom
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Social Links */}
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                Connect with me
-              </h3>
-              <div className="flex gap-3">
-                {socialLinks.map((link) => (
-                  <a
-                    key={link.name}
-                    href={link.href}
-                    className={cn(
-                      "group flex items-center gap-2 px-5 py-3 rounded-xl",
-                      "bg-white dark:bg-gray-900/50",
-                      "border border-gray-200 dark:border-gray-800",
-                      "text-gray-700 dark:text-gray-300",
-                      "hover:border-primary/50 hover:text-primary",
-                      "transition-all duration-300 card-glow"
-                    )}
-                    aria-label={link.name}
-                  >
-                    <link.icon size={20} />
-                    <span className="font-medium">{link.name}</span>
-                    <ArrowUpRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
-                  </a>
-                ))}
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Contact Form */}
-          <motion.div
-            className="lg:col-span-3"
-            variants={itemVariants}
-          >
-            <div className="p-8 rounded-2xl bg-white dark:bg-gray-900/50 border border-gray-200 dark:border-gray-800 card-glow">
-              <Form {...form}>
-                <form
-                  onSubmit={form.handleSubmit(onSubmit)}
-                  className="space-y-6"
-                >
-                  <div className="grid gap-6 sm:grid-cols-2">
-                    <FormField
-                      control={form.control}
-                      name="name"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-gray-700 dark:text-gray-300">
-                            Name
-                          </FormLabel>
-                          <FormControl>
-                            <Input
-                              {...field}
-                              placeholder="Your name"
-                              className="h-12 rounded-xl border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 focus:border-primary"
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="email"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-gray-700 dark:text-gray-300">
-                            Email
-                          </FormLabel>
-                          <FormControl>
-                            <Input
-                              {...field}
-                              type="email"
-                              placeholder="your.email@example.com"
-                              className="h-12 rounded-xl border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 focus:border-primary"
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                  <FormField
-                    control={form.control}
-                    name="message"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-gray-700 dark:text-gray-300">
-                          Message
-                        </FormLabel>
-                        <FormControl>
-                          <Textarea
-                            {...field}
-                            placeholder="Tell me about your project..."
-                            className="min-h-[150px] rounded-xl border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 focus:border-primary resize-none"
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <Button
-                    type="submit"
-                    disabled={form.formState.isSubmitting}
-                    className="w-full h-12 rounded-xl text-base font-medium"
-                  >
-                    {form.formState.isSubmitting ? (
-                      <span className="flex items-center gap-2">
-                        <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                        Sending...
-                      </span>
-                    ) : (
-                      <span className="flex items-center gap-2">
-                        <Send className="w-5 h-5" />
-                        Send Message
-                      </span>
-                    )}
-                  </Button>
-                </form>
-              </Form>
-            </div>
-          </motion.div>
+            contact@peterkaskonas.com
+          </a>
         </div>
 
-        {/* Footer */}
-        <motion.footer
-          className="mt-24 pt-8 border-t border-gray-200 dark:border-gray-800"
-          variants={itemVariants}
-        >
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p className="text-gray-500 dark:text-gray-400">
-              © {year} Peter Kaskonas. All rights reserved.
-            </p>
-            <div className="flex items-center gap-4">
-              {socialLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  className="p-2 text-gray-400 hover:text-primary transition-colors"
-                  aria-label={link.name}
-                >
-                  <link.icon size={20} />
-                </a>
-              ))}
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6" noValidate>
+            <div className="grid gap-6 sm:grid-cols-2">
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field: f }) => (
+                  <FormItem>
+                    <FormLabel className="text-white">Name</FormLabel>
+                    <FormControl>
+                      <input {...f} autoComplete="name" placeholder="Jane Smith…" className={field} />
+                    </FormControl>
+                    <FormMessage className="text-accent" />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field: f }) => (
+                  <FormItem>
+                    <FormLabel className="text-white">Email</FormLabel>
+                    <FormControl>
+                      <input
+                        {...f}
+                        type="email"
+                        autoComplete="email"
+                        spellCheck={false}
+                        placeholder="jane@business.co.uk…"
+                        className={field}
+                      />
+                    </FormControl>
+                    <FormMessage className="text-accent" />
+                  </FormItem>
+                )}
+              />
             </div>
-          </div>
-        </motion.footer>
-      </motion.div>
+            <FormField
+              control={form.control}
+              name="message"
+              render={({ field: f }) => (
+                <FormItem>
+                  <FormLabel className="text-white">What do you need?</FormLabel>
+                  <FormControl>
+                    <textarea
+                      {...f}
+                      rows={6}
+                      autoComplete="off"
+                      placeholder="A new website for my bakery in Bury St Edmunds…"
+                      className={field + " resize-y"}
+                    />
+                  </FormControl>
+                  <FormMessage className="text-accent" />
+                </FormItem>
+              )}
+            />
+            <button
+              type="submit"
+              disabled={form.formState.isSubmitting}
+              className="btn bg-accent text-accent-foreground hover:bg-white disabled:opacity-70"
+            >
+              {form.formState.isSubmitting ? "Sending…" : "Send message"}
+            </button>
+          </form>
+        </Form>
+      </div>
     </section>
   );
 }

@@ -1,67 +1,60 @@
-# Next.js Project with SST, Sentry, and pnpm
+# peterkaskonas.com
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app), enhanced with [SST (Serverless Stack)](https://sst.dev/), [Sentry](https://sentry.io/), and using [pnpm](https://pnpm.io/) as the package manager.
+Personal website and blog for Peter Kaskonas — software engineer and web developer based in Suffolk, UK. Built with [Astro](https://astro.build/) and deployed to AWS with [SST](https://sst.dev/).
 
-## Technologies Used
+## Tech Stack
 
-- [Next.js 13](https://nextjs.org/)
-- [SST (Serverless Stack)](https://sst.dev/)
-- [Sentry](https://sentry.io/)
-- [pnpm](https://pnpm.io/)
+- [Astro 5](https://astro.build/) — static site with selective hydration
+- [React 18](https://react.dev/) — interactive islands (hero, services, contact form, etc.)
+- [Tailwind CSS](https://tailwindcss.com/) + [Radix UI](https://www.radix-ui.com/) + [Framer Motion](https://www.framer.com/motion/)
+- [SST v3](https://sst.dev/) — infrastructure as code, deployed to AWS (`eu-west-1`) with Cloudflare DNS
+- [Resend](https://resend.com/) — transactional email for the contact form
+- [pnpm](https://pnpm.io/) — package manager
 
-## Getting Started
+## Project Structure
 
-First, ensure you have pnpm installed. If not, you can install it using:
+```
+src/
+├── assets/img/      # Optimized images
+├── components/      # React islands + Astro components (ui/ = shadcn-style primitives)
+├── content/blog/    # Blog posts (Astro content collection)
+├── layouts/         # BaseLayout (SEO, theme, analytics) and BlogLayout
+├── pages/
+│   ├── index.astro  # Landing page
+│   ├── blog/        # Blog index + dynamic post routes
+│   └── api/
+│       └── send-email.ts  # Contact form endpoint (Resend)
+└── styles/          # Global CSS
+sst.config.ts        # SST/AWS infrastructure definition
+```
+
+## Development
 
 ```bash
-npm install -g pnpm
-```
-
-Then, install the project dependencies:
-
-```
 pnpm install
+pnpm dev        # Dev server at http://localhost:4321
+pnpm build      # Production build
+pnpm preview    # Preview the production build
+pnpm lint       # ESLint
 ```
 
-To run the development server:
+## Deployment
 
+Deployed with SST to AWS. GitHub Actions handle CI (`.github/workflows/test.yml`) and deployment (`.github/workflows/deploy.yml`).
+
+```bash
+pnpm deploy:staging   # Deploy to the staging stage
+pnpm deploy:live      # Deploy to production (peterkaskonas.com)
 ```
-pnpm dev
-```
 
-Open [http://localhost:3000](http://localhost:3000)
+The `live` stage serves [peterkaskonas.com](https://peterkaskonas.com) (with a `www` redirect) using Cloudflare DNS; other stages deploy without a custom domain.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Configuration
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization)
+- **`ResendApiKey`** — SST secret for the contact form email API. Set with `npx sst secret set ResendApiKey <value>` (or use a `RESEND_API_KEY` env var for local development).
+- **`CLOUDFLARE_ZONE_ID`** — env var used by `sst.config.ts` for DNS on the `live` stage (plus Cloudflare API credentials for the provider).
 
-## SST (Serverless Stack)
+## Blog
 
-This project uses SST for infrastructure as code and serverless deployment. To learn more about SST and how it's integrated into this project, check out the [SST documentation](https://docs.sst.dev/)
-
-## Sentry Integration
-
-Sentry is integrated into this project for error tracking and performance monitoring. To configure Sentry, update the Sentry configuration in your project files. For more information, refer to the [Sentry documentation for Next.js](https://docs.sentry.io/platforms/javascript/guides/nextjs/)
-
-## CloudFront revalidation webhook (invalidate `/blog/*`)
-
-This app exposes a webhook endpoint that triggers a CloudFront invalidation for `/blog/*`:
-
-- **Endpoint**: `POST /api/revalidate`
-- **Auth**: either
-  - `x-webhook-secret: <CLOUDFRONT_WEBHOOK_SECRET>` header, or
-  - `Authorization: Bearer <CLOUDFRONT_WEBHOOK_SECRET>`
-
-### Required environment variables
-
-- **`CLOUDFRONT_WEBHOOK_SECRET`**: shared secret used to protect the endpoint
-- **`CLOUDFRONT_DISTRIBUTION_ID`**: CloudFront distribution ID to invalidate
-
-### AWS credentials
-
-The route uses the default AWS SDK credential chain (ideal when deployed on AWS via SST/IAM roles).
-If you run locally, you’ll typically need:
-
-- `AWS_REGION` (defaults to `us-east-1` if omitted)
-- `AWS_ACCESS_KEY_ID`
-- `AWS_SECRET_ACCESS_KEY`
+Posts live in `src/content/blog/` as an Astro content collection. Add a new markdown file there and it appears at `/blog/<slug>`.
+</content>

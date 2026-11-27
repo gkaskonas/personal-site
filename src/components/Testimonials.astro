@@ -1,0 +1,60 @@
+---
+const others = [
+  {
+    quote:
+      "We hired Pete to build our company's website from scratch, and with his vast knowledge and experience, he gave us a lot of great recommendations on how to create more leads. He is also very efficient and responsive. I can't recommend his work enough!",
+    name: "Brian Lee",
+    role: "Lead Coach and Co-founder, Lift Performance",
+  },
+  {
+    quote:
+      "He is a phenomenal talent and regularly produces high quality work that 2 or 3 people would struggle to reproduce.",
+    name: "Paul Andrews",
+    role: "Senior Solutions Architect, Amazon Web Services",
+  },
+  {
+    quote:
+      "A self-motivated, ambitious and intelligent young man. These skills allowed him to solve complex problems and engineer solutions at pace, without compromising on quality.",
+    name: "Mario Paphitis",
+    role: "Engineering Manager, Ocado",
+  },
+];
+---
+
+<section id="testimonials" class="container-page pb-24 lg:pb-32">
+  <h2 class="wipe text-[clamp(2rem,4.5vw,3.25rem)] font-extrabold leading-[1.02]">What people say</h2>
+
+  <figure class="grow-in mt-12 rounded-md bg-accent p-8 text-accent-foreground sm:p-12 lg:p-16">
+    <blockquote class="max-w-[38ch] space-y-6 text-[clamp(1.4rem,2.6vw,2.1rem)] font-semibold leading-snug tracking-tight">
+      <p class="read-in">
+        “Peter consistently amazes us with fast, reliable, and secure solutions. He's proactive and
+        forward-thinking, fixing problems before we've even spotted them.”
+      </p>
+      <p class="read-in">
+        “Peter is incredibly talented and pushes our project further than we thought possible. He’s fast,
+        reliable, and cares about getting the details right. We trust him to deliver on any project we
+        have and are grateful to work with him.”
+      </p>
+    </blockquote>
+    <figcaption class="mt-10 text-base">
+      <span class="font-bold">John</span>, Visual Revival.
+      <a href="#work" class="ml-1 font-semibold underline decoration-2 underline-offset-4 hover:no-underline">Read the case study</a>
+    </figcaption>
+  </figure>
+
+  <div class="mt-12 grid gap-10 md:grid-cols-3">
+    {
+      others.map((t) => (
+        <figure class="reveal flex flex-col border-t-2 border-foreground pt-6">
+          <blockquote class="flex-1">
+            <p>“{t.quote}”</p>
+          </blockquote>
+          <figcaption class="mt-6 text-sm">
+            <span class="block font-bold">{t.name}</span>
+            <span class="text-muted-foreground">{t.role}</span>
+          </figcaption>
+        </figure>
+      ))
+    }
+  </div>
+</section>

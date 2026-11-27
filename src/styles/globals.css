@@ -2,144 +2,539 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Cross-document view transitions between home and blog (progressive enhancement) */
+@view-transition {
+  navigation: auto;
+}
+
+:root {
+  interpolate-size: allow-keywords; /* lets <details> animate to height:auto */
+}
+
 @layer base {
+  /* Midnight & sea-glass: a Suffolk coast at dusk. Dark is the default theme. */
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-
+    color-scheme: light;
+    --background: 195 25% 96%; /* #F3F7F8 */
+    --foreground: 209 41% 10%; /* #0F1A24 */
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
+    --card-foreground: 209 41% 10%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 209 41% 10%;
+    --primary: 170 59% 27%; /* deep sea-glass #1D6F61 */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 200 20% 90%;
+    --secondary-foreground: 209 41% 10%;
+    --muted: 200 20% 90%;
+    --muted-foreground: 209 18% 33%;
+    --accent: 17 87% 72%; /* sunset peach #F59E7A */
+    --accent-foreground: 209 41% 10%;
+    --destructive: 0 70% 45%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 200 18% 84%;
+    --input: 200 18% 78%;
+    --ring: 170 59% 27%;
+    --radius: 0.375rem;
 
-    --primary: 221.2 83.2% 53.3%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 221.2 83.2% 53.3%;
-
-    --radius: 0.5rem;
+    --band: 210 45% 16%; /* deep sea #16283A */
+    --field-1: 30 55% 70%;
+    --field-2: 168 25% 55%;
+    --field-3: 200 35% 32%;
+    --field-4: 209 41% 16%;
+    --cloud: 0 0% 100% / 0.85;
+    --bird: 209 41% 16%;
+    --ground: 209 41% 16%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    color-scheme: dark;
+    --background: 209 41% 10%; /* night blue #0F1A24 */
+    --foreground: 204 28% 93%; /* foam white #E8EEF2 */
+    --card: 211 42% 13%;
+    --card-foreground: 204 28% 93%;
+    --popover: 211 42% 13%;
+    --popover-foreground: 204 28% 93%;
+    --primary: 168 48% 66%; /* sea-glass #7FD1C0 */
+    --primary-foreground: 209 41% 10%;
+    --secondary: 209 38% 17%;
+    --secondary-foreground: 204 28% 93%;
+    --muted: 209 38% 17%;
+    --muted-foreground: 206 17% 69%;
+    --accent: 17 87% 72%; /* sunset peach #F59E7A */
+    --accent-foreground: 209 41% 10%;
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 210 37% 21%;
+    --input: 210 37% 26%;
+    --ring: 168 48% 66%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 48%;
+    --band: 210 45% 16%;
+    --field-1: 22 45% 42%; /* last light on the fields */
+    --field-2: 200 30% 20%;
+    --field-3: 205 38% 14%;
+    --field-4: 209 45% 6%;
+    --cloud: 210 32% 20% / 0.7;
+    --bird: 204 28% 93% / 0.55;
+    --ground: 209 41% 10%; /* same as page so the fields melt into it */
   }
-}
 
-@layer base {
   * {
     @apply border-border;
   }
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
   body {
     @apply bg-background text-foreground;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+    letter-spacing: -0.025em;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  section[id] {
+    scroll-margin-top: 5rem;
+  }
+  a,
+  button,
+  summary {
+    touch-action: manipulation;
+  }
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 3px;
   }
 }
 
-/* Animated gradient overlay for hero */
-@layer utilities {
-  .hero-gradient-overlay {
-    background: linear-gradient(
-      135deg,
-      rgba(59, 130, 246, 0.1) 0%,
-      rgba(0, 0, 0, 0.4) 50%,
-      rgba(59, 130, 246, 0.05) 100%
-    );
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded px-5 py-3 font-semibold transition-colors;
+  }
+  .btn-primary {
+    @apply btn bg-primary text-primary-foreground;
+    transition:
+      transform 0.25s cubic-bezier(0.3, 1.6, 0.5, 1),
+      box-shadow 0.25s ease,
+      background-color 0.2s ease;
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 0 -1px hsl(var(--accent));
+  }
+  .btn-primary:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 0 0 hsl(var(--accent));
+  }
+  /* Pink highlighter that sweeps up behind the text on hover */
+  .ink-link {
+    @apply font-semibold text-foreground;
+    background: linear-gradient(hsl(var(--accent)) 0 0) 0 100% / 100% 0.14em no-repeat;
+    transition:
+      background-size 0.3s cubic-bezier(0.6, 0, 0.2, 1),
+      color 0.2s;
+    padding: 0 0.1em;
+  }
+  .ink-link:hover {
+    background-size: 100% 100%;
+    color: hsl(var(--accent-foreground));
+  }
+}
+
+
+
+/* The page header stays put while pages cross-fade */
+.site-header {
+  view-transition-name: site-header;
+}
+
+/* ---------- details: smooth open/close where ::details-content is supported ---------- */
+details::details-content {
+  block-size: 0;
+  overflow: clip;
+  transition:
+    block-size 0.4s cubic-bezier(0.6, 0, 0.2, 1),
+    content-visibility 0.4s allow-discrete;
+}
+details[open]::details-content {
+  block-size: auto;
+}
+
+/* Stars only come out at dusk (dark theme) */
+.stars {
+  display: none;
+}
+.dark .stars {
+  display: inline;
+}
+
+/* Certification badges overlap like a fanned hand */
+.cert-group .badge + .badge {
+  margin-left: -2.75rem;
+}
+.cert-group .badge:first-child {
+  rotate: -4deg;
+}
+.cert-group .badge:last-child {
+  rotate: 5deg;
+  translate: 0 0.5rem;
+}
+
+/* Static fallbacks (no motion / no scroll timelines) */
+.strike {
+  position: relative;
+}
+.strike::after {
+  content: "";
+  position: absolute;
+  inset-inline: -0.05em;
+  top: 52%;
+  height: 0.08em;
+  background: hsl(var(--accent));
+  transform-origin: left;
+}
+.pipeline-fill {
+  transform-origin: top;
+}
+
+/* ---------- Motion. Everything below is skipped for prefers-reduced-motion ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  /* Hero: headline words rise out of a mask, one after another */
+  .word {
+    display: inline-block;
+    overflow: clip;
+    padding-bottom: 0.08em;
+    margin-bottom: -0.08em;
+    vertical-align: top;
+  }
+  .word > span {
+    display: inline-block;
+    animation: word-rise 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    animation-delay: calc(var(--i) * 70ms + 0.1s);
+  }
+  @keyframes word-rise {
+    from {
+      transform: translateY(105%) rotate(4deg);
+    }
+  }
+  .hero-fade {
+    animation: fade-in 0.8s ease-out both;
+    animation-delay: var(--d, 0.6s);
+  }
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(0.75rem);
+    }
   }
 
-  /* Glow effect for cards */
-  .card-glow {
-    box-shadow: 0 0 0 1px hsl(var(--border)),
-      0 4px 6px -1px rgba(0, 0, 0, 0.1),
-      0 2px 4px -2px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.5s ease;
+  /* Sun comes up on load, glows, and sets as you scroll away */
+  .hero-sun {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: sunrise 1.8s cubic-bezier(0.2, 0.7, 0.15, 1) 0.15s both;
+  }
+  @keyframes sunrise {
+    from {
+      transform: translateY(70%);
+    }
+  }
+  .sun-halo {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: breathe 6s ease-in-out infinite;
+  }
+  @keyframes breathe {
+    50% {
+      transform: scale(1.12);
+      opacity: 0.6;
+    }
   }
 
-  .card-glow:hover {
-    box-shadow: 0 0 0 1px hsl(var(--primary) / 0.5),
-      0 0 20px -5px hsl(var(--primary) / 0.3),
-      0 20px 25px -5px rgba(0, 0, 0, 0.1),
-      0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  /* Clouds and birds drift across the big sky */
+  .cloud {
+    animation: drift var(--t, 90s) linear infinite;
+    animation-delay: var(--delay, 0s);
+  }
+  @keyframes drift {
+    from {
+      transform: translateX(-320px);
+    }
+    to {
+      transform: translateX(1600px);
+    }
+  }
+  .birds {
+    animation: fly 38s linear infinite;
+    animation-delay: -12s;
+  }
+  @keyframes fly {
+    from {
+      transform: translate(1500px, 30px);
+    }
+    to {
+      transform: translate(-200px, -10px);
+    }
+  }
+  .bird {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: flap 0.7s ease-in-out infinite alternate;
+  }
+  .bird:nth-child(2) {
+    animation-delay: -0.3s;
+  }
+  .bird:nth-child(3) {
+    animation-delay: -0.5s;
+  }
+  @keyframes flap {
+    to {
+      transform: scaleY(0.35);
+    }
+  }
+  .glint {
+    animation: glint 7s ease-in-out infinite;
+  }
+  @keyframes glint {
+    from {
+      transform: translateX(-300px);
+    }
+    to {
+      transform: translateX(1700px);
+    }
   }
 
-  /* Glass morphism utilities */
-  .glass {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+  .star {
+    animation: twinkle var(--t, 4s) ease-in-out infinite;
+    animation-delay: var(--delay, 0s);
+  }
+  @keyframes twinkle {
+    50% {
+      opacity: 0.15;
+    }
   }
 
-  .dark .glass {
-    background: rgba(0, 0, 0, 0.2);
+  /* Estuary waves along the top of the contact band */
+  .wave {
+    animation: wave var(--t, 14s) linear infinite;
+  }
+  @keyframes wave {
+    to {
+      transform: translateX(-720px);
+    }
   }
 
-  /* Underline animation */
-  .animated-underline {
+  /* Pipeline: a file travels down the line, forever */
+  .packet {
+    animation: packet 3.6s cubic-bezier(0.6, 0, 0.4, 1) infinite;
+  }
+  @keyframes packet {
+    0% {
+      top: 0;
+      opacity: 0;
+    }
+    10%,
+    85% {
+      opacity: 1;
+    }
+    100% {
+      top: 100%;
+      opacity: 0;
+    }
+  }
+
+  .cert-group .badge {
+    transition: transform 0.45s cubic-bezier(0.3, 1.5, 0.5, 1);
+  }
+  .cert-group:hover .badge:first-child {
+    transform: translateX(-0.5rem) rotate(-10deg);
+  }
+  .cert-group:hover .badge:last-child {
+    transform: translateX(1rem) rotate(6deg) translateY(-0.5rem);
+  }
+
+  .service-row h4 {
+    transition: transform 0.35s cubic-bezier(0.3, 1.4, 0.5, 1);
+  }
+  .service-row:hover h4 {
+    transform: translateX(0.5rem);
+  }
+  .service-row {
     position: relative;
   }
-
-  .animated-underline::after {
+  .service-row::before {
     content: "";
     position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: linear-gradient(90deg, hsl(var(--primary)), hsl(var(--primary) / 0.5));
-    transition: width 0.5s ease;
+    left: -1.25rem;
+    top: 2.4rem;
+    width: 0.4rem;
+    height: 2rem;
+    border-radius: 99px;
+    background: hsl(var(--accent));
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
+  }
+  .service-row:hover::before {
+    transform: scaleY(1);
   }
 
-  .animated-underline:hover::after {
-    width: 100%;
+  /* ---------- Scroll-driven: only where the browser supports timelines ---------- */
+  @supports (animation-timeline: view()) {
+    .site-header {
+      animation: header-solid linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 140px;
+    }
+    @keyframes header-solid {
+      to {
+        border-bottom-color: hsl(var(--border));
+        background-color: hsl(var(--background) / 0.92);
+      }
+    }
+
+    .sun-set {
+      animation: sun-set linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 70vh;
+    }
+    @keyframes sun-set {
+      to {
+        transform: translateY(150px);
+      }
+    }
+
+    .wipe {
+      animation: wipe linear both;
+      animation-timeline: view();
+      animation-range: entry 10% cover 35%;
+    }
+    @keyframes wipe {
+      from {
+        clip-path: inset(0 100% 0 0);
+        transform: translateX(-1rem);
+      }
+      to {
+        clip-path: inset(0 -1rem 0 0);
+      }
+    }
+
+    .reveal {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 5% cover 30%;
+    }
+    @keyframes reveal {
+      from {
+        opacity: 0;
+        transform: translateY(2.5rem);
+      }
+    }
+
+    .pop {
+      animation: pop linear both;
+      animation-timeline: view();
+      animation-range: entry calc(10% + var(--i, 0) * 6%) cover 35%;
+    }
+    @keyframes pop {
+      from {
+        opacity: 0;
+        transform: scale(0.6) rotate(-12deg);
+      }
+    }
+
+    .strike-in {
+      view-timeline: --strike block;
+    }
+    .strike-in .strike {
+      animation: strike-fade linear both;
+      animation-timeline: --strike;
+      animation-range: cover 20% cover 40%;
+    }
+    @keyframes strike-fade {
+      from {
+        color: hsl(var(--foreground));
+      }
+    }
+    .strike-in .strike::after {
+      animation: strike linear both;
+      animation-timeline: --strike;
+      animation-range: cover 25% cover 42%;
+    }
+    @keyframes strike {
+      from {
+        transform: scaleX(0);
+      }
+    }
+    .strike-in .after-strike {
+      animation: after-strike linear both;
+      animation-timeline: --strike;
+      animation-range: cover 30% cover 48%;
+    }
+    @keyframes after-strike {
+      from {
+        opacity: 0;
+        transform: translateX(-3rem);
+        filter: blur(6px);
+      }
+    }
+
+    .pipeline-fill {
+      animation: fill linear both;
+      animation-timeline: view();
+      animation-range: entry 20% cover 60%;
+    }
+    @keyframes fill {
+      from {
+        transform: scaleY(0);
+      }
+    }
+
+    .grow-in {
+      animation: grow-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 35%;
+    }
+    @keyframes grow-in {
+      from {
+        transform: scale(0.92);
+        border-radius: 3rem;
+        opacity: 0.4;
+      }
+    }
+
+    .read-in {
+      animation: read-in linear both;
+      animation-timeline: view();
+      animation-range: entry 30% cover 50%;
+    }
+    @keyframes read-in {
+      from {
+        opacity: 0.2;
+      }
+    }
+
+    .read-progress {
+      animation: read-progress linear both;
+      animation-timeline: scroll(root);
+    }
+    @keyframes read-progress {
+      from {
+        transform: scaleX(0);
+      }
+    }
   }
 }
 
-/* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+  @view-transition {
+    navigation: none;
   }
 }

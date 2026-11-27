@@ -1,0 +1,78 @@
+---
+
+const steps = [
+  { title: "Ingest", text: "Master files are uploaded to AWS and queued automatically." },
+  { title: "Process", text: "Masters are transcoded into the final download formats." },
+  { title: "Deliver", text: "Finished products are published straight to their WordPress store." },
+];
+
+const results = [
+  "A simple web app replaced command-line tools tied to office Macs",
+  "Pay-per-use cloud costs instead of always-on servers",
+  "Capacity that scales up and down with demand",
+];
+---
+
+<section id="work" class="bg-card py-24 lg:py-32">
+  <div class="container-page">
+    <p class="text-lg text-muted-foreground">
+      Recent work: a media pipeline for Visual Revival, a US company selling church media online
+    </p>
+
+    <h2 class="strike-in mt-6 font-extrabold leading-[0.95] tracking-[-0.04em]">
+      <span class="sr-only">Down from 18 hours to under 45 minutes</span>
+      <span aria-hidden="true" class="block text-[clamp(3rem,10vw,8rem)] text-muted-foreground/60"><span class="strike">18 hours</span></span>
+      <span aria-hidden="true" class="after-strike block text-[clamp(3rem,10vw,8rem)]">Under 45 min</span>
+      <span class="mt-4 block max-w-xl text-xl font-semibold tracking-tight text-muted-foreground sm:text-2xl">
+        to get one product bundle ready for sale.
+      </span>
+    </h2>
+
+    <div class="mt-16 grid gap-12 lg:grid-cols-2 lg:gap-20">
+      <div class="reveal space-y-5 text-lg">
+        <p>
+          Getting video ready for their online store was slow, hands-on work. Every new product meant
+          running clunky command-line tools on office Macs, then converting, checking and moving files
+          by hand, which capped how fast the catalogue could grow.
+        </p>
+        <p>
+          I built a cloud pipeline that does the whole job automatically, on serverless infrastructure
+          that only costs money while it's working.
+        </p>
+        <ul class="list-disc space-y-1.5 pl-5 text-base text-muted-foreground marker:text-accent">
+          {results.map((r) => <li>{r}</li>)}
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-lg font-bold">How it works</h3>
+        <ol class="relative mt-6">
+          <span aria-hidden="true" class="absolute inset-y-0 left-0 w-0.5 bg-border"></span>
+          <span aria-hidden="true" class="pipeline-fill absolute inset-y-0 left-0 w-0.5 bg-accent"></span>
+          <span aria-hidden="true" class="packet absolute -left-[5px] h-3 w-3 rounded-sm bg-primary"></span>
+          {
+            steps.map((s, i) => (
+              <li class="relative pb-8 pl-8 last:pb-0">
+                <span style={`--i: ${i}`} class="pop absolute -left-[0.8rem] top-0 grid h-7 w-7 place-items-center rounded-full bg-primary text-sm font-bold text-primary-foreground tabular-nums">
+                  {i + 1}
+                </span>
+                <p class="font-bold">{s.title}</p>
+                <p class="mt-1 text-muted-foreground">{s.text}</p>
+              </li>
+            ))
+          }
+        </ol>
+        <p class="mt-10 text-sm text-muted-foreground" translate="no">
+          AWS, serverless, WordPress (Easy Digital Downloads)
+        </p>
+      </div>
+    </div>
+
+    <p class="mt-16 text-lg">
+      Got a process that eats your team's time?
+      <a href="#contact" class="ink-link">
+        Let's automate it.
+      </a>
+    </p>
+  </div>
+</section>
